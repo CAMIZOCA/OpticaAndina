@@ -9,7 +9,7 @@
             <li><span>/</span></li>
             <li><a href="{{ route('servicios') }}" class="hover:text-teal-600">Servicios</a></li>
             <li><span>/</span></li>
-            <li class="text-gray-800 font-medium truncate">{{ $service->name }}</li>
+            <li class="text-gray-800 font-medium truncate">{{ $service->title }}</li>
         </ol>
     </div>
 </nav>
@@ -21,18 +21,18 @@
             <div class="mb-8">
                 @if($service->icon)
                     <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mb-4">
-                        <img src="{{ asset('storage/' . $service->icon) }}" alt="{{ $service->name }}" class="w-10 h-10 object-contain">
+                        <img src="{{ asset('storage/' . $service->icon) }}" alt="{{ $service->title }}" class="w-10 h-10 object-contain">
                     </div>
                 @endif
-                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ $service->name }}</h1>
-                @if($service->short_description)
-                    <p class="text-xl text-gray-500">{{ $service->short_description }}</p>
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ $service->title }}</h1>
+                @if($service->excerpt)
+                    <p class="text-xl text-gray-500">{{ $service->excerpt }}</p>
                 @endif
             </div>
 
             {{-- Imagen principal --}}
             @if($service->image)
-                <img src="{{ asset('storage/' . $service->image) }}" alt="{{ $service->name }}"
+                <img src="{{ asset('storage/' . $service->image) }}" alt="{{ $service->title }}"
                      class="w-full h-72 object-cover rounded-2xl mb-8">
             @endif
 
@@ -50,7 +50,7 @@
                     <p class="text-gray-500 text-sm">Escríbenos por WhatsApp y te atendemos de inmediato.</p>
                 </div>
                 <x-whatsapp-button
-                    :message="$service->cta_whatsapp_text ?? 'Hola, quisiera información sobre el servicio: ' . $service->name"
+                    :message="$service->cta_whatsapp_text ?? 'Hola, quisiera información sobre el servicio: ' . $service->title"
                     label="Consultar por WhatsApp"
                 />
             </div>
@@ -61,11 +61,12 @@
                     <h2 class="text-2xl font-bold text-gray-900 mb-6">Preguntas Frecuentes</h2>
                     <div class="space-y-4">
                         @foreach($service->faqs as $faq)
-                            <details class="bg-white border border-gray-200 rounded-xl p-5 group" x-data="{ open: false }">
+                            <details class="bg-white border border-gray-200 rounded-xl p-5" x-data="{ open: false }">
                                 <summary class="flex justify-between items-center cursor-pointer font-semibold text-gray-800 list-none"
                                          @click="open = !open">
                                     <span>{{ $faq['question'] }}</span>
-                                    <svg class="w-5 h-5 text-teal-600 transition-transform" :class="open ? 'rotate-180' : ''"
+                                    <svg class="w-5 h-5 text-teal-600 transition-transform flex-shrink-0 ml-4"
+                                         :class="open ? 'rotate-180' : ''"
                                          fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                     </svg>
@@ -81,7 +82,7 @@
 </section>
 
 {{-- Servicios relacionados --}}
-@if($related->isNotEmpty())
+@if(isset($related) && $related->isNotEmpty())
 <section class="py-12 bg-gray-50">
     <div class="container mx-auto px-4">
         <h2 class="section-title text-center">Otros Servicios</h2>
