@@ -49,8 +49,8 @@
             </header>
 
             {{-- Imagen destacada --}}
-            @if($post->featured_image)
-                <img src="{{ asset('storage/' . $post->featured_image) }}"
+            @if($post->image)
+                <img src="{{ asset('storage/' . $post->image) }}"
                      alt="{{ $post->title }}"
                      class="w-full rounded-2xl mb-10 max-h-96 object-cover">
             @endif
@@ -90,8 +90,8 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
             @foreach($related as $rel)
                 <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                    @if($rel->featured_image)
-                        <img src="{{ asset('storage/' . $rel->featured_image) }}" alt="{{ $rel->title }}" class="w-full h-40 object-cover">
+                    @if($rel->image)
+                        <img src="{{ asset('storage/' . $rel->image) }}" alt="{{ $rel->title }}" class="w-full h-40 object-cover">
                     @endif
                     <div class="p-5">
                         <p class="text-xs text-text-muted mb-2">{{ $rel->published_at?->format('d M Y') }}</p>

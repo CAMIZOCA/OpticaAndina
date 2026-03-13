@@ -17,22 +17,24 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
                 <h2 class="section-title">Nuestra Historia</h2>
-                <p class="text-gray-600 mb-4">
-                    Óptica Vista Andina nació en Tumbaco con la misión de ofrecer atención visual de calidad a precios accesibles para las familias de nuestra comunidad.
-                </p>
-                <p class="text-gray-600 mb-4">
-                    Con más de 15 años de experiencia, hemos atendido a miles de pacientes, desde niños hasta adultos mayores, ayudándoles a ver el mundo con claridad.
-                </p>
-                <p class="text-gray-600">
-                    Contamos con tecnología moderna para exámenes visuales y una amplia selección de monturas nacionales e importadas para todos los gustos y presupuestos.
-                </p>
+                @foreach($historia as $parrafo)
+                    @if($parrafo)
+                        <p class="text-gray-600 mb-4">{{ $parrafo }}</p>
+                    @endif
+                @endforeach
             </div>
             <div class="rounded-2xl overflow-hidden shadow-lg">
-                <div class="bg-brand-50 h-72 flex items-center justify-center">
-                    <svg class="w-32 h-32 text-brand-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                    </svg>
-                </div>
+                @if($nosotrosImageUrl)
+                    <img src="{{ $nosotrosImageUrl }}"
+                         alt="Óptica Vista Andina"
+                         class="w-full h-72 object-cover">
+                @else
+                    <div class="bg-brand-50 h-72 flex items-center justify-center">
+                        <svg class="w-32 h-32 text-brand-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                        </svg>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -69,17 +71,19 @@
         <h2 class="section-title">Nuestro Equipo</h2>
         <p class="text-text-muted mb-10">Profesionales comprometidos con tu salud visual</p>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
-            @foreach([
-                ['name' => 'Especialista Óptico', 'role' => 'Optómetra Certificado'],
-                ['name' => 'Atención al Cliente', 'role' => 'Asesora de Monturas'],
-                ['name' => 'Técnico en Óptica', 'role' => 'Laboratorio de Lentes'],
-            ] as $member)
+            @foreach($team as $member)
                 <div class="text-center">
-                    <div class="w-24 h-24 bg-brand-100 rounded-full mx-auto mb-4 flex items-center justify-center">
-                        <svg class="w-12 h-12 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                        </svg>
-                    </div>
+                    @if(!empty($member['photo']))
+                        <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($member['photo']) }}"
+                             alt="{{ $member['name'] }}"
+                             class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-brand-100">
+                    @else
+                        <div class="w-24 h-24 bg-brand-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <svg class="w-12 h-12 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                        </div>
+                    @endif
                     <h3 class="font-semibold text-gray-800">{{ $member['name'] }}</h3>
                     <p class="text-text-muted text-sm">{{ $member['role'] }}</p>
                 </div>
@@ -99,4 +103,3 @@
     </div>
 </section>
 @endsection
-

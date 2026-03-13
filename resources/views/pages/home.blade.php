@@ -131,8 +131,8 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
             @foreach($latestPosts as $post)
                 <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                    @if($post->featured_image)
-                        <img src="{{ asset('storage/' . $post->featured_image) }}" alt="{{ $post->title }}" class="w-full h-44 object-cover">
+                    @if($post->image)
+                        <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="w-full h-44 object-cover">
                     @endif
                     <div class="p-5">
                         <p class="text-sm text-text-muted mb-2">{{ $post->published_at?->format('d M Y') }}</p>
