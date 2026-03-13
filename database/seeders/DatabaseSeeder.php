@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             BrandSeeder::class,
             ServiceSeeder::class,
+            BlogPostSeeder::class,
             RedirectSeeder::class,
             SeoMetaSeeder::class,
             StatSeeder::class,
