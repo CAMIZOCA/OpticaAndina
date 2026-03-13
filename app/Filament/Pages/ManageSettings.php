@@ -8,6 +8,7 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 class ManageSettings extends Page
 {
@@ -32,10 +33,43 @@ class ManageSettings extends Page
                 Forms\Components\Tabs::make('Configuración')
                     ->tabs([
                         Forms\Components\Tabs\Tab::make('General')
+                            ->icon('heroicon-o-building-storefront')
                             ->schema([
                                 Forms\Components\TextInput::make('site_name')->label('Nombre del sitio')->required(),
                                 Forms\Components\TextInput::make('site_tagline')->label('Slogan'),
                                 Forms\Components\TextInput::make('founding_year')->label('Año de fundación'),
+                            ]),
+                        Forms\Components\Tabs\Tab::make('Logos')
+                            ->icon('heroicon-o-photo')
+                            ->schema([
+                                Forms\Components\Section::make('Logo del Header')
+                                    ->description('Se muestra en la barra de navegación superior (fondo blanco). Formatos: PNG, JPG, SVG, WebP. Tamaño recomendado: 320×80 px.')
+                                    ->schema([
+                                        Forms\Components\FileUpload::make('logo_header')
+                                            ->label('Logo header')
+                                            ->image()
+                                            ->disk('public')
+                                            ->directory('brand')
+                                            ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/svg+xml', 'image/webp'])
+                                            ->maxSize(2048)
+                                            ->imagePreviewHeight('80')
+                                            ->downloadable()
+                                            ->helperText('Si no sube un logo, se mostrará el nombre del sitio en texto.'),
+                                    ]),
+                                Forms\Components\Section::make('Logo del Footer')
+                                    ->description('Se muestra en el pie de página (fondo oscuro azul). Usa preferentemente una versión blanca o clara del logo. Tamaño recomendado: 160×50 px.')
+                                    ->schema([
+                                        Forms\Components\FileUpload::make('logo_footer')
+                                            ->label('Logo footer')
+                                            ->image()
+                                            ->disk('public')
+                                            ->directory('brand')
+                                            ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/svg+xml', 'image/webp'])
+                                            ->maxSize(2048)
+                                            ->imagePreviewHeight('80')
+                                            ->downloadable()
+                                            ->helperText('Si no sube un logo, se mostrará el isotipo por defecto.'),
+                                    ]),
                             ]),
                         Forms\Components\Tabs\Tab::make('Contacto')
                             ->schema([

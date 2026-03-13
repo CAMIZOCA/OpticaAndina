@@ -5,37 +5,339 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
-@theme {
-    --font-sans: 'Inter', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+/* Optica Andina — Design System
+   Logo: Verde Andino #8DC63F (accent) | Azul Optica #3B7EC8 (brand) | Azul Oscuro #284F8D */
 
-    --color-teal-50: #f0fdfa;
-    --color-teal-100: #ccfbf1;
-    --color-teal-200: #99f6e4;
-    --color-teal-300: #5eead4;
-    --color-teal-400: #2dd4bf;
-    --color-teal-500: #14b8a6;
-    --color-teal-600: #0d9488;
-    --color-teal-700: #0f766e;
-    --color-teal-800: #115e59;
-    --color-teal-900: #134e4a;
+@theme {
+    --font-sans:    'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Poppins', 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+    /* Azul Corporativo — texto "Optica Andina" del logo */
+    --color-brand-50:  #eef4fc;
+    --color-brand-100: #d6e6f8;
+    --color-brand-200: #aecdf1;
+    --color-brand-300: #7dade6;
+    --color-brand-400: #5490d9;
+    --color-brand-500: #3b7ec8;
+    --color-brand-600: #2f66a8;
+    --color-brand-700: #284f8d;
+    --color-brand-800: #1f3c6e;
+    --color-brand-900: #162b52;
+
+    /* Verde Andino — circulo del logo */
+    --color-accent-50:  #f3faeb;
+    --color-accent-100: #e2f2cc;
+    --color-accent-200: #c8e69f;
+    --color-accent-300: #a8d46a;
+    --color-accent-400: #97ca4a;
+    --color-accent-500: #8dc63f;
+    --color-accent-600: #74a833;
+    --color-accent-700: #5c8728;
+    --color-accent-800: #496920;
+    --color-accent-900: #3b551b;
+
+    /* Superficies y texto */
+    --color-surface-soft:  #f5f8fc;
+    --color-border-soft:   #dce7f3;
+    --color-border-medium: #b8cfe8;
+    --color-text-primary:  #1a2840;
+    --color-text-body:     #374151;
+    --color-text-muted:    #5e7285;
+    --color-text-light:    #8fa3b5;
 }
 
 @layer base {
-    html { scroll-behavior: smooth; }
-    body { @apply text-gray-700 antialiased; }
+    html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+        font-family: var(--font-sans);
+        color: var(--color-text-body);
+        background-color: #ffffff;
+        line-height: 1.7;
+    }
+
+    h1, h2, h3, h4 {
+        font-family: var(--font-display);
+        color: var(--color-text-primary);
+        line-height: 1.25;
+        letter-spacing: -0.02em;
+    }
+
+    /* Escalas controladas — negocio local, no landing gigante */
+    h1 { font-size: clamp(1.875rem, 4vw, 2.625rem); font-weight: 700; }
+    h2 { font-size: clamp(1.375rem, 3vw, 1.875rem); font-weight: 700; }
+    h3 { font-size: clamp(1.0625rem, 2vw, 1.25rem); font-weight: 600; }
+
+    p { color: var(--color-text-body); }
+
+    a {
+        color: var(--color-brand-600);
+        text-decoration: none;
+        transition: color 0.15s ease;
+    }
+    a:hover { color: var(--color-brand-700); }
+
+    :focus-visible {
+        outline: 2px solid var(--color-brand-500);
+        outline-offset: 3px;
+        border-radius: 4px;
+    }
+
+    img { max-width: 100%; height: auto; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: var(--color-brand-300); border-radius: 3px; }
 }
 
 @layer components {
+
+    /* ═══ HEADER — SOLIDO, nunca transparente ═══════════════════ */
+    .site-header {
+        background-color: #ffffff !important;
+        border-bottom: 2px solid var(--color-brand-100);
+        box-shadow: 0 2px 12px 0 rgba(40, 79, 141, 0.10);
+        position: sticky;
+        top: 0;
+        z-index: 50;
+    }
+
+    /* ═══ BOTONES ═══════════════════════════════════════════════ */
     .btn-primary {
-        @apply inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold px-5 py-3 rounded-lg transition-colors duration-200;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background-color: var(--color-brand-600);
+        color: #ffffff;
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.9375rem;
+        border-radius: 0.5rem;
+        border: 2px solid transparent;
+        box-shadow: 0 2px 8px rgba(47, 102, 168, 0.28);
+        transition: all 0.15s ease;
+        cursor: pointer;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+    .btn-primary:hover {
+        background-color: var(--color-brand-700);
+        color: #ffffff;
+        box-shadow: 0 4px 16px rgba(47, 102, 168, 0.38);
+        transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background-color: var(--color-accent-500);
+        color: #ffffff;
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.9375rem;
+        border-radius: 0.5rem;
+        border: 2px solid transparent;
+        box-shadow: 0 2px 8px rgba(141, 198, 63, 0.28);
+        transition: all 0.15s ease;
+        cursor: pointer;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+    .btn-secondary:hover {
+        background-color: var(--color-accent-600);
+        color: #ffffff;
+        transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background-color: transparent;
+        color: var(--color-brand-600);
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.9375rem;
+        border-radius: 0.5rem;
+        border: 2px solid var(--color-brand-500);
+        transition: all 0.15s ease;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .btn-ghost:hover {
+        background-color: var(--color-brand-600);
+        color: #ffffff;
     }
     .btn-outline {
-        @apply inline-flex items-center gap-2 border-2 border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white font-semibold px-5 py-3 rounded-lg transition-colors duration-200;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background-color: transparent;
+        color: var(--color-brand-600);
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.9375rem;
+        border-radius: 0.5rem;
+        border: 2px solid var(--color-brand-500);
+        transition: all 0.15s ease;
+        cursor: pointer;
+        text-decoration: none;
     }
+    .btn-outline:hover {
+        background-color: var(--color-brand-600);
+        color: #ffffff;
+    }
+
+    .btn-white {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background-color: #ffffff;
+        color: var(--color-brand-700);
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.9375rem;
+        border-radius: 0.5rem;
+        border: 2px solid rgba(255,255,255,0.8);
+        transition: all 0.15s ease;
+        text-decoration: none;
+    }
+    .btn-white:hover {
+        background-color: var(--color-brand-50);
+        color: var(--color-brand-800);
+    }
+
+    /* ═══ SECCIONES HERO ════════════════════════════════════════ */
+    .section-hero {
+        background: linear-gradient(140deg, var(--color-brand-700) 0%, var(--color-brand-900) 100%);
+        color: #ffffff;
+        position: relative;
+        overflow: hidden;
+    }
+    .section-hero h1,
+    .section-hero h2 { color: #ffffff; }
+    .section-hero .hero-subtitle { color: var(--color-brand-100); }
+
+    .page-hero {
+        background: linear-gradient(140deg, var(--color-brand-600) 0%, var(--color-brand-800) 100%);
+        color: #ffffff;
+        padding: 4rem 0;
+    }
+    .page-hero h1,
+    .page-hero h2 { color: #ffffff; }
+    .page-hero .hero-subtitle { color: var(--color-brand-100); }
+
+    /* ═══ CTA DE CONTRASTE ══════════════════════════════════════ */
+    .section-cta {
+        background: linear-gradient(140deg, var(--color-brand-700) 0%, var(--color-brand-800) 100%);
+        color: #ffffff;
+    }
+    .section-cta h2,
+    .section-cta h3 { color: #ffffff; }
+    .section-cta .cta-subtitle { color: var(--color-brand-100); }
+    .section-cta-contrast {
+        background: linear-gradient(140deg, var(--color-brand-700) 0%, var(--color-brand-800) 100%);
+        color: #ffffff;
+    }
+    .section-cta-contrast h2,
+    .section-cta-contrast h3 { color: #ffffff; }
+    .section-cta-contrast .cta-subtitle { color: var(--color-brand-100); }
+
+    /* ═══ TIPOGRAFIA DE SECCION ═════════════════════════════════ */
     .section-title {
-        @apply text-3xl md:text-4xl font-bold text-gray-800;
+        font-family: var(--font-display);
+        font-weight: 700;
+        color: var(--color-text-primary);
+        letter-spacing: -0.02em;
     }
+    .section-subtitle {
+        color: var(--color-text-muted);
+        font-size: 1.0625rem;
+        line-height: 1.7;
+    }
+    .title-divider {
+        height: 3px;
+        width: 3rem;
+        background: linear-gradient(90deg, var(--color-accent-500), var(--color-brand-500));
+        border-radius: 2px;
+        margin: 0.625rem auto 0;
+    }
+
+    /* ═══ CARDS ════════════════════════════════════════════════ */
+    .card {
+        background-color: #ffffff;
+        border-radius: 0.75rem;
+        border: 1px solid var(--color-border-soft);
+        box-shadow: 0 1px 4px rgba(26, 40, 64, 0.06),
+                    0 4px 12px rgba(26, 40, 64, 0.04);
+        transition: box-shadow 0.2s ease, transform 0.2s ease;
+        overflow: hidden;
+    }
+    .card:hover {
+        box-shadow: 0 4px 16px rgba(26, 40, 64, 0.10),
+                    0 8px 24px rgba(26, 40, 64, 0.06);
+        transform: translateY(-2px);
+    }
+
+    /* ═══ FORMULARIOS ══════════════════════════════════════════ */
+    .form-input {
+        width: 100%;
+        padding: 0.625rem 1rem;
+        background-color: #ffffff;
+        border: 1.5px solid var(--color-border-medium);
+        border-radius: 0.5rem;
+        font-size: 0.9375rem;
+        color: var(--color-text-primary);
+        line-height: 1.5;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .form-input:focus {
+        outline: none;
+        border-color: var(--color-brand-500);
+        box-shadow: 0 0 0 3px rgba(59, 126, 200, 0.12);
+    }
+    .form-input::placeholder { color: var(--color-text-light); }
+
+    /* ═══ BADGES ═══════════════════════════════════════════════ */
+    .badge-brand {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.2rem 0.75rem;
+        background-color: var(--color-brand-50);
+        color: var(--color-brand-700);
+        font-size: 0.75rem;
+        font-weight: 600;
+        border-radius: 9999px;
+        border: 1px solid var(--color-brand-100);
+    }
+    .badge-accent {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.2rem 0.75rem;
+        background-color: var(--color-accent-50);
+        color: var(--color-accent-700);
+        font-size: 0.75rem;
+        font-weight: 600;
+        border-radius: 9999px;
+        border: 1px solid var(--color-accent-200);
+    }
+
+    /* ═══ LINE CLAMP ═══════════════════════════════════════════ */
     .line-clamp-2 {
         overflow: hidden;
         display: -webkit-box;
@@ -48,4 +350,43 @@
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 3;
     }
+
+    /* ═══ WHATSAPP FAB ════════════════════════════════════════ */
+    .whatsapp-fab {
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        z-index: 60;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.875rem 1.25rem;
+        background-color: #25D366;
+        color: #ffffff;
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.9375rem;
+        border-radius: 9999px;
+        box-shadow: 0 4px 20px rgba(37, 211, 102, 0.40),
+                    0 2px 8px rgba(0, 0, 0, 0.12);
+        transition: all 0.2s ease;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+    .whatsapp-fab:hover {
+        color: #ffffff;
+        box-shadow: 0 6px 28px rgba(37, 211, 102, 0.55),
+                    0 3px 12px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px) scale(1.02);
+    }
+
+    /* ═══ PROSE ════════════════════════════════════════════════ */
+    .prose h2,
+    .prose h3,
+    .prose h4 {
+        font-family: var(--font-display);
+        color: var(--color-text-primary);
+    }
+    .prose a { color: var(--color-brand-600); }
+    .prose a:hover { color: var(--color-brand-700); }
 }

@@ -18,9 +18,14 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SiteSettingSeeder::class,
             CategorySeeder::class,
+            BrandSeeder::class,
             ServiceSeeder::class,
             RedirectSeeder::class,
             SeoMetaSeeder::class,
+            StatSeeder::class,
+            TestimonialSeeder::class,
+            FaqSeeder::class,
+            VideoSeeder::class,
         ]);
 
         // Admin user for Filament
@@ -30,3 +35,4 @@ class DatabaseSeeder extends Seeder
         ]);
     }
 }
+

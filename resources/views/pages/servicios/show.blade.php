@@ -4,10 +4,10 @@
 {{-- Breadcrumb --}}
 <nav class="bg-gray-50 border-b" aria-label="Breadcrumb">
     <div class="container mx-auto px-4 py-3">
-        <ol class="flex items-center gap-2 text-sm text-gray-500">
-            <li><a href="{{ route('home') }}" class="hover:text-teal-600">Inicio</a></li>
+        <ol class="flex items-center gap-2 text-sm text-text-muted">
+            <li><a href="{{ route('home') }}" class="hover:text-brand-600">Inicio</a></li>
             <li><span>/</span></li>
-            <li><a href="{{ route('servicios') }}" class="hover:text-teal-600">Servicios</a></li>
+            <li><a href="{{ route('servicios') }}" class="hover:text-brand-600">Servicios</a></li>
             <li><span>/</span></li>
             <li class="text-gray-800 font-medium truncate">{{ $service->title }}</li>
         </ol>
@@ -20,13 +20,13 @@
             {{-- Cabecera --}}
             <div class="mb-8">
                 @if($service->icon)
-                    <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mb-4">
+                    <div class="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mb-4">
                         <img src="{{ asset('storage/' . $service->icon) }}" alt="{{ $service->title }}" class="w-10 h-10 object-contain">
                     </div>
                 @endif
                 <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ $service->title }}</h1>
                 @if($service->excerpt)
-                    <p class="text-xl text-gray-500">{{ $service->excerpt }}</p>
+                    <p class="text-xl text-text-muted">{{ $service->excerpt }}</p>
                 @endif
             </div>
 
@@ -44,10 +44,10 @@
             @endif
 
             {{-- CTA WhatsApp --}}
-            <div class="bg-teal-50 border border-teal-100 rounded-xl p-6 mb-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="bg-brand-50 border border-brand-100 rounded-xl p-6 mb-10 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
                     <h3 class="font-semibold text-gray-800 mb-1">¿Quieres agendar este servicio?</h3>
-                    <p class="text-gray-500 text-sm">Escríbenos por WhatsApp y te atendemos de inmediato.</p>
+                    <p class="text-text-muted text-sm">Escríbenos por WhatsApp y te atendemos de inmediato.</p>
                 </div>
                 <x-whatsapp-button
                     :message="$service->cta_whatsapp_text ?? 'Hola, quisiera información sobre el servicio: ' . $service->title"
@@ -65,7 +65,7 @@
                                 <summary class="flex justify-between items-center cursor-pointer font-semibold text-gray-800 list-none"
                                          @click="open = !open">
                                     <span>{{ $faq['question'] }}</span>
-                                    <svg class="w-5 h-5 text-teal-600 transition-transform flex-shrink-0 ml-4"
+                                    <svg class="w-5 h-5 text-brand-600 transition-transform flex-shrink-0 ml-4"
                                          :class="open ? 'rotate-180' : ''"
                                          fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -95,3 +95,4 @@
 </section>
 @endif
 @endsection
+

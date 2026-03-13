@@ -1,6 +1,7 @@
 *.log
 .DS_Store
 .env
+/public/opcache-test.php
 .claude/
 .env.backup
 .env.production

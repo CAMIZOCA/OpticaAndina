@@ -4,10 +4,10 @@
 {{-- Breadcrumb --}}
 <nav class="bg-gray-50 border-b" aria-label="Breadcrumb">
     <div class="container mx-auto px-4 py-3">
-        <ol class="flex items-center gap-2 text-sm text-gray-500">
-            <li><a href="{{ route('home') }}" class="hover:text-teal-600">Inicio</a></li>
+        <ol class="flex items-center gap-2 text-sm text-text-muted">
+            <li><a href="{{ route('home') }}" class="hover:text-brand-600">Inicio</a></li>
             <li><span>/</span></li>
-            <li><a href="{{ route('marcas') }}" class="hover:text-teal-600">Marcas</a></li>
+            <li><a href="{{ route('marcas') }}" class="hover:text-brand-600">Marcas</a></li>
             <li><span>/</span></li>
             <li class="text-gray-800 font-medium">{{ $brand->name }}</li>
         </ol>
@@ -23,7 +23,7 @@
             <div>
                 <h1 class="text-3xl font-bold text-gray-900">{{ $brand->name }}</h1>
                 @if($brand->country)
-                    <p class="text-gray-500">{{ $brand->country }}</p>
+                    <p class="text-text-muted">{{ $brand->country }}</p>
                 @endif
                 @if($brand->description)
                     <p class="text-gray-600 mt-2 max-w-2xl">{{ $brand->description }}</p>
@@ -37,8 +37,8 @@
     <div class="container mx-auto px-4">
         @if($products->isEmpty())
             <div class="text-center py-12">
-                <p class="text-gray-500">No hay productos disponibles para esta marca.</p>
-                <a href="{{ route('catalogo') }}" class="inline-block mt-4 text-teal-600 hover:underline">Ver catálogo completo</a>
+                <p class="text-text-muted">No hay productos disponibles para esta marca.</p>
+                <a href="{{ route('catalogo') }}" class="inline-block mt-4 text-brand-600 hover:underline">Ver catálogo completo</a>
             </div>
         @else
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -54,3 +54,4 @@
     </div>
 </section>
 @endsection
+

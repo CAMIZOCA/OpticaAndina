@@ -2,10 +2,10 @@
 
 @section('content')
 {{-- Hero --}}
-<section class="bg-gradient-to-br from-teal-700 to-teal-900 text-white py-16">
+<section class="page-hero py-16">
     <div class="container mx-auto px-4 text-center">
         <h1 class="text-4xl font-bold mb-4">Sobre Nosotros</h1>
-        <p class="text-teal-100 text-lg max-w-2xl mx-auto">
+        <p class="hero-subtitle text-lg max-w-2xl mx-auto">
             Conoce la historia de Óptica Vista Andina y nuestro compromiso con la salud visual.
         </p>
     </div>
@@ -28,8 +28,8 @@
                 </p>
             </div>
             <div class="rounded-2xl overflow-hidden shadow-lg">
-                <div class="bg-teal-50 h-72 flex items-center justify-center">
-                    <svg class="w-32 h-32 text-teal-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-brand-50 h-72 flex items-center justify-center">
+                    <svg class="w-32 h-32 text-brand-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                     </svg>
                 </div>
@@ -50,13 +50,13 @@
                 ['icon' => 'M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z', 'title' => 'Tecnología', 'desc' => 'Equipos modernos para diagnósticos precisos.'],
             ] as $valor)
                 <div class="bg-white rounded-xl p-6 text-center shadow-sm">
-                    <div class="w-14 h-14 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-7 h-7 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-14 h-14 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-7 h-7 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $valor['icon'] }}"/>
                         </svg>
                     </div>
                     <h3 class="font-semibold text-gray-800 mb-2">{{ $valor['title'] }}</h3>
-                    <p class="text-gray-500 text-sm">{{ $valor['desc'] }}</p>
+                    <p class="text-text-muted text-sm">{{ $valor['desc'] }}</p>
                 </div>
             @endforeach
         </div>
@@ -67,7 +67,7 @@
 <section class="py-16">
     <div class="container mx-auto px-4 text-center">
         <h2 class="section-title">Nuestro Equipo</h2>
-        <p class="text-gray-500 mb-10">Profesionales comprometidos con tu salud visual</p>
+        <p class="text-text-muted mb-10">Profesionales comprometidos con tu salud visual</p>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
             @foreach([
                 ['name' => 'Especialista Óptico', 'role' => 'Optómetra Certificado'],
@@ -75,13 +75,13 @@
                 ['name' => 'Técnico en Óptica', 'role' => 'Laboratorio de Lentes'],
             ] as $member)
                 <div class="text-center">
-                    <div class="w-24 h-24 bg-teal-100 rounded-full mx-auto mb-4 flex items-center justify-center">
-                        <svg class="w-12 h-12 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-24 h-24 bg-brand-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <svg class="w-12 h-12 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                         </svg>
                     </div>
                     <h3 class="font-semibold text-gray-800">{{ $member['name'] }}</h3>
-                    <p class="text-gray-500 text-sm">{{ $member['role'] }}</p>
+                    <p class="text-text-muted text-sm">{{ $member['role'] }}</p>
                 </div>
             @endforeach
         </div>
@@ -89,13 +89,14 @@
 </section>
 
 {{-- CTA --}}
-<section class="py-12 bg-teal-700 text-white text-center">
+<section class="py-12 section-cta-contrast text-center">
     <div class="container mx-auto px-4">
         <h2 class="text-2xl font-bold mb-4">Visítanos en Tumbaco</h2>
-        <p class="text-teal-100 mb-6">{{ \App\Models\SiteSetting::get('address', 'Av. Interoceánica, Tumbaco, Ecuador') }}</p>
-        <a href="{{ route('contacto') }}" class="inline-block bg-white text-teal-700 font-semibold px-6 py-3 rounded-lg hover:bg-teal-50 transition">
+        <p class="cta-subtitle mb-6">{{ \App\Models\SiteSetting::get('address', 'Av. Interoceánica, Tumbaco, Ecuador') }}</p>
+        <a href="{{ route('contacto') }}" class="inline-block bg-white text-brand-700 font-semibold px-6 py-3 rounded-lg hover:bg-brand-50 transition">
             Contáctanos
         </a>
     </div>
 </section>
 @endsection
+

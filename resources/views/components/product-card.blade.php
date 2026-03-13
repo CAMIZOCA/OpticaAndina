@@ -18,20 +18,21 @@
         @endif
         <div class="p-4">
             @if($product->brand)
-                <p class="text-xs text-teal-600 font-medium uppercase tracking-wide mb-1">{{ $product->brand->name }}</p>
+                <p class="text-xs text-brand-600 font-medium uppercase tracking-wide mb-1">{{ $product->brand->name }}</p>
             @endif
-            <h3 class="font-semibold text-gray-800 group-hover:text-teal-600 transition-colors line-clamp-2">
+            <h3 class="font-semibold text-gray-800 group-hover:text-brand-600 transition-colors line-clamp-2">
                 {{ $product->name }}
             </h3>
             @if($product->short_description)
-                <p class="text-sm text-gray-500 mt-1 line-clamp-2">{{ $product->short_description }}</p>
+                <p class="text-sm text-text-muted mt-1 line-clamp-2">{{ $product->short_description }}</p>
             @endif
             <div class="mt-3 flex items-center justify-between">
-                <span class="text-xs px-2 py-1 rounded-full {{ $product->is_available ? 'bg-green-50 text-green-600' : 'bg-gray-100 text-gray-500' }}">
+                <span class="text-xs px-2 py-1 rounded-full {{ $product->is_available ? 'bg-accent-50 text-accent-600' : 'bg-gray-100 text-text-muted' }}">
                     {{ $product->is_available ? 'Disponible' : 'Sin stock' }}
                 </span>
-                <span class="text-teal-600 text-sm font-medium">Ver detalles →</span>
+                <span class="text-brand-600 text-sm font-medium">Ver detalles →</span>
             </div>
         </div>
     </a>
 </article>
+

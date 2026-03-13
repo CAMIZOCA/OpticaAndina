@@ -4,12 +4,12 @@
 {{-- Breadcrumb --}}
 <nav class="bg-gray-50 border-b" aria-label="Breadcrumb">
     <div class="container mx-auto px-4 py-3">
-        <ol class="flex items-center gap-2 text-sm text-gray-500">
-            <li><a href="{{ route('home') }}" class="hover:text-teal-600">Inicio</a></li>
+        <ol class="flex items-center gap-2 text-sm text-text-muted">
+            <li><a href="{{ route('home') }}" class="hover:text-brand-600">Inicio</a></li>
             <li><span>/</span></li>
-            <li><a href="{{ route('catalogo') }}" class="hover:text-teal-600">Catálogo</a></li>
+            <li><a href="{{ route('catalogo') }}" class="hover:text-brand-600">Catálogo</a></li>
             <li><span>/</span></li>
-            <li><a href="{{ route('catalogo.categoria', $category->slug) }}" class="hover:text-teal-600">{{ $category->name }}</a></li>
+            <li><a href="{{ route('catalogo.categoria', $category->slug) }}" class="hover:text-brand-600">{{ $category->name }}</a></li>
             <li><span>/</span></li>
             <li class="text-gray-800 font-medium truncate">{{ $product->name }}</li>
         </ol>
@@ -37,7 +37,7 @@
                             @foreach($product->images as $i => $img)
                                 <button @click="active = {{ $i }}"
                                         class="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition"
-                                        :class="active === {{ $i }} ? 'border-teal-500' : 'border-transparent hover:border-gray-300'">
+                                        :class="active === {{ $i }} ? 'border-brand-500' : 'border-transparent hover:border-gray-300'">
                                     <img src="{{ asset('storage/' . $img->path) }}" alt="" class="w-full h-full object-cover">
                                 </button>
                             @endforeach
@@ -55,12 +55,12 @@
             {{-- Info --}}
             <div>
                 <div class="mb-2">
-                    <a href="{{ route('catalogo.categoria', $category->slug) }}" class="text-sm text-teal-600 hover:underline">
+                    <a href="{{ route('catalogo.categoria', $category->slug) }}" class="text-sm text-brand-600 hover:underline">
                         {{ $category->name }}
                     </a>
                     @if($product->brand)
-                        <span class="text-gray-400 mx-2">·</span>
-                        <a href="{{ route('marcas.show', $product->brand->slug) }}" class="text-sm text-gray-500 hover:text-teal-600">
+                        <span class="text-text-muted mx-2">·</span>
+                        <a href="{{ route('marcas.show', $product->brand->slug) }}" class="text-sm text-text-muted hover:text-brand-600">
                             {{ $product->brand->name }}
                         </a>
                     @endif
@@ -82,7 +82,7 @@
                             @foreach($product->attributes as $attr)
                                 @if(!empty($attr['key']) && !empty($attr['value']))
                                     <div class="bg-gray-50 rounded-lg p-3">
-                                        <dt class="text-xs text-gray-500 uppercase tracking-wide">{{ $attr['key'] }}</dt>
+                                        <dt class="text-xs text-text-muted uppercase tracking-wide">{{ $attr['key'] }}</dt>
                                         <dd class="font-medium text-gray-800 mt-0.5">{{ $attr['value'] }}</dd>
                                     </div>
                                 @endif
@@ -94,12 +94,12 @@
                 {{-- Disponibilidad --}}
                 <div class="mb-6">
                     @if($product->is_available)
-                        <span class="inline-flex items-center gap-1.5 text-green-700 bg-green-50 border border-green-200 px-3 py-1.5 rounded-full text-sm font-medium">
-                            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                        <span class="inline-flex items-center gap-1.5 text-accent-700 bg-accent-50 border border-accent-200 px-3 py-1.5 rounded-full text-sm font-medium">
+                            <span class="w-2 h-2 bg-accent-500 rounded-full"></span>
                             Disponible
                         </span>
                     @else
-                        <span class="inline-flex items-center gap-1.5 text-gray-500 bg-gray-100 px-3 py-1.5 rounded-full text-sm">
+                        <span class="inline-flex items-center gap-1.5 text-text-muted bg-gray-100 px-3 py-1.5 rounded-full text-sm">
                             <span class="w-2 h-2 bg-gray-400 rounded-full"></span>
                             Consultar disponibilidad
                         </span>
@@ -107,9 +107,9 @@
                 </div>
 
                 {{-- CTA WhatsApp --}}
-                <div class="bg-green-50 border border-green-100 rounded-xl p-5">
+                <div class="bg-accent-50 border border-accent-100 rounded-xl p-5">
                     <p class="text-gray-700 mb-3 font-medium">¿Te interesa este producto?</p>
-                    <p class="text-gray-500 text-sm mb-4">Consúltanos por WhatsApp para más información, disponibilidad y asesoramiento personalizado.</p>
+                    <p class="text-text-muted text-sm mb-4">Consúltanos por WhatsApp para más información, disponibilidad y asesoramiento personalizado.</p>
                     <x-whatsapp-button
                         :message="$product->whatsapp_text ?? 'Hola, me interesa el producto: ' . $product->name"
                         label="Consultar por WhatsApp"
@@ -135,3 +135,4 @@
 </section>
 @endif
 @endsection
+
