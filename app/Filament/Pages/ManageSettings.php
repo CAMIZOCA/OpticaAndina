@@ -7,7 +7,6 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class ManageSettings extends Page
@@ -18,11 +17,30 @@ class ManageSettings extends Page
     protected static string $view = 'filament.pages.manage-settings';
     protected static ?int $navigationSort = 99;
 
-    /** Keys that store JSON arrays (Repeater, etc.) */
+    /** Keys that store JSON arrays (Repeater fields). */
     protected const JSON_KEYS = [
         'nosotros_team',
         'about_features',
+        'home_process',
+        'home_sections_order',
     ];
+
+    /** Available orderable sections on the home page. */
+    public static function homeSectionOptions(): array
+    {
+        return [
+            'services'          => '🔧 Nuestros Servicios',
+            'stats'             => '📊 Estadísticas (Nos avala…)',
+            'about'             => '💡 Cuidado profesional y personalizado',
+            'process'           => '⚙️  Nuestro Proceso',
+            'service_gallery'   => '🖼️  Galería de Servicios',
+            'featured_products' => '🛍️  Productos Destacados',
+            'brands'            => '🏷️  Marcas',
+            'categories'        => '📁 Categorías',
+            'latest_posts'      => '📰 Artículos Recientes',
+            'faq'               => '❓ Preguntas Frecuentes',
+        ];
+    }
 
     public ?array $data = [];
 
@@ -47,7 +65,8 @@ class ManageSettings extends Page
             ->schema([
                 Forms\Components\Tabs::make('Configuración')
                     ->tabs([
-                        // ─── General ───────────────────────────────────────────
+
+                        // ─── General ─────────────────────────────────────────
                         Forms\Components\Tabs\Tab::make('General')
                             ->icon('heroicon-o-building-storefront')
                             ->schema([
@@ -56,7 +75,7 @@ class ManageSettings extends Page
                                 Forms\Components\TextInput::make('founding_year')->label('Año de fundación'),
                             ]),
 
-                        // ─── Logos ─────────────────────────────────────────────
+                        // ─── Logos ───────────────────────────────────────────
                         Forms\Components\Tabs\Tab::make('Logos')
                             ->icon('heroicon-o-photo')
                             ->schema([
@@ -64,33 +83,23 @@ class ManageSettings extends Page
                                     ->description('Se muestra en la barra de navegación superior (fondo blanco). Formatos: PNG, JPG, SVG, WebP. Tamaño recomendado: 320×80 px.')
                                     ->schema([
                                         Forms\Components\FileUpload::make('logo_header')
-                                            ->label('Logo header')
-                                            ->image()
-                                            ->disk('public')
-                                            ->directory('brand')
-                                            ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/svg+xml', 'image/webp'])
-                                            ->maxSize(2048)
-                                            ->imagePreviewHeight('80')
-                                            ->downloadable()
+                                            ->label('Logo header')->image()->disk('public')->directory('brand')
+                                            ->acceptedFileTypes(['image/png','image/jpeg','image/svg+xml','image/webp'])
+                                            ->maxSize(2048)->imagePreviewHeight('80')->downloadable()
                                             ->helperText('Si no sube un logo, se mostrará el nombre del sitio en texto.'),
                                     ]),
                                 Forms\Components\Section::make('Logo del Footer')
                                     ->description('Se muestra en el pie de página (fondo oscuro azul). Usa preferentemente una versión blanca o clara del logo. Tamaño recomendado: 160×50 px.')
                                     ->schema([
                                         Forms\Components\FileUpload::make('logo_footer')
-                                            ->label('Logo footer')
-                                            ->image()
-                                            ->disk('public')
-                                            ->directory('brand')
-                                            ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/svg+xml', 'image/webp'])
-                                            ->maxSize(2048)
-                                            ->imagePreviewHeight('80')
-                                            ->downloadable()
+                                            ->label('Logo footer')->image()->disk('public')->directory('brand')
+                                            ->acceptedFileTypes(['image/png','image/jpeg','image/svg+xml','image/webp'])
+                                            ->maxSize(2048)->imagePreviewHeight('80')->downloadable()
                                             ->helperText('Si no sube un logo, se mostrará el isotipo por defecto.'),
                                     ]),
                             ]),
 
-                        // ─── Contacto ──────────────────────────────────────────
+                        // ─── Contacto ────────────────────────────────────────
                         Forms\Components\Tabs\Tab::make('Contacto')
                             ->icon('heroicon-o-phone')
                             ->schema([
@@ -104,7 +113,7 @@ class ManageSettings extends Page
                                 Forms\Components\Textarea::make('maps_embed')->label('Código embed del mapa')->rows(4),
                             ]),
 
-                        // ─── Página Inicio ─────────────────────────────────────
+                        // ─── Página Inicio ───────────────────────────────────
                         Forms\Components\Tabs\Tab::make('Página Inicio')
                             ->icon('heroicon-o-home')
                             ->schema([
@@ -112,68 +121,123 @@ class ManageSettings extends Page
                                     ->description('Texto destacado que aparece en la parte superior de la página de inicio.')
                                     ->schema([
                                         Forms\Components\TextInput::make('hero_title')
-                                            ->label('Título del hero')
-                                            ->placeholder('Tu visión, nuestro compromiso'),
+                                            ->label('Título del hero')->placeholder('Tu visión, nuestro compromiso'),
                                         Forms\Components\Textarea::make('hero_subtitle')
-                                            ->label('Subtítulo del hero')
-                                            ->rows(3)
+                                            ->label('Subtítulo del hero')->rows(3)
                                             ->placeholder('Más de 15 años cuidando la salud visual…'),
                                         Forms\Components\TextInput::make('hero_cta_text')
-                                            ->label('Texto del botón CTA')
-                                            ->placeholder('Ver Catálogo'),
+                                            ->label('Texto del botón CTA')->placeholder('Ver Catálogo'),
                                     ]),
-                                Forms\Components\Section::make('Sección "Sobre nosotros" en el inicio')
-                                    ->description('Breve descripción de la óptica que aparece en el inicio.')
+
+                                Forms\Components\Section::make('Sección "Cuidado profesional y personalizado"')
+                                    ->description('Bloque de texto + lista de características que aparece en el inicio.')
                                     ->schema([
+                                        Forms\Components\TextInput::make('about_title')
+                                            ->label('Título de la sección')
+                                            ->placeholder('Cuidado profesional y personalizado'),
                                         Forms\Components\Textarea::make('about_content')
-                                            ->label('Texto principal')
-                                            ->rows(4)
+                                            ->label('Texto principal')->rows(4)
                                             ->placeholder('En Óptica Vista Andina nos dedicamos a…'),
                                         Forms\Components\Repeater::make('about_features')
-                                            ->label('Características destacadas')
+                                            ->label('Características destacadas (lista con ✓)')
                                             ->schema([
                                                 Forms\Components\TextInput::make('feature')
                                                     ->label('Característica')
                                                     ->placeholder('Atención personalizada y profesional')
                                                     ->required(),
                                             ])
-                                            ->defaultItems(4)
-                                            ->reorderable()
-                                            ->collapsible()
-                                            ->helperText('Lista de puntos que destacan el servicio (aparecen con tick verde).'),
+                                            ->defaultItems(4)->reorderable()->collapsible()
+                                            ->helperText('Aparecen con un ✓ verde en el inicio.'),
+                                    ]),
+
+                                Forms\Components\Section::make('Artículos recientes del Blog')
+                                    ->schema([
+                                        Forms\Components\Select::make('home_articles_count')
+                                            ->label('Cantidad de artículos a mostrar en el inicio')
+                                            ->options(['2'=>'2 artículos','3'=>'3 artículos','4'=>'4 artículos','6'=>'6 artículos'])
+                                            ->default('3')
+                                            ->helperText('Número de artículos del blog visibles en la página de inicio.'),
                                     ]),
                             ]),
 
-                        // ─── Página Nosotros ───────────────────────────────────
+                        // ─── Proceso ─────────────────────────────────────────
+                        Forms\Components\Tabs\Tab::make('Nuestro Proceso')
+                            ->icon('heroicon-o-arrow-path')
+                            ->schema([
+                                Forms\Components\Section::make('Pasos del proceso')
+                                    ->description('Pasos que se muestran en la sección "Nuestro Proceso" del inicio. Arrastra para reordenar.')
+                                    ->schema([
+                                        Forms\Components\Repeater::make('home_process')
+                                            ->label('Pasos')
+                                            ->schema([
+                                                Forms\Components\TextInput::make('title')
+                                                    ->label('Título del paso')->required()->placeholder('Agendar Cita'),
+                                                Forms\Components\Textarea::make('text')
+                                                    ->label('Descripción')->rows(2)->required()
+                                                    ->placeholder('Reserva tu cita en línea o por WhatsApp'),
+                                                Forms\Components\TextInput::make('icon')
+                                                    ->label('Ícono (Font Awesome)')->placeholder('fas fa-calendar')
+                                                    ->helperText('Ej: fas fa-calendar · fas fa-eye · fas fa-glasses · fas fa-check-circle'),
+                                            ])
+                                            ->defaultItems(4)->reorderable()->collapsible()
+                                            ->itemLabel(fn (array $state): ?string => $state['title'] ?? null),
+                                    ]),
+                            ]),
+
+                        // ─── Orden secciones inicio ──────────────────────────
+                        Forms\Components\Tabs\Tab::make('Orden del Inicio')
+                            ->icon('heroicon-o-bars-3')
+                            ->schema([
+                                Forms\Components\Section::make('Reorganizar secciones de la página de inicio')
+                                    ->description('Arrastra las filas para cambiar el orden de aparición. Desactiva el toggle para ocultar una sección. El Hero siempre va primero y el CTA final siempre al último.')
+                                    ->schema([
+                                        Forms\Components\Repeater::make('home_sections_order')
+                                            ->label('Secciones')
+                                            ->schema([
+                                                Forms\Components\Select::make('key')
+                                                    ->label('Sección')
+                                                    ->options(self::homeSectionOptions())
+                                                    ->required()
+                                                    ->distinct()
+                                                    ->disableOptionsWhenSelectedInSiblingRepeaterItems(),
+                                                Forms\Components\Toggle::make('visible')
+                                                    ->label('Mostrar')
+                                                    ->default(true)
+                                                    ->inline(false),
+                                            ])
+                                            ->columns(2)
+                                            ->reorderable()
+                                            ->collapsible()
+                                            ->itemLabel(fn (array $state): ?string => self::homeSectionOptions()[$state['key'] ?? ''] ?? ($state['key'] ?? null))
+                                            ->defaultItems(0)
+                                            ->addActionLabel('+ Agregar sección'),
+                                    ]),
+                            ]),
+
+                        // ─── Página Nosotros ─────────────────────────────────
                         Forms\Components\Tabs\Tab::make('Página Nosotros')
                             ->icon('heroicon-o-user-group')
                             ->schema([
                                 Forms\Components\Section::make('Historia')
                                     ->schema([
                                         Forms\Components\Textarea::make('nosotros_historia_1')
-                                            ->label('Párrafo 1 — Origen')
-                                            ->rows(4)
+                                            ->label('Párrafo 1 — Origen')->rows(4)
                                             ->placeholder('Óptica Vista Andina nació en Tumbaco…'),
                                         Forms\Components\Textarea::make('nosotros_historia_2')
-                                            ->label('Párrafo 2 — Trayectoria')
-                                            ->rows(4)
+                                            ->label('Párrafo 2 — Trayectoria')->rows(4)
                                             ->placeholder('Con más de 15 años de experiencia…'),
                                         Forms\Components\Textarea::make('nosotros_historia_3')
-                                            ->label('Párrafo 3 — Oferta actual')
-                                            ->rows(4)
+                                            ->label('Párrafo 3 — Oferta actual')->rows(4)
                                             ->placeholder('Contamos con tecnología moderna…'),
                                     ]),
                                 Forms\Components\Section::make('Imagen de la historia')
                                     ->schema([
                                         Forms\Components\FileUpload::make('nosotros_imagen')
-                                            ->label('Foto del local / equipo')
-                                            ->image()
-                                            ->disk('public')
-                                            ->directory('pages')
-                                            ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/webp'])
-                                            ->maxSize(3072)
-                                            ->imagePreviewHeight('160')
-                                            ->helperText('Se muestra junto al texto de la historia. Tamaño recomendado: 800×600 px.'),
+                                            ->label('Foto del local / equipo')->image()
+                                            ->disk('public')->directory('pages')
+                                            ->acceptedFileTypes(['image/png','image/jpeg','image/webp'])
+                                            ->maxSize(3072)->imagePreviewHeight('160')
+                                            ->helperText('Tamaño recomendado: 800×600 px.'),
                                     ]),
                                 Forms\Components\Section::make('Equipo')
                                     ->schema([
@@ -181,30 +245,19 @@ class ManageSettings extends Page
                                             ->label('Miembros del equipo')
                                             ->schema([
                                                 Forms\Components\TextInput::make('name')
-                                                    ->label('Nombre')
-                                                    ->required()
-                                                    ->placeholder('Dra. María García'),
+                                                    ->label('Nombre')->required()->placeholder('Dra. María García'),
                                                 Forms\Components\TextInput::make('role')
-                                                    ->label('Cargo / Especialidad')
-                                                    ->required()
-                                                    ->placeholder('Optómetra Certificada'),
+                                                    ->label('Cargo')->required()->placeholder('Optómetra Certificada'),
                                                 Forms\Components\FileUpload::make('photo')
-                                                    ->label('Foto')
-                                                    ->image()
-                                                    ->disk('public')
-                                                    ->directory('team')
-                                                    ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/webp'])
-                                                    ->maxSize(1024)
-                                                    ->imagePreviewHeight('100'),
+                                                    ->label('Foto')->image()->disk('public')->directory('team')
+                                                    ->acceptedFileTypes(['image/png','image/jpeg','image/webp'])
+                                                    ->maxSize(1024)->imagePreviewHeight('100'),
                                             ])
-                                            ->reorderable()
-                                            ->collapsible()
-                                            ->defaultItems(0)
-                                            ->helperText('Añade los integrantes del equipo que se mostrarán en la página Nosotros.'),
+                                            ->reorderable()->collapsible()->defaultItems(0),
                                     ]),
                             ]),
 
-                        // ─── SEO ───────────────────────────────────────────────
+                        // ─── SEO ─────────────────────────────────────────────
                         Forms\Components\Tabs\Tab::make('SEO')
                             ->icon('heroicon-o-magnifying-glass')
                             ->schema([
@@ -214,7 +267,7 @@ class ManageSettings extends Page
                                 Forms\Components\TextInput::make('google_analytics')->label('Google Analytics ID')->placeholder('G-XXXXXXXXXX'),
                             ]),
 
-                        // ─── Redes sociales ────────────────────────────────────
+                        // ─── Redes sociales ──────────────────────────────────
                         Forms\Components\Tabs\Tab::make('Redes sociales')
                             ->icon('heroicon-o-share')
                             ->schema([
@@ -233,12 +286,10 @@ class ManageSettings extends Page
         $data = $this->form->getState();
 
         foreach ($data as $key => $value) {
-            // Encode arrays (Repeater fields) as JSON for storage
             $stored = is_array($value) ? json_encode($value, JSON_UNESCAPED_UNICODE) : $value;
             SiteSetting::updateOrCreate(['key' => $key], ['value' => $stored]);
         }
 
-        // Flush the shared settings cache once
         SiteSetting::flushCache();
 
         Notification::make()

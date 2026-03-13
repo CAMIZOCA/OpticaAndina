@@ -5,14 +5,30 @@ namespace App\Http\Controllers;
 use App\Models\BlogPost;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Faq;
 use App\Models\Product;
 use App\Models\Service;
 use App\Models\SiteSetting;
+use App\Models\Stat;
 use App\Services\SeoService;
 use Illuminate\Support\Facades\Schema;
 
 class HomeController extends Controller
 {
+    /** Default section order (used when no override is stored in settings). */
+    private const DEFAULT_SECTIONS = [
+        ['key' => 'services',          'visible' => true],
+        ['key' => 'stats',             'visible' => true],
+        ['key' => 'about',             'visible' => true],
+        ['key' => 'process',           'visible' => true],
+        ['key' => 'service_gallery',   'visible' => true],
+        ['key' => 'featured_products', 'visible' => true],
+        ['key' => 'brands',            'visible' => true],
+        ['key' => 'categories',        'visible' => true],
+        ['key' => 'latest_posts',      'visible' => true],
+        ['key' => 'faq',               'visible' => true],
+    ];
+
     public function index()
     {
         $seo = SeoService::forPage('home');
@@ -20,7 +36,7 @@ class HomeController extends Controller
 
         $settings = SiteSetting::getAll();
 
-        // Hero data — editable via Configuración → Página Inicio
+        // ── Hero ────────────────────────────────────────────────────────────
         $hero = [
             'title'    => $settings['hero_title']    ?? 'Tu visión, nuestro compromiso',
             'subtitle' => $settings['hero_subtitle']  ?? 'Más de 15 años cuidando la salud visual de las familias de Tumbaco. Exámenes visuales, monturas nacionales e importadas, lentes de contacto y mucho más.',
@@ -28,8 +44,8 @@ class HomeController extends Controller
             'cta_link' => route('catalogo'),
         ];
 
-        // About section — editable via Configuración → Página Inicio
-        $rawFeatures = $settings['about_features'] ?? null;
+        // ── About section ───────────────────────────────────────────────────
+        $rawFeatures  = $settings['about_features'] ?? null;
         $featuresData = $rawFeatures ? json_decode($rawFeatures, true) : null;
         $aboutFeatures = [];
         if (is_array($featuresData)) {
@@ -43,76 +59,108 @@ class HomeController extends Controller
                 'Seguimiento continuo de tu visión',
             ];
         }
-
         $about = [
+            'title'    => $settings['about_title']   ?? 'Cuidado profesional y personalizado',
             'content'  => $settings['about_content'] ?? 'En Óptica Vista Andina nos dedicamos a proporcionar cuidado visual profesional y personalizado. Contamos con equipamiento de última generación y un equipo de especialistas certificados.',
             'features' => $aboutFeatures,
         ];
 
-        // Featured products
-        $featuredProducts = Product::with(['category', 'brand', 'images'])
-            ->active()->available()->featured()->ordered()->limit(8)->get();
+        // ── Process ─────────────────────────────────────────────────────────
+        $rawProcess = $settings['home_process'] ?? null;
+        $process    = $rawProcess ? json_decode($rawProcess, true) : [];
+        if (!is_array($process)) {
+            $process = [];
+        }
 
-        // Services
-        $services = Service::active()->ordered()->limit(5)->get();
+        // ── Articles count ──────────────────────────────────────────────────
+        $articlesCount = (int) ($settings['home_articles_count'] ?? 3);
 
-        // Service gallery (3 main services with images)
-        $serviceGallery = Service::active()->ordered()->limit(3)->get();
+        // ── Section ordering ────────────────────────────────────────────────
+        $rawOrder = $settings['home_sections_order'] ?? null;
+        $sections = $rawOrder ? json_decode($rawOrder, true) : null;
+        if (!is_array($sections) || empty($sections)) {
+            $sections = self::DEFAULT_SECTIONS;
+        }
+        // Only include sections with visible = true
+        $sections = array_values(array_filter(
+            $sections,
+            fn ($s) => (bool) ($s['visible'] ?? true)
+        ));
 
-        // Brands
-        $brands = Brand::active()->limit(8)->get();
+        // ── Dynamic data queries ─────────────────────────────────────────────
+        $neededSectionKeys = array_column($sections, 'key');
 
-        // Categories
-        $categories = Category::active()->root()->ordered()->get();
+        $services = in_array('services', $neededSectionKeys) || in_array('service_gallery', $neededSectionKeys)
+            ? Service::active()->ordered()->get()
+            : collect();
 
-        // Latest blog posts
-        $latestPosts = BlogPost::published()->latest()->limit(3)->get();
+        $serviceGallery = $services->take(3);
+        $services       = $services->take(5);
 
-        // Optional models — only query if table exists (safe for projects in progress)
-        $stats        = $this->safeQuery('stats',        fn () => \App\Models\Stat::active()->ordered()->get());
+        $stats = in_array('stats', $neededSectionKeys)
+            ? $this->safeQuery('stats', fn () => Stat::active()->ordered()->get())
+            : collect();
+
+        $featuredProducts = in_array('featured_products', $neededSectionKeys)
+            ? Product::with(['category', 'brand', 'images'])->active()->available()->featured()->ordered()->limit(8)->get()
+            : collect();
+
+        $brands = in_array('brands', $neededSectionKeys)
+            ? Brand::active()->limit(8)->get()
+            : collect();
+
+        $categories = in_array('categories', $neededSectionKeys)
+            ? Category::active()->root()->ordered()->get()
+            : collect();
+
+        $latestPosts = in_array('latest_posts', $neededSectionKeys)
+            ? BlogPost::published()->latest()->limit($articlesCount)->get()
+            : collect();
+
+        $faqs = in_array('faq', $neededSectionKeys)
+            ? $this->safeQuery('faq', fn () => Faq::active()->ordered()->get())
+            : collect();
+
+        // Optional: testimonials, video (future)
         $testimonials = $this->safeQuery('testimonials', fn () => \App\Models\Testimonial::active()->featured()->ordered()->limit(3)->get());
-        $faqs         = $this->safeQuery('faqs',         fn () => \App\Models\Faq::active()->ordered()->get());
         $video        = $this->safeQuery('videos',       fn () => \App\Models\Video::ordered()->first());
-        $process      = collect([]);
 
         return view('pages.home', compact(
             'seo',
             'hero',
             'about',
+            'process',
+            'sections',
             'services',
             'serviceGallery',
+            'stats',
             'featuredProducts',
             'brands',
             'categories',
             'latestPosts',
-            'stats',
-            'testimonials',
+            'articlesCount',
             'faqs',
-            'video',
-            'process'
+            'testimonials',
+            'video'
         ));
     }
 
     public function nosotros()
     {
-        $seo = SeoService::forPage('nosotros');
-
+        $seo      = SeoService::forPage('nosotros');
         $settings = SiteSetting::getAll();
 
-        // Historia — editable via Configuración → Página Nosotros
         $historia = array_filter([
             $settings['nosotros_historia_1'] ?? 'Óptica Vista Andina nació en Tumbaco con la misión de ofrecer atención visual de calidad a precios accesibles para las familias de nuestra comunidad.',
             $settings['nosotros_historia_2'] ?? 'Con más de 15 años de experiencia, hemos atendido a miles de pacientes, desde niños hasta adultos mayores, ayudándoles a ver el mundo con claridad.',
             $settings['nosotros_historia_3'] ?? 'Contamos con tecnología moderna para exámenes visuales y una amplia selección de monturas nacionales e importadas para todos los gustos y presupuestos.',
         ]);
 
-        // Nosotros image
         $nosotrosImagePath = $settings['nosotros_imagen'] ?? null;
         $nosotrosImageUrl  = $nosotrosImagePath
             ? \Illuminate\Support\Facades\Storage::disk('public')->url($nosotrosImagePath)
             : null;
 
-        // Team members — editable via Configuración → Página Nosotros
         $rawTeam = $settings['nosotros_team'] ?? null;
         $team    = $rawTeam ? json_decode($rawTeam, true) : [];
         if (!is_array($team) || empty($team)) {
@@ -133,11 +181,11 @@ class HomeController extends Controller
     {
         try {
             if (!Schema::hasTable($table)) {
-                return $default ?? collect([]);
+                return $default ?? collect();
             }
             return $query();
         } catch (\Throwable) {
-            return $default ?? collect([]);
+            return $default ?? collect();
         }
     }
 }
