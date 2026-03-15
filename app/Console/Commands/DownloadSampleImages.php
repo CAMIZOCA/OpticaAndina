@@ -75,7 +75,7 @@ class DownloadSampleImages extends Command
                 continue;
             }
 
-            if ($this->download($this->picsum($seed, 1200, 630), "public/{$path}")) {
+            if ($this->download($this->picsum($seed, 1200, 630), "$path")) {
                 $post->update(['image' => $path]);
                 $this->line("  ✓ {$slug}");
             } else {
@@ -121,7 +121,7 @@ class DownloadSampleImages extends Command
                 continue;
             }
 
-            if ($this->download($this->picsum($seed, 800, 600), "public/{$path}")) {
+            if ($this->download($this->picsum($seed, 800, 600), "$path")) {
                 $service->update(['image' => $path]);
                 $this->line("  ✓ {$slug}");
             } else {
@@ -161,7 +161,7 @@ class DownloadSampleImages extends Command
                 continue;
             }
 
-            if ($this->download($this->picsum($seed, 800, 600), "public/{$path}")) {
+            if ($this->download($this->picsum($seed, 800, 600), "$path")) {
                 $category->update(['image' => $path]);
                 $this->line("  ✓ {$slug}");
             } else {
@@ -213,7 +213,7 @@ class DownloadSampleImages extends Command
 
             $url = str_replace('{domain}', $domain, self::CLEARBIT);
 
-            if ($this->download($url, "public/{$path}")) {
+            if ($this->download($url, "$path")) {
                 $brand->update(['logo' => $path]);
                 $this->line("  ✓ {$slug}");
             } else {
@@ -248,7 +248,7 @@ class DownloadSampleImages extends Command
 
             $path = $cfg['dir'];
 
-            if ($this->download($this->picsum($cfg['seed'], $cfg['w'], $cfg['h']), "public/{$path}")) {
+            if ($this->download($this->picsum($cfg['seed'], $cfg['w'], $cfg['h']), "$path")) {
                 SiteSetting::updateOrCreate(['key' => $key], ['value' => $path]);
                 SiteSetting::flushCache();
                 $this->line("  ✓ {$key}");
@@ -271,7 +271,7 @@ class DownloadSampleImages extends Command
             $response = Http::timeout(30)->withOptions(['allow_redirects' => true])->get($url);
 
             if ($response->successful() && strlen($response->body()) > 1000) {
-                Storage::put($storagePath, $response->body());
+                Storage::disk('public')->put($storagePath, $response->body());
                 return true;
             }
         } catch (\Throwable $e) {
