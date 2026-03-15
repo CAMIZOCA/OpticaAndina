@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContactMessage;
+use App\Models\SiteSetting;
 use App\Services\SeoService;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,17 @@ class ContactController extends Controller
 {
     public function index()
     {
-        $seo = SeoService::forPage('contacto');
+        $seo      = SeoService::forPage('contacto');
+        $siteName = SiteSetting::get('site_name', 'Óptica Vista Andina');
+        $seo['schema'] = json_encode([
+            '@context' => 'https://schema.org',
+            '@type'    => 'ContactPage',
+            'url'      => route('contacto'),
+            'name'     => 'Contacto – ' . $siteName,
+        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $seo['breadcrumb_schema'] = SeoService::breadcrumbSchema([
+            ['name' => 'Contacto', 'url' => route('contacto')],
+        ]);
         return view('pages.contacto', compact('seo'));
     }
 

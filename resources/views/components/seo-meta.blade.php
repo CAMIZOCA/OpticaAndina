@@ -1,3 +1,9 @@
+@props([
+    'title', 'metaDescription' => '', 'ogTitle' => '', 'ogDescription' => '',
+    'ogImage' => null, 'ogType' => 'website', 'canonical' => null, 'noindex' => false,
+    'schema' => null, 'faqSchema' => null, 'breadcrumbSchema' => null,
+    'extraSchema' => null, 'siteName' => '',
+])
 <title>{{ $title }}</title>
 <meta name="description" content="{{ $metaDescription }}">
 @if($noindex)
@@ -10,7 +16,7 @@
 @endif
 
 {{-- Open Graph --}}
-<meta property="og:type" content="website">
+<meta property="og:type" content="{{ $ogType }}">
 <meta property="og:site_name" content="{{ $siteName }}">
 <meta property="og:title" content="{{ $ogTitle ?: $title }}">
 <meta property="og:description" content="{{ $ogDescription ?: $metaDescription }}">
@@ -33,4 +39,10 @@
 @endif
 @if($faqSchema)
 <script type="application/ld+json">{!! $faqSchema !!}</script>
+@endif
+@if($breadcrumbSchema)
+<script type="application/ld+json">{!! $breadcrumbSchema !!}</script>
+@endif
+@if($extraSchema)
+<script type="application/ld+json">{!! $extraSchema !!}</script>
 @endif

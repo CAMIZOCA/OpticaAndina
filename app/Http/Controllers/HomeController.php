@@ -33,7 +33,8 @@ class HomeController extends Controller
     public function index()
     {
         $seo = SeoService::forPage('home');
-        $seo['schema'] = json_encode(SeoService::localBusinessSchema(), JSON_UNESCAPED_UNICODE);
+        $seo['schema']       = json_encode(SeoService::localBusinessSchema(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $seo['extra_schema'] = SeoService::websiteSchema();
 
         $settings = SiteSetting::getAll();
 
@@ -175,6 +176,23 @@ class HomeController extends Controller
                 ['name' => 'Técnico en Óptica',    'role' => 'Laboratorio de Lentes',  'photo' => null],
             ];
         }
+
+        $siteName         = SiteSetting::get('site_name', 'Óptica Vista Andina');
+        $seo['schema']    = json_encode([
+            '@context'    => 'https://schema.org',
+            '@type'       => 'AboutPage',
+            'url'         => route('nosotros'),
+            'name'        => 'Nosotros – ' . $siteName,
+            'description' => SiteSetting::get('seo_description', ''),
+            'mainEntity'  => [
+                '@type' => 'Organization',
+                'name'  => $siteName,
+                '@id'   => config('app.url') . '/#business',
+            ],
+        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $seo['breadcrumb_schema'] = SeoService::breadcrumbSchema([
+            ['name' => 'Nosotros', 'url' => route('nosotros')],
+        ]);
 
         return view('pages.nosotros', compact('seo', 'historia', 'nosotrosImageUrl', 'team'));
     }

@@ -285,10 +285,54 @@ class ManageSettings extends Page
                         Forms\Components\Tabs\Tab::make('SEO')
                             ->icon('heroicon-o-magnifying-glass')
                             ->schema([
-                                Forms\Components\TextInput::make('seo_title')->label('Título SEO principal'),
-                                Forms\Components\Textarea::make('seo_description')->label('Descripción SEO principal')->rows(3),
-                                Forms\Components\FileUpload::make('og_image')->label('Imagen Open Graph')->image()->directory('seo'),
-                                Forms\Components\TextInput::make('google_analytics')->label('Google Analytics ID')->placeholder('G-XXXXXXXXXX'),
+                                Forms\Components\Section::make('Meta y Open Graph')
+                                    ->columns(2)
+                                    ->schema([
+                                        Forms\Components\TextInput::make('seo_title')
+                                            ->label('Título SEO principal')
+                                            ->columnSpanFull(),
+                                        Forms\Components\Textarea::make('seo_description')
+                                            ->label('Descripción SEO principal')
+                                            ->rows(3)
+                                            ->columnSpanFull(),
+                                        Forms\Components\FileUpload::make('og_image')
+                                            ->label('Imagen Open Graph')
+                                            ->image()
+                                            ->directory('seo')
+                                            ->columnSpanFull(),
+                                    ]),
+
+                                Forms\Components\Section::make('Analytics y seguimiento')
+                                    ->description('Activa las herramientas pegando el código o ID correspondiente. Deja en blanco para desactivar.')
+                                    ->columns(2)
+                                    ->schema([
+                                        Forms\Components\TextInput::make('google_analytics')
+                                            ->label('Google Analytics 4 — Measurement ID')
+                                            ->placeholder('G-XXXXXXXXXX')
+                                            ->helperText('ID de medición de GA4'),
+
+                                        Forms\Components\TextInput::make('microsoft_clarity')
+                                            ->label('Microsoft Clarity — Project ID')
+                                            ->placeholder('Ej: abcdef1234')
+                                            ->helperText('Heatmaps y grabaciones de sesión (gratis)'),
+
+                                        Forms\Components\TextInput::make('google_search_console')
+                                            ->label('Google Search Console — verification content')
+                                            ->placeholder('Sólo el valor del atributo content')
+                                            ->helperText('De: <meta name="google-site-verification" content="ESTE_VALOR">')
+                                            ->columnSpanFull(),
+
+                                        Forms\Components\TextInput::make('bing_site_auth')
+                                            ->label('Bing Webmaster Tools — BingSiteAuth content')
+                                            ->placeholder('Valor content de la verificación Bing')
+                                            ->columnSpanFull(),
+
+                                        Forms\Components\Textarea::make('custom_head_scripts')
+                                            ->label('Scripts personalizados en <head>')
+                                            ->rows(5)
+                                            ->helperText('HTML libre (Facebook Pixel, LinkedIn Insight, etc.). Se inyecta en el <head> de todas las páginas.')
+                                            ->columnSpanFull(),
+                                    ]),
                             ]),
 
                         // ─── Redes sociales ──────────────────────────────────

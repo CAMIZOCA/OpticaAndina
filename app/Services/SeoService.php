@@ -76,6 +76,7 @@ class SeoService
             'og_title'         => $product->meta_title ?? $product->name,
             'og_description'   => strip_tags($product->short_description ?? ''),
             'og_image'         => $ogImage,
+            'og_type'          => 'product',
             'canonical'        => url()->current(),
             'noindex'          => false,
             'schema'           => json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
@@ -183,6 +184,7 @@ class SeoService
             'og_title'         => $post->title,
             'og_description'   => strip_tags($post->excerpt ?? ''),
             'og_image'         => $ogImage,
+            'og_type'          => 'article',
             'canonical'        => url()->current(),
             'noindex'          => false,
             'schema'           => json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
@@ -283,5 +285,63 @@ class SeoService
         }
 
         return $schema;
+    }
+
+    /**
+     * Genera JSON-LD BreadcrumbList.
+     * $crumbs = [['name' => 'Blog', 'url' => '...'], ['name' => 'Título del post']]
+     * "Inicio" se añade automáticamente como primer ítem.
+     */
+    public static function breadcrumbSchema(array $crumbs): string
+    {
+        $items = [[
+            '@type'    => 'ListItem',
+            'position' => 1,
+            'name'     => 'Inicio',
+            'item'     => config('app.url'),
+        ]];
+
+        foreach ($crumbs as $i => $crumb) {
+            $item = [
+                '@type'    => 'ListItem',
+                'position' => $i + 2,
+                'name'     => $crumb['name'],
+            ];
+            if (!empty($crumb['url'])) {
+                $item['item'] = $crumb['url'];
+            }
+            $items[] = $item;
+        }
+
+        return json_encode([
+            '@context'        => 'https://schema.org',
+            '@type'           => 'BreadcrumbList',
+            'itemListElement' => $items,
+        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
+
+    /**
+     * WebSite schema con SearchAction (sitelinks searchbox de Google).
+     */
+    public static function websiteSchema(): string
+    {
+        $url  = config('app.url');
+        $name = SiteSetting::get('site_name', 'Óptica Vista Andina');
+
+        return json_encode([
+            '@context' => 'https://schema.org',
+            '@type'    => 'WebSite',
+            '@id'      => $url . '/#website',
+            'url'      => $url,
+            'name'     => $name,
+            'potentialAction' => [
+                '@type'       => 'SearchAction',
+                'target'      => [
+                    '@type'       => 'EntryPoint',
+                    'urlTemplate' => $url . '/catalogo?q={search_term_string}',
+                ],
+                'query-input' => 'required name=search_term_string',
+            ],
+        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 }

@@ -18,6 +18,10 @@ class BlogController extends Controller
     {
         $post    = BlogPost::where('slug', $slug)->published()->firstOrFail();
         $seo     = SeoService::forBlogPost($post);
+        $seo['breadcrumb_schema'] = SeoService::breadcrumbSchema([
+            ['name' => 'Blog', 'url' => route('blog')],
+            ['name' => $post->title],
+        ]);
         $related = BlogPost::published()->where('id', '!=', $post->id)->latest()->limit(3)->get();
         return view('pages.blog.post', compact('seo', 'post', 'related'));
     }

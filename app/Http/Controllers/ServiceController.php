@@ -18,6 +18,10 @@ class ServiceController extends Controller
     {
         $service = Service::where('slug', $slug)->where('is_active', true)->firstOrFail();
         $seo     = SeoService::forService($service);
+        $seo['breadcrumb_schema'] = SeoService::breadcrumbSchema([
+            ['name' => 'Servicios', 'url' => route('servicios')],
+            ['name' => $service->title],
+        ]);
         $related = Service::active()->ordered()->where('id', '!=', $service->id)->limit(3)->get();
         return view('pages.servicios.show', compact('seo', 'service', 'related'));
     }

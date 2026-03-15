@@ -6,8 +6,17 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @php
-        $defaultOgImage = file_exists(public_path('images/brand/logo-full.svg')) ? asset('images/brand/logo-full.svg') : '';
+        $defaultOgImage   = file_exists(public_path('images/brand/logo-full.svg')) ? asset('images/brand/logo-full.svg') : '';
+        $trackingSettings = \App\Models\SiteSetting::getAll();
     @endphp
+
+    {{-- Verification meta tags --}}
+    @if(!empty($trackingSettings['google_search_console']))
+    <meta name="google-site-verification" content="{{ $trackingSettings['google_search_console'] }}">
+    @endif
+    @if(!empty($trackingSettings['bing_site_auth']))
+    <meta name="msvalidate.01" content="{{ $trackingSettings['bing_site_auth'] }}">
+    @endif
 
     <x-seo-meta
         :title="$seo['title'] ?? config('app.name')"
@@ -15,10 +24,13 @@
         :og-title="$seo['og_title'] ?? ''"
         :og-description="$seo['og_description'] ?? ''"
         :og-image="$seo['og_image'] ?: $defaultOgImage"
+        :og-type="$seo['og_type'] ?? 'website'"
         :canonical="$seo['canonical'] ?? null"
         :noindex="$seo['noindex'] ?? false"
         :schema="$seo['schema'] ?? null"
         :faq-schema="$seo['faq_schema'] ?? null"
+        :breadcrumb-schema="$seo['breadcrumb_schema'] ?? null"
+        :extra-schema="$seo['extra_schema'] ?? null"
         :site-name="$seo['site_name'] ?? config('app.name')"
     />
 
@@ -33,20 +45,32 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 
-    @php $gaId = \App\Models\SiteSetting::get('google_analytics') @endphp
-    @if($gaId)
+    @if(!empty($trackingSettings['google_analytics']))
     <script>
         window.addEventListener('load', function() {
             var s = document.createElement('script');
-            s.src = 'https://www.googletagmanager.com/gtag/js?id={{ $gaId }}';
+            s.src = 'https://www.googletagmanager.com/gtag/js?id={{ $trackingSettings['google_analytics'] }}';
             s.async = true;
             document.head.appendChild(s);
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', '{{ $gaId }}');
+            gtag('config', '{{ $trackingSettings['google_analytics'] }}');
         });
     </script>
+    @endif
+
+    @if(!empty($trackingSettings['microsoft_clarity']))
+    <script>
+        (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window,document,"clarity","script","{{ $trackingSettings['microsoft_clarity'] }}");
+    </script>
+    @endif
+
+    @if(!empty($trackingSettings['custom_head_scripts']))
+    {!! $trackingSettings['custom_head_scripts'] !!}
     @endif
 </head>
 <body class="bg-white text-text-primary">

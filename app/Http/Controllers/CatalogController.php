@@ -34,6 +34,10 @@ class CatalogController extends Controller
             'schema'           => null,
             'site_name'        => $siteName,
         ];
+        $seo['breadcrumb_schema'] = SeoService::breadcrumbSchema([
+            ['name' => 'Catálogo', 'url' => route('catalogo')],
+            ['name' => $category->name],
+        ]);
         $brands = Brand::active()->get();
         return view('pages.catalogo.category', compact('seo', 'category', 'brands'));
     }
@@ -47,6 +51,11 @@ class CatalogController extends Controller
             ->where('is_active', true)
             ->firstOrFail();
         $seo = SeoService::forProduct($product);
+        $seo['breadcrumb_schema'] = SeoService::breadcrumbSchema([
+            ['name' => 'Catálogo', 'url' => route('catalogo')],
+            ['name' => $category->name, 'url' => route('catalogo.categoria', $category->slug)],
+            ['name' => $product->name],
+        ]);
         $related = Product::with(['category', 'brand', 'images'])
             ->active()->where('category_id', $category->id)->where('id', '!=', $product->id)->limit(4)->get();
         return view('pages.catalogo.product', compact('seo', 'category', 'product', 'related'));
