@@ -11,11 +11,12 @@ use Illuminate\Support\Facades\Storage;
 
 class ManageSettings extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
+    protected static ?string $navigationIcon  = 'heroicon-o-cog-6-tooth';
     protected static ?string $navigationLabel = 'Configuración';
+    protected static ?string $navigationGroup = 'Ajustes';
     protected static ?string $title = 'Configuración del sitio';
     protected static string $view = 'filament.pages.manage-settings';
-    protected static ?int $navigationSort = 99;
+    protected static ?int $navigationSort = 1;
 
     /** Keys that store JSON arrays (Repeater fields). */
     protected const JSON_KEYS = [
@@ -148,6 +149,29 @@ class ManageSettings extends Page
                                             ])
                                             ->defaultItems(4)->reorderable()->collapsible()
                                             ->helperText('Aparecen con un ✓ verde en el inicio.'),
+                                    ]),
+
+                                Forms\Components\Section::make('Imágenes del Inicio')
+                                    ->description('Imágenes que aparecen en el hero y en la sección "Cuidado profesional".')
+                                    ->schema([
+                                        Forms\Components\FileUpload::make('hero_image')
+                                            ->label('Imagen lateral del Hero')
+                                            ->image()
+                                            ->disk('public')
+                                            ->directory('pages')
+                                            ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/webp'])
+                                            ->maxSize(3072)
+                                            ->imagePreviewHeight('120')
+                                            ->helperText('Se muestra a la derecha del texto principal. Tamaño recomendado: 900×700 px.'),
+                                        Forms\Components\FileUpload::make('about_image')
+                                            ->label('Imagen sección "Cuidado profesional"')
+                                            ->image()
+                                            ->disk('public')
+                                            ->directory('pages')
+                                            ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/webp'])
+                                            ->maxSize(3072)
+                                            ->imagePreviewHeight('120')
+                                            ->helperText('Se muestra en la sección "Cuidado profesional y personalizado". Tamaño recomendado: 800×600 px.'),
                                     ]),
 
                                 Forms\Components\Section::make('Artículos recientes del Blog')

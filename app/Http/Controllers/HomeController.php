@@ -12,6 +12,7 @@ use App\Models\SiteSetting;
 use App\Models\Stat;
 use App\Services\SeoService;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -37,11 +38,13 @@ class HomeController extends Controller
         $settings = SiteSetting::getAll();
 
         // ── Hero ────────────────────────────────────────────────────────────
+        $heroImagePath = $settings['hero_image'] ?? null;
         $hero = [
             'title'    => $settings['hero_title']    ?? 'Tu visión, nuestro compromiso',
             'subtitle' => $settings['hero_subtitle']  ?? 'Más de 15 años cuidando la salud visual de las familias de Tumbaco. Exámenes visuales, monturas nacionales e importadas, lentes de contacto y mucho más.',
             'cta_text' => $settings['hero_cta_text']  ?? 'Ver Catálogo',
             'cta_link' => route('catalogo'),
+            'image'    => $heroImagePath ? Storage::disk('public')->url($heroImagePath) : null,
         ];
 
         // ── About section ───────────────────────────────────────────────────
@@ -59,10 +62,12 @@ class HomeController extends Controller
                 'Seguimiento continuo de tu visión',
             ];
         }
+        $aboutImagePath = $settings['about_image'] ?? null;
         $about = [
             'title'    => $settings['about_title']   ?? 'Cuidado profesional y personalizado',
             'content'  => $settings['about_content'] ?? 'En Óptica Vista Andina nos dedicamos a proporcionar cuidado visual profesional y personalizado. Contamos con equipamiento de última generación y un equipo de especialistas certificados.',
             'features' => $aboutFeatures,
+            'image'    => $aboutImagePath ? Storage::disk('public')->url($aboutImagePath) : null,
         ];
 
         // ── Process ─────────────────────────────────────────────────────────

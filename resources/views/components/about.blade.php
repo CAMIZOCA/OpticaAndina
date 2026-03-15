@@ -1,4 +1,4 @@
-@props(['title', 'content', 'features' => [], 'cta_text' => 'Agendar cita', 'cta_link'])
+@props(['title', 'content', 'features' => [], 'cta_text' => 'Agendar cita', 'cta_link', 'image' => null])
 
 <section class="py-16 bg-white">
     <div class="container mx-auto px-4">
@@ -27,11 +27,17 @@
                 </a>
             </div>
 
-            <div class="bg-gray-100 rounded-lg h-96 flex items-center justify-center">
-                <svg class="w-24 h-24 text-brand-300" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path>
-                </svg>
-            </div>
+            @if($image)
+                <div class="rounded-2xl overflow-hidden shadow-lg">
+                    <img src="{{ $image }}" alt="{{ $title }}" class="w-full h-96 object-cover">
+                </div>
+            @else
+                <div class="bg-gray-100 rounded-lg h-96 flex items-center justify-center">
+                    <svg class="w-24 h-24 text-brand-300" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path>
+                    </svg>
+                </div>
+            @endif
         </div>
     </div>
 </section>

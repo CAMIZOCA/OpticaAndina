@@ -15,8 +15,8 @@ class FaqResource extends Resource
     protected static ?string $model = Faq::class;
     protected static ?string $navigationIcon  = 'heroicon-o-question-mark-circle';
     protected static ?string $navigationLabel = 'Preguntas Frecuentes';
-    protected static ?string $navigationGroup = 'Contenido';
-    protected static ?int    $navigationSort  = 5;
+    protected static ?string $navigationGroup = 'Entradas';
+    protected static ?int    $navigationSort  = 2;
     protected static ?string $modelLabel      = 'Pregunta';
     protected static ?string $pluralModelLabel = 'Preguntas Frecuentes';
 

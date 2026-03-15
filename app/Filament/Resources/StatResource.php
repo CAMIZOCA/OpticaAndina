@@ -15,8 +15,8 @@ class StatResource extends Resource
     protected static ?string $model = Stat::class;
     protected static ?string $navigationIcon  = 'heroicon-o-chart-bar';
     protected static ?string $navigationLabel = 'Estadísticas';
-    protected static ?string $navigationGroup = 'Contenido';
-    protected static ?int    $navigationSort  = 6;
+    protected static ?string $navigationGroup = 'Apariencia';
+    protected static ?int    $navigationSort  = 2;
     protected static ?string $modelLabel      = 'Estadística';
     protected static ?string $pluralModelLabel = 'Estadísticas';
 

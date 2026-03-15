@@ -21,7 +21,7 @@
             <div class="mb-8">
                 @if($service->icon)
                     <div class="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mb-4">
-                        <img src="{{ asset('storage/' . $service->icon) }}" alt="{{ $service->title }}" class="w-10 h-10 object-contain">
+                        <x-dynamic-component :component="$service->icon" class="w-10 h-10 text-brand-600" />
                     </div>
                 @endif
                 <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ $service->title }}</h1>

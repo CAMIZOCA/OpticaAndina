@@ -10,6 +10,7 @@
     :subtitle="$hero['subtitle']"
     :cta_text="$hero['cta_text']"
     :cta_link="$hero['cta_link']"
+    :image="$hero['image'] ?? null"
 />
 
 {{-- ═══════════════════════════════════════════════════════════
@@ -54,6 +55,7 @@
             :content="$about['content']"
             :features="$about['features']"
             :cta_link="route('contacto')"
+            :image="$about['image'] ?? null"
         />
     @break
 

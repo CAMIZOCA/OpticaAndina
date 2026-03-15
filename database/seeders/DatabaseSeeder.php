@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             TestimonialSeeder::class,
             FaqSeeder::class,
             VideoSeeder::class,
+            ImageSeeder::class,
         ]);
 
         // Admin user for Filament
