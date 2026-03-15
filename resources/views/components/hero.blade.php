@@ -48,8 +48,7 @@
                 <img src="{{ $image }}"
                      alt="{{ $title }}"
                      class="w-full max-h-[480px] object-cover rounded-2xl shadow-xl">
-                <div class="absolute -bottom-4 -left-4 w-24 h-24 bg-brand-100 rounded-2xl -z-10"></div>
-                <div class="absolute -top-4 -right-4 w-16 h-16 bg-accent-100 rounded-xl -z-10"></div>
+               
             </div>
             @endif
         </div>
