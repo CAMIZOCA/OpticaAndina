@@ -1,10 +1,11 @@
 import './bootstrap';
-import Alpine from 'alpinejs';
 import intersect from '@alpinejs/intersect';
 
-Alpine.plugin(intersect);
-window.Alpine = Alpine;
-Alpine.start();
+// Livewire 3 bundles Alpine internally — register plugins via alpine:init
+// to avoid "multiple instances of Alpine" warning
+document.addEventListener('alpine:init', () => {
+    window.Alpine.plugin(intersect);
+});
 
 // Animaciones scroll con IntersectionObserver
 document.addEventListener('DOMContentLoaded', () => {
