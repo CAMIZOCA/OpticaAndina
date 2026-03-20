@@ -15,7 +15,7 @@
 /.zed
 /auth.json
 /node_modules
-/public/build
+# /public/build  ← incluido en git para deploy en shared hosting sin Node.js
 /public/hot
 /public/storage
 /storage/*.key
