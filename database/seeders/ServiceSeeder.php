@@ -18,7 +18,7 @@ class ServiceSeeder extends Seeder
                 'sort_order'        => 1,
                 'cta_text'          => 'Agenda tu examen',
                 'cta_whatsapp_text' => 'Hola, quisiera agendar un examen visual integral. ¿Cuál es su disponibilidad?',
-                'meta_title'        => 'Examen Visual Integral en Tumbaco | Óptica Vista Andina',
+                'meta_title'        => 'Examen Visual Integral en Tumbaco | Óptica Andina',
                 'meta_description'  => 'Examen visual completo con equipos modernos en Tumbaco, Ecuador. Detección de miopía, astigmatismo, hipermetropía y más.',
                 'faqs'              => [
                     ['question' => '¿Cuánto dura el examen visual?', 'answer' => 'El examen visual integral tiene una duración de aproximadamente 45 a 60 minutos, dependiendo de los procedimientos que se realicen.'],
@@ -49,7 +49,7 @@ class ServiceSeeder extends Seeder
                 'sort_order'        => 2,
                 'cta_text'          => 'Consultar adaptación',
                 'cta_whatsapp_text' => 'Hola, me interesa la adaptación de lentes de contacto. ¿Qué necesito para comenzar?',
-                'meta_title'        => 'Adaptación de Lentes de Contacto en Tumbaco | Óptica Vista Andina',
+                'meta_title'        => 'Adaptación de Lentes de Contacto en Tumbaco | Óptica Andina',
                 'meta_description'  => 'Adaptación profesional de lentes de contacto en Tumbaco. Blandos, tóricos, progresivos y ortoqueratología.',
                 'faqs'              => [
                     ['question' => '¿Puedo usar lentes de contacto si tengo astigmatismo?', 'answer' => 'Sí, existen lentes tóricos especialmente diseñados para corregir el astigmatismo con gran precisión y comodidad.'],
@@ -76,7 +76,7 @@ class ServiceSeeder extends Seeder
                 'sort_order'        => 3,
                 'cta_text'          => 'Evalúa si necesitas terapia',
                 'cta_whatsapp_text' => 'Hola, me interesa conocer más sobre la terapia visual. ¿A quiénes está dirigida?',
-                'meta_title'        => 'Terapia Visual en Tumbaco | Óptica Vista Andina',
+                'meta_title'        => 'Terapia Visual en Tumbaco | Óptica Andina',
                 'meta_description'  => 'Terapia visual para niños y adultos en Tumbaco. Tratamiento de convergencia, ambliopía y estrabismo funcional.',
                 'faqs'              => [
                     ['question' => '¿La terapia visual puede reemplazar a la cirugía de estrabismo?', 'answer' => 'En algunos tipos de estrabismo funcional, la terapia visual puede ser suficiente para corregir la desviación sin cirugía.'],
@@ -100,7 +100,7 @@ class ServiceSeeder extends Seeder
                 'sort_order'        => 4,
                 'cta_text'          => 'Agendar cita para mi hijo/a',
                 'cta_whatsapp_text' => 'Hola, quisiera agendar un control visual para mi hijo/a. ¿Desde qué edad atienden?',
-                'meta_title'        => 'Control Visual Infantil en Tumbaco | Óptica Vista Andina',
+                'meta_title'        => 'Control Visual Infantil en Tumbaco | Óptica Andina',
                 'meta_description'  => 'Exámenes visuales para niños desde 3 años en Tumbaco. Detección de miopía, ambliopía y problemas que afectan el aprendizaje.',
                 'faqs'              => [
                     ['question' => '¿A qué edad se recomienda el primer examen visual?', 'answer' => 'Alrededor de los 3 años, antes del inicio de la etapa preescolar. Cuanto antes se detecten los problemas, más fácil es tratarlos.'],
@@ -129,7 +129,7 @@ class ServiceSeeder extends Seeder
                 'sort_order'        => 5,
                 'cta_text'          => 'Reservar asesoría',
                 'cta_whatsapp_text' => 'Hola, me gustaría recibir asesoría para elegir una montura. ¿Cuándo puedo visitarlos?',
-                'meta_title'        => 'Asesoría en Monturas de Gafas | Óptica Vista Andina Tumbaco',
+                'meta_title'        => 'Asesoría en Monturas de Gafas | Óptica Andina Tumbaco',
                 'meta_description'  => 'Encuentra las gafas perfectas para tu rostro en Tumbaco. Asesoría personalizada en monturas ópticas y de sol.',
                 'faqs'              => [
                     ['question' => '¿Cómo sé qué forma de montura me queda mejor?', 'answer' => 'La montura debe contrastar con la forma de tu rostro. Nuestros asesores analizan tu morfología facial para recomendarte las mejores opciones.'],
@@ -153,7 +153,7 @@ class ServiceSeeder extends Seeder
                 'sort_order'        => 6,
                 'cta_text'          => 'Consultar lentes',
                 'cta_whatsapp_text' => 'Hola, me interesa información sobre lentes oftálmicos. ¿Qué opciones tienen?',
-                'meta_title'        => 'Lentes Oftálmicos en Tumbaco | Óptica Vista Andina',
+                'meta_title'        => 'Lentes Oftálmicos en Tumbaco | Óptica Andina',
                 'meta_description'  => 'Lentes monofocales, bifocales y progresivos con antirreflejante y filtro de luz azul en Tumbaco, Ecuador.',
                 'faqs'              => [
                     ['question' => '¿Qué diferencia hay entre un lente básico y uno premium?', 'answer' => 'Los lentes premium tienen mayor índice de refracción (más delgados), mejores diseños (progresivos) y tratamientos de superficie superiores.'],
@@ -183,7 +183,7 @@ class ServiceSeeder extends Seeder
                 'sort_order'        => 7,
                 'cta_text'          => 'Ver colección',
                 'cta_whatsapp_text' => 'Hola, me interesa conocer su colección de gafas de sol. ¿Tienen opciones con graduación?',
-                'meta_title'        => 'Gafas de Sol UV400 en Tumbaco | Óptica Vista Andina',
+                'meta_title'        => 'Gafas de Sol UV400 en Tumbaco | Óptica Andina',
                 'meta_description'  => 'Gafas de sol certificadas UV400 en Tumbaco. Monturas graduadas, polarizadas y de moda. Protege tu visión con estilo.',
                 'faqs'              => [
                     ['question' => '¿Puedo poner mi graduación en gafas de sol?', 'answer' => 'Sí. Podemos adaptar lentes graduados en la mayoría de monturas de sol.'],
@@ -208,7 +208,7 @@ class ServiceSeeder extends Seeder
                 'sort_order'        => 8,
                 'cta_text'          => 'Consultar para mi hijo/a',
                 'cta_whatsapp_text' => 'Hola, mi hijo/a tiene miopía y quisiera información sobre cómo controlar su progresión.',
-                'meta_title'        => 'Control de Miopía Infantil en Tumbaco | Óptica Vista Andina',
+                'meta_title'        => 'Control de Miopía Infantil en Tumbaco | Óptica Andina',
                 'meta_description'  => 'Tratamientos para frenar la miopía en niños en Tumbaco. Ortoqueratología, lentes de control y lentes especiales.',
                 'faqs'              => [
                     ['question' => '¿A partir de qué graduación se recomienda el control?', 'answer' => 'Se recomienda cuando hay progresión rápida (más de 0.50D por año), independientemente del grado actual.'],
@@ -234,7 +234,7 @@ class ServiceSeeder extends Seeder
                 'sort_order'        => 9,
                 'cta_text'          => 'Consultar',
                 'cta_whatsapp_text' => 'Hola, me interesa el servicio de baja visión. ¿Podrían darme más información?',
-                'meta_title'        => 'Baja Visión y Rehabilitación Visual | Óptica Vista Andina Tumbaco',
+                'meta_title'        => 'Baja Visión y Rehabilitación Visual | Óptica Andina Tumbaco',
                 'meta_description'  => 'Rehabilitación visual para personas con baja visión en Tumbaco. Ayudas ópticas y estrategias para mejorar la calidad de vida.',
                 'faqs'              => [
                     ['question' => '¿Qué se considera baja visión?', 'answer' => 'Cuando la agudeza visual en el mejor ojo, con la mejor corrección posible, es inferior a 3/10, o el campo visual es menor a 20 grados.'],
@@ -257,7 +257,7 @@ class ServiceSeeder extends Seeder
                 'sort_order'        => 10,
                 'cta_text'          => 'Agendar evaluación',
                 'cta_whatsapp_text' => 'Hola, necesito un examen visual para la licencia de conducir. ¿Qué necesito?',
-                'meta_title'        => 'Examen Visual para Conducir en Tumbaco | Óptica Vista Andina',
+                'meta_title'        => 'Examen Visual para Conducir en Tumbaco | Óptica Andina',
                 'meta_description'  => 'Examen visual para licencia de conducir en Tumbaco. Certificado oficial, campo visual, visión nocturna y más.',
                 'faqs'              => [
                     ['question' => '¿Cuáles son los requisitos visuales para conducir en Ecuador?', 'answer' => 'Agudeza visual de al menos 5/10 en cada ojo con corrección, campo visual adecuado y ausencia de visión doble.'],
@@ -283,7 +283,7 @@ class ServiceSeeder extends Seeder
                 'sort_order'        => 11,
                 'cta_text'          => 'Traer mis gafas',
                 'cta_whatsapp_text' => 'Hola, necesito reparar mis gafas. ¿Pueden revisarlas?',
-                'meta_title'        => 'Reparación de Gafas en Tumbaco | Óptica Vista Andina',
+                'meta_title'        => 'Reparación de Gafas en Tumbaco | Óptica Andina',
                 'meta_description'  => 'Reparamos y ajustamos monturas en Tumbaco. Cambio de plaquetas, soldadura, ajuste y limpieza ultrasónica profesional.',
                 'faqs'              => [
                     ['question' => '¿Pueden reparar cualquier tipo de montura?', 'answer' => 'Reparamos la mayoría de monturas de metal, acetato y materiales especiales. Algunas reparaciones complejas requieren taller especializado.'],
@@ -308,7 +308,7 @@ class ServiceSeeder extends Seeder
                 'sort_order'        => 12,
                 'cta_text'          => 'Consultar',
                 'cta_whatsapp_text' => 'Hola, me interesa la asesoría nutricional para la salud visual. ¿En qué consiste?',
-                'meta_title'        => 'Nutrición para la Salud Ocular | Óptica Vista Andina Tumbaco',
+                'meta_title'        => 'Nutrición para la Salud Ocular | Óptica Andina Tumbaco',
                 'meta_description'  => 'Consejos de nutrición para proteger tu visión en Tumbaco. Luteína, omega-3 y vitaminas para la salud ocular.',
                 'faqs'              => [
                     ['question' => '¿La alimentación realmente afecta la visión?', 'answer' => 'Sí. Dietas ricas en luteína, zeaxantina, omega-3 y antioxidantes reducen significativamente el riesgo de degeneración macular y cataratas.'],

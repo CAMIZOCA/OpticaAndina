@@ -1,5 +1,5 @@
 @php
-    $siteName  = \App\Models\SiteSetting::get('site_name', 'Óptica Vista Andina');
+    $siteName  = \App\Models\SiteSetting::get('site_name', 'Óptica Andina');
     $whatsapp  = \App\Models\SiteSetting::get('whatsapp_number', '593999000000');
     $phone     = \App\Models\SiteSetting::get('phone', '');
     $currentRoute = request()->route()?->getName() ?? '';
@@ -17,7 +17,7 @@
             <span>{{ \App\Models\SiteSetting::get('address', '') }}</span>
             <div class="flex items-center gap-4">
                 @if($phone)
-                <a href="tel:{{ $phone }}" class="transition-colors hover:text-accent-200">{{ $phone }}</a>
+                <a href="tel:{{ $phone }}" class="text-white transition-colors hover:text-accent-200">{{ $phone }}</a>
                 @endif
                 <span>{{ \App\Models\SiteSetting::get('hours', '') }}</span>
             </div>

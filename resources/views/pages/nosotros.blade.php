@@ -6,7 +6,7 @@
     <div class="container mx-auto px-4 text-center">
         <h1 class="text-4xl font-bold mb-4">Sobre Nosotros</h1>
         <p class="hero-subtitle text-lg max-w-2xl mx-auto">
-            Conoce la historia de Óptica Vista Andina y nuestro compromiso con la salud visual.
+            Conoce la historia de Óptica Andina y nuestro compromiso con la salud visual.
         </p>
     </div>
 </section>
@@ -26,7 +26,7 @@
             <div class="rounded-2xl overflow-hidden shadow-lg">
                 @if($nosotrosImageUrl)
                     <img src="{{ $nosotrosImageUrl }}"
-                         alt="Óptica Vista Andina"
+                         alt="Óptica Andina"
                          class="w-full h-72 object-cover">
                 @else
                     <div class="bg-brand-50 h-72 flex items-center justify-center">

@@ -18,7 +18,7 @@ class BlogPostSeeder extends Seeder
                 'tags'        => ['salud visual', 'examen visual', 'prevención'],
                 'is_published'=> true,
                 'published_at'=> now()->subDays(2),
-                'meta_title'  => 'Frecuencia del Examen Visual – ¿Cada Cuánto? | Óptica Vista Andina',
+                'meta_title'  => 'Frecuencia del Examen Visual – ¿Cada Cuánto? | Óptica Andina',
                 'meta_description' => 'Descubre con qué frecuencia necesitas un examen visual según tu edad. Consejos de nuestros especialistas en Tumbaco.',
                 'content'     => '<h2>La importancia de los exámenes visuales regulares</h2>
 <p>La visión es uno de nuestros sentidos más preciados, pero también uno de los más descuidados. Muchas personas solo visitan al optometrista cuando ya notan problemas evidentes: visión borrosa, dolores de cabeza frecuentes o dificultad para leer. Sin embargo, esperar a tener síntomas puede significar que la condición ya está avanzada.</p>
@@ -43,7 +43,7 @@ class BlogPostSeeder extends Seeder
 </ul>
 
 <h2>Conclusión</h2>
-<p>En Óptica Vista Andina te recomendamos no esperar a tener molestias para hacerte revisar. Un examen visual preventivo puede detectar condiciones antes de que afecten tu calidad de vida. ¡Agenda tu cita hoy y cuida tu visión!</p>',
+<p>En Óptica Andina te recomendamos no esperar a tener molestias para hacerte revisar. Un examen visual preventivo puede detectar condiciones antes de que afecten tu calidad de vida. ¡Agenda tu cita hoy y cuida tu visión!</p>',
             ],
             [
                 'title'       => 'Miopía en niños: señales de alerta y cómo actuar',
@@ -53,7 +53,7 @@ class BlogPostSeeder extends Seeder
                 'tags'        => ['miopía', 'salud infantil', 'niños', 'prevención'],
                 'is_published'=> true,
                 'published_at'=> now()->subDays(5),
-                'meta_title'  => 'Miopía en Niños: Señales y Tratamiento | Óptica Vista Andina Tumbaco',
+                'meta_title'  => 'Miopía en Niños: Señales y Tratamiento | Óptica Andina Tumbaco',
                 'meta_description' => '¿Tu hijo se acerca mucho a la pantalla o al libro? Puede ser miopía. Conoce las señales de alerta y cómo actuar.',
                 'content'     => '<h2>¿Qué es la miopía y por qué está aumentando?</h2>
 <p>La miopía, o vista corta, es una condición en la que los objetos lejanos se ven borrosos mientras que los cercanos se perciben con claridad. En las últimas décadas, su prevalencia ha aumentado dramáticamente, especialmente en niños. Los expertos atribuyen este incremento al mayor tiempo frente a pantallas y la reducción de actividades al aire libre.</p>
@@ -81,7 +81,7 @@ class BlogPostSeeder extends Seeder
 <p>Se recomienda pasar al menos 90 minutos diarios al aire libre, mantener una distancia adecuada al leer (30-40 cm), y tomar descansos regulares de las pantallas.</p>
 
 <h2>¿Cuándo consultar?</h2>
-<p>Si identificas alguna de las señales mencionadas, no esperes. En Óptica Vista Andina contamos con especialistas en control de miopía infantil. Cuanto antes se detecte y trate, mejores serán los resultados a largo plazo.</p>',
+<p>Si identificas alguna de las señales mencionadas, no esperes. En Óptica Andina contamos con especialistas en control de miopía infantil. Cuanto antes se detecte y trate, mejores serán los resultados a largo plazo.</p>',
             ],
             [
                 'title'       => 'Síndrome de visión por computadora: síntomas y soluciones',
@@ -91,7 +91,7 @@ class BlogPostSeeder extends Seeder
                 'tags'        => ['fatiga visual', 'pantallas', 'trabajo digital', 'ojo seco'],
                 'is_published'=> true,
                 'published_at'=> now()->subDays(9),
-                'meta_title'  => 'Síndrome de Visión por Computadora: Cómo Prevenirlo | Óptica Vista Andina',
+                'meta_title'  => 'Síndrome de Visión por Computadora: Cómo Prevenirlo | Óptica Andina',
                 'meta_description' => 'Fatiga visual, dolores de cabeza y ojo seco por usar pantallas. Descubre el síndrome de visión digital y cómo combatirlo.',
                 'content'     => '<h2>¿Qué es el síndrome de visión por computadora?</h2>
 <p>El síndrome de visión por computadora (SVC), también llamado fatiga visual digital, es un conjunto de síntomas oculares y visuales causados por el uso prolongado de dispositivos electrónicos con pantalla: computadoras, tablets, smartphones y televisores.</p>
@@ -121,7 +121,7 @@ class BlogPostSeeder extends Seeder
 <p>En casos de ojo seco, las lágrimas artificiales sin conservantes pueden aliviar la irritación. Consulta con tu optometrista cuál es la más adecuada.</p>
 
 <h2>¿Cuándo visitar al especialista?</h2>
-<p>Si los síntomas persisten a pesar de seguir estas recomendaciones, visítanos en Óptica Vista Andina. Podemos evaluar si necesitas corrección óptica específica para trabajo con pantallas o si existe alguna condición subyacente que deba tratarse.</p>',
+<p>Si los síntomas persisten a pesar de seguir estas recomendaciones, visítanos en Óptica Andina. Podemos evaluar si necesitas corrección óptica específica para trabajo con pantallas o si existe alguna condición subyacente que deba tratarse.</p>',
             ],
             [
                 'title'       => 'Glaucoma: el ladrón silencioso de la visión',
@@ -131,7 +131,7 @@ class BlogPostSeeder extends Seeder
                 'tags'        => ['glaucoma', 'prevención', 'enfermedades oculares', 'adultos'],
                 'is_published'=> true,
                 'published_at'=> now()->subDays(14),
-                'meta_title'  => 'Glaucoma: Prevención y Detección Temprana | Óptica Vista Andina',
+                'meta_title'  => 'Glaucoma: Prevención y Detección Temprana | Óptica Andina',
                 'meta_description' => 'El glaucoma destruye el nervio óptico sin síntomas previos. Descubre los factores de riesgo y la importancia de los controles regulares.',
                 'content'     => '<h2>¿Qué es el glaucoma?</h2>
 <p>El glaucoma es un grupo de enfermedades oculares que dañan progresivamente el nervio óptico, responsable de transmitir la información visual al cerebro. Es la segunda causa de ceguera irreversible en el mundo, y lo más alarmante es que en la mayoría de los casos no produce síntomas hasta que ya existe un daño considerable.</p>
@@ -162,7 +162,7 @@ class BlogPostSeeder extends Seeder
 <p>El glaucoma no tiene cura, pero puede controlarse para detener su progresión. Los tratamientos incluyen colirios reductores de presión, láser o cirugía en casos avanzados.</p>
 
 <h2>La detección temprana es tu mejor defensa</h2>
-<p>Si tienes más de 40 años o cualquiera de los factores de riesgo mencionados, un examen visual anual que incluya tonometría es fundamental. En Óptica Vista Andina realizamos evaluaciones completas que incluyen la medición de presión ocular. No esperes a tener síntomas: cuando aparecen, el daño ya está hecho.</p>',
+<p>Si tienes más de 40 años o cualquiera de los factores de riesgo mencionados, un examen visual anual que incluya tonometría es fundamental. En Óptica Andina realizamos evaluaciones completas que incluyen la medición de presión ocular. No esperes a tener síntomas: cuando aparecen, el daño ya está hecho.</p>',
             ],
             [
                 'title'       => 'Alimentación y salud visual: los nutrientes que cuidan tus ojos',
@@ -172,7 +172,7 @@ class BlogPostSeeder extends Seeder
                 'tags'        => ['nutrición', 'salud visual', 'alimentación', 'prevención'],
                 'is_published'=> true,
                 'published_at'=> now()->subDays(18),
-                'meta_title'  => 'Alimentación para una Buena Visión | Óptica Vista Andina Tumbaco',
+                'meta_title'  => 'Alimentación para una Buena Visión | Óptica Andina Tumbaco',
                 'meta_description' => 'Vitaminas, antioxidantes y ácidos grasos que protegen tu visión. Guía de nutrición para la salud ocular.',
                 'content'     => '<h2>Tus ojos también se alimentan</h2>
 <p>La retina es uno de los tejidos con mayor demanda metabólica del cuerpo. Una alimentación deficiente puede aumentar el riesgo de degeneración macular, cataratas y ojo seco. Por el contrario, una dieta rica en nutrientes específicos puede reducir significativamente estos riesgos.</p>
@@ -211,7 +211,7 @@ class BlogPostSeeder extends Seeder
                 'tags'        => ['cataratas', 'cirugía ocular', 'adultos mayores', 'visión'],
                 'is_published'=> true,
                 'published_at'=> now()->subDays(22),
-                'meta_title'  => 'Cataratas: Síntomas, Cirugía y Recuperación | Óptica Vista Andina',
+                'meta_title'  => 'Cataratas: Síntomas, Cirugía y Recuperación | Óptica Andina',
                 'meta_description' => 'Todo lo que necesitas saber sobre las cataratas: síntomas, diagnóstico, cirugía y recuperación. Información de nuestros especialistas.',
                 'content'     => '<h2>¿Qué son las cataratas?</h2>
 <p>El cristalino es el lente natural del ojo, transparente en condiciones normales. Con los años, las proteínas que lo componen se pueden agrupar y opacificar, creando una "nube" que bloquea el paso de la luz. Eso es una catarata.</p>
@@ -250,7 +250,7 @@ class BlogPostSeeder extends Seeder
                 'tags'        => ['lentes de contacto', 'contactología', 'mitos', 'cuidado ocular'],
                 'is_published'=> true,
                 'published_at'=> now()->subDays(27),
-                'meta_title'  => 'Lentes de Contacto: Mitos y Realidades | Óptica Vista Andina',
+                'meta_title'  => 'Lentes de Contacto: Mitos y Realidades | Óptica Andina',
                 'meta_description' => 'Resolvemos los mitos más comunes sobre los lentes de contacto. ¿Son seguros? ¿Para quién son? Guía completa.',
                 'content'     => '<h2>Los lentes de contacto tienen mala fama injustificada</h2>
 <p>Hay muchos mitos alrededor de los lentes de contacto que llevan a las personas a rechazarlos sin fundamento. La realidad es que, usados correctamente y bajo supervisión profesional, son una excelente opción para corregir problemas de visión con alta comodidad y libertad.</p>
@@ -271,7 +271,7 @@ class BlogPostSeeder extends Seeder
 <p><strong>Falso.</strong> Personas de todas las edades pueden usar lentes de contacto. Para la presbicia (vista cansada), existen lentes multifocales o progresivos que permiten ver bien a todas las distancias.</p>
 
 <h2>¿Cómo sé si soy candidato/a?</h2>
-<p>La adaptación de lentes de contacto requiere una evaluación profesional. En Óptica Vista Andina realizamos un estudio completo de la córnea para determinar el tipo y diámetro de lente más adecuado para ti. ¡Agenda tu cita!</p>',
+<p>La adaptación de lentes de contacto requiere una evaluación profesional. En Óptica Andina realizamos un estudio completo de la córnea para determinar el tipo y diámetro de lente más adecuado para ti. ¡Agenda tu cita!</p>',
             ],
             [
                 'title'       => 'Ojo seco: causas, síntomas y tratamiento',
@@ -281,7 +281,7 @@ class BlogPostSeeder extends Seeder
                 'tags'        => ['ojo seco', 'lágrima', 'confort ocular', 'tratamiento'],
                 'is_published'=> true,
                 'published_at'=> now()->subDays(32),
-                'meta_title'  => 'Ojo Seco: Causas y Tratamiento | Óptica Vista Andina Tumbaco',
+                'meta_title'  => 'Ojo Seco: Causas y Tratamiento | Óptica Andina Tumbaco',
                 'meta_description' => 'Síntomas de ojo seco, por qué ocurre y qué tratamientos existen. Información de nuestros especialistas en Tumbaco.',
                 'content'     => '<h2>¿Qué es el ojo seco?</h2>
 <p>El síndrome de ojo seco ocurre cuando los ojos no producen suficientes lágrimas, o cuando las lágrimas producidas son de mala calidad y se evaporan demasiado rápido. Es una de las consultas más frecuentes en optometría y afecta significativamente la calidad de vida.</p>
@@ -321,7 +321,7 @@ class BlogPostSeeder extends Seeder
 <p>Aumentar el parpadeo consciente, tomar descansos frecuentes de las pantallas, usar humidificadores y gafas protectoras en ambientes ventosos.</p>
 
 <h2>La importancia del diagnóstico profesional</h2>
-<p>No todos los ojos secos son iguales. El tipo de tratamiento depende de cuál capa lagrimal está afectada. En Óptica Vista Andina evaluamos la calidad y cantidad de tu lágrima para recomendar el tratamiento más adecuado para tu caso.</p>',
+<p>No todos los ojos secos son iguales. El tipo de tratamiento depende de cuál capa lagrimal está afectada. En Óptica Andina evaluamos la calidad y cantidad de tu lágrima para recomendar el tratamiento más adecuado para tu caso.</p>',
             ],
             [
                 'title'       => 'Cómo elegir las gafas perfectas según tu forma de rostro',
@@ -331,7 +331,7 @@ class BlogPostSeeder extends Seeder
                 'tags'        => ['monturas', 'estilo', 'moda óptica', 'asesoría'],
                 'is_published'=> true,
                 'published_at'=> now()->subDays(37),
-                'meta_title'  => 'Gafas según tu Forma de Rostro | Óptica Vista Andina Tumbaco',
+                'meta_title'  => 'Gafas según tu Forma de Rostro | Óptica Andina Tumbaco',
                 'meta_description' => 'Guía para elegir las gafas perfectas según la forma de tu rostro: ovalado, redondo, cuadrado, corazón.',
                 'content'     => '<h2>La montura correcta puede transformar tu imagen</h2>
 <p>Elegir unas gafas no es solo una decisión visual: es una decisión estética que impacta directamente en tu imagen. La regla de oro es encontrar una montura cuya forma contraste armónicamente con la tuya.</p>
@@ -357,7 +357,7 @@ class BlogPostSeeder extends Seeder
 <h2>Más allá de la forma</h2>
 <p>El color de la montura también importa. Los tonos que contrastan con el tono de piel suelen ser los más favorecedores. Considera también tu estilo de vida: las monturas de acetato grueso son más resistentes para el uso diario activo.</p>
 
-<h2>Tu asesor en Óptica Vista Andina</h2>
+<h2>Tu asesor en Óptica Andina</h2>
 <p>En nuestra óptica en Tumbaco te asesoramos personalmente para encontrar la montura que mejor realce tus rasgos. ¡Visítanos y pruébate cuantas quieras sin compromiso!</p>',
             ],
             [
@@ -368,7 +368,7 @@ class BlogPostSeeder extends Seeder
                 'tags'        => ['protección UV', 'gafas de sol', 'prevención', 'cataratas'],
                 'is_published'=> true,
                 'published_at'=> now()->subDays(42),
-                'meta_title'  => 'Protección Solar para los Ojos | Óptica Vista Andina Tumbaco',
+                'meta_title'  => 'Protección Solar para los Ojos | Óptica Andina Tumbaco',
                 'meta_description' => 'La radiación UV daña los ojos a largo plazo. Cómo elegir gafas de sol con protección real y por qué usarlas todo el año.',
                 'content'     => '<h2>El sol y tus ojos: una relación de largo plazo</h2>
 <p>En Ecuador, con su posición geográfica cerca de la línea ecuatorial y las elevaciones de la sierra, la radiación UV es significativamente más intensa que en muchos otros países. Quito y sus valles como Tumbaco y Cumbayá presentan índices UV extremos gran parte del año.</p>
@@ -406,7 +406,7 @@ class BlogPostSeeder extends Seeder
                 'tags'        => ['terapia visual', 'estrabismo', 'convergencia', 'visión binocular'],
                 'is_published'=> true,
                 'published_at'=> now()->subDays(48),
-                'meta_title'  => 'Terapia Visual: Ejercicios para una Mejor Visión | Óptica Vista Andina',
+                'meta_title'  => 'Terapia Visual: Ejercicios para una Mejor Visión | Óptica Andina',
                 'meta_description' => 'Qué es la terapia visual, para quién es y qué condiciones trata. Especialistas en terapia visual en Tumbaco.',
                 'content'     => '<h2>¿Qué es la terapia visual?</h2>
 <p>La terapia visual es un programa supervisado de ejercicios y actividades diseñados para mejorar el sistema visual más allá de la simple corrección óptica. A diferencia de las gafas, que compensan los problemas de refracción, la terapia visual busca mejorar las habilidades visuales que afectan la eficiencia visual en tareas cotidianas como leer, conducir o practicar deportes.</p>
@@ -438,7 +438,7 @@ class BlogPostSeeder extends Seeder
                 'tags'        => ['presbicia', 'lentes progresivos', 'vista cansada', 'adultos'],
                 'is_published'=> true,
                 'published_at'=> now()->subDays(54),
-                'meta_title'  => 'Lentes Progresivos: Guía para Principiantes | Óptica Vista Andina',
+                'meta_title'  => 'Lentes Progresivos: Guía para Principiantes | Óptica Andina',
                 'meta_description' => 'Todo sobre los lentes progresivos: cómo funcionan, período de adaptación, ventajas y consejos para nuevos usuarios.',
                 'content'     => '<h2>¿Qué son los lentes progresivos?</h2>
 <p>Los lentes progresivos son lentes multifocales que incorporan en una misma lente la graduación para ver de lejos (parte superior), de cerca (parte inferior) y distancias intermedias como la pantalla del computador (zona de transición). A diferencia de los bifocales, no tienen línea visible, lo que los hace más estéticos y naturales.</p>
@@ -468,7 +468,7 @@ class BlogPostSeeder extends Seeder
 <p>La tecnología del diseño del lente progresivo hace una gran diferencia en la facilidad de adaptación y el confort visual. Los diseños de última generación (diseño libre o "free-form") están optimizados digitalmente para cada paciente, con zonas de visión más amplias y distorsiones mínimas.</p>
 
 <h2>¿Vale la pena la inversión?</h2>
-<p>Los progresivos de calidad requieren una inversión mayor, pero la diferencia en confort y facilidad de adaptación es significativa. En Óptica Vista Andina te ayudamos a elegir el diseño adecuado para tu graduación y estilo de vida.</p>',
+<p>Los progresivos de calidad requieren una inversión mayor, pero la diferencia en confort y facilidad de adaptación es significativa. En Óptica Andina te ayudamos a elegir el diseño adecuado para tu graduación y estilo de vida.</p>',
             ],
         ];
 

@@ -106,6 +106,27 @@
                     @endif
                 </div>
 
+                {{-- CTA Stripe --}}
+                @if($stripeEnabled && $product->is_purchasable && $product->price > 0)
+                <div class="mb-4">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-2xl font-bold text-gray-900">${{ number_format($product->price, 2) }}</span>
+                        <span class="text-sm text-text-muted">USD</span>
+                    </div>
+                    <form method="POST" action="{{ route('checkout', $product->slug) }}">
+                        @csrf
+                        <button type="submit"
+                                class="w-full inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                            </svg>
+                            Comprar ahora
+                        </button>
+                    </form>
+                    <p class="text-xs text-text-muted mt-2 text-center">Pago seguro con Stripe · Tarjeta de crédito/débito</p>
+                </div>
+                @endif
+
                 {{-- CTA WhatsApp --}}
                 <div class="bg-accent-50 border border-accent-100 rounded-xl p-5">
                     <p class="text-gray-700 mb-3 font-medium">¿Te interesa este producto?</p>

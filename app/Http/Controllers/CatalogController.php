@@ -16,13 +16,15 @@ class CatalogController extends Controller
         $categories = Category::active()->root()->ordered()
             ->withCount(['products' => fn ($q) => $q->active()])
             ->get();
-        return view('pages.catalogo.index', compact('seo', 'categories'));
+        $saleProducts   = Product::with(['category', 'brand', 'images'])->active()->onSale()->latest()->limit(8)->get();
+        $saleTotalCount = Product::active()->onSale()->count();
+        return view('pages.catalogo.index', compact('seo', 'categories', 'saleProducts', 'saleTotalCount'));
     }
 
     public function category(string $categorySlug)
     {
         $category = Category::where('slug', $categorySlug)->where('is_active', true)->firstOrFail();
-        $siteName = SiteSetting::get('site_name', 'Óptica Vista Andina');
+        $siteName = SiteSetting::get('site_name', 'Óptica Andina');
         $seo = [
             'title'            => $category->meta_title ?? $category->name . ' – ' . $siteName,
             'meta_description' => $category->meta_description ?? '',
@@ -58,6 +60,7 @@ class CatalogController extends Controller
         ]);
         $related = Product::with(['category', 'brand', 'images'])
             ->active()->where('category_id', $category->id)->where('id', '!=', $product->id)->limit(4)->get();
-        return view('pages.catalogo.product', compact('seo', 'category', 'product', 'related'));
+        $stripeEnabled = SiteSetting::get('stripe_enabled', '0') === '1';
+        return view('pages.catalogo.product', compact('seo', 'category', 'product', 'related', 'stripeEnabled'));
     }
 }

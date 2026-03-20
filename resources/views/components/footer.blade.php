@@ -1,5 +1,5 @@
 @php
-    $siteName  = \App\Models\SiteSetting::get('site_name', 'Óptica Vista Andina');
+    $siteName  = \App\Models\SiteSetting::get('site_name', 'Óptica Andina');
     $address   = \App\Models\SiteSetting::get('address', 'Tumbaco, Pichincha, Ecuador');
     $phone     = \App\Models\SiteSetting::get('phone', '');
     $email     = \App\Models\SiteSetting::get('email', '');
@@ -47,26 +47,26 @@
             <div>
                 <h3 class="mb-3 text-lg font-semibold text-white">Navegación</h3>
                 <nav class="flex flex-col gap-2 text-sm">
-                    <a href="{{ route('nosotros') }}" class="transition-colors hover:text-accent-300">Nosotros</a>
-                    <a href="{{ route('servicios') }}" class="transition-colors hover:text-accent-300">Servicios</a>
-                    <a href="{{ route('catalogo') }}" class="transition-colors hover:text-accent-300">Catálogo</a>
-                    <a href="{{ route('marcas') }}" class="transition-colors hover:text-accent-300">Marcas</a>
-                    <a href="{{ route('blog') }}" class="transition-colors hover:text-accent-300">Blog</a>
-                    <a href="{{ route('contacto') }}" class="transition-colors hover:text-accent-300">Contacto</a>
+                    <a href="{{ route('nosotros') }}" class="text-white/80 transition-colors hover:text-white">Nosotros</a>
+                    <a href="{{ route('servicios') }}" class="text-white/80 transition-colors hover:text-white">Servicios</a>
+                    <a href="{{ route('catalogo') }}" class="text-white/80 transition-colors hover:text-white">Catálogo</a>
+                    <a href="{{ route('marcas') }}" class="text-white/80 transition-colors hover:text-white">Marcas</a>
+                    <a href="{{ route('blog') }}" class="text-white/80 transition-colors hover:text-white">Blog</a>
+                    <a href="{{ route('contacto') }}" class="text-white/80 transition-colors hover:text-white">Contacto</a>
                 </nav>
             </div>
 
             <div>
                 <h3 class="mb-3 text-lg font-semibold text-white">Contacto</h3>
-                <address class="not-italic text-sm flex flex-col gap-2 text-brand-50/90">
+                <address class="not-italic text-sm flex flex-col gap-2 text-white/80">
                     @if($address)
                     <span>{{ $address }}</span>
                     @endif
                     @if($phone)
-                    <a href="tel:{{ $phone }}" class="transition-colors hover:text-accent-300">{{ $phone }}</a>
+                    <a href="tel:{{ $phone }}" class="text-white/80 transition-colors hover:text-white">{{ $phone }}</a>
                     @endif
                     @if($email)
-                    <a href="mailto:{{ $email }}" class="transition-colors hover:text-accent-300">{{ $email }}</a>
+                    <a href="mailto:{{ $email }}" class="text-white/80 transition-colors hover:text-white">{{ $email }}</a>
                     @endif
                     @if($hours)
                     <span>{{ $hours }}</span>
@@ -77,7 +77,7 @@
 
         <div class="mt-10 flex flex-col items-center justify-between gap-3 border-t border-brand-700 pt-6 text-xs text-brand-200 sm:flex-row">
             <p>© {{ date('Y') }} {{ $siteName }}. Todos los derechos reservados.</p>
-            <a href="/sitemap.xml" class="transition-colors hover:text-accent-300">Sitemap</a>
+            <a href="/sitemap.xml" class="text-brand-200 transition-colors hover:text-white">Sitemap</a>
         </div>
     </div>
 </footer>

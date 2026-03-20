@@ -54,6 +54,7 @@ class CategoryResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn ($query) => $query->with(['parent']))
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),

@@ -13,7 +13,7 @@ class SeoService
 {
     public static function forPage(string $pageKey): array
     {
-        $siteName = SiteSetting::get('site_name', 'Óptica Vista Andina');
+        $siteName = SiteSetting::get('site_name', 'Óptica Andina');
         $meta = SeoMeta::getForPage($pageKey);
 
         return [
@@ -31,7 +31,7 @@ class SeoService
 
     public static function forProduct(Product $product): array
     {
-        $siteName = SiteSetting::get('site_name', 'Óptica Vista Andina');
+        $siteName = SiteSetting::get('site_name', 'Óptica Andina');
         $ogImage  = $product->coverImage
             ? asset('storage/' . $product->coverImage->path)
             : SiteSetting::get('og_image', '');
@@ -86,7 +86,7 @@ class SeoService
 
     public static function forService(Service $service): array
     {
-        $siteName = SiteSetting::get('site_name', 'Óptica Vista Andina');
+        $siteName = SiteSetting::get('site_name', 'Óptica Andina');
         $ogImage  = $service->image
             ? asset('storage/' . $service->image)
             : SiteSetting::get('og_image', '');
@@ -143,7 +143,7 @@ class SeoService
 
     public static function forBlogPost(BlogPost $post): array
     {
-        $siteName = SiteSetting::get('site_name', 'Óptica Vista Andina');
+        $siteName = SiteSetting::get('site_name', 'Óptica Andina');
         $ogImage  = $post->image
             ? asset('storage/' . $post->image)
             : SiteSetting::get('og_image', '');
@@ -198,7 +198,7 @@ class SeoService
     public static function localBusinessSchema(): array
     {
         $settings = SiteSetting::getAll();
-        $name     = $settings['site_name'] ?? 'Óptica Vista Andina';
+        $name     = $settings['site_name'] ?? 'Óptica Andina';
         $phone    = $settings['phone'] ?? '';
         $address  = $settings['address'] ?? 'Tumbaco, Pichincha, Ecuador';
         $email    = $settings['email'] ?? '';
@@ -326,7 +326,7 @@ class SeoService
     public static function websiteSchema(): string
     {
         $url  = config('app.url');
-        $name = SiteSetting::get('site_name', 'Óptica Vista Andina');
+        $name = SiteSetting::get('site_name', 'Óptica Andina');
 
         return json_encode([
             '@context' => 'https://schema.org',

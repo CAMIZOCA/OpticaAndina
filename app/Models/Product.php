@@ -11,14 +11,18 @@ class Product extends Model
     protected $fillable = [
         'category_id', 'brand_id', 'name', 'slug', 'short_description',
         'description', 'attributes', 'is_available', 'is_featured', 'is_active',
+        'is_on_sale', 'price', 'is_purchasable', 'stripe_price_id',
         'sort_order', 'whatsapp_text', 'meta_title', 'meta_description',
     ];
 
     protected $casts = [
-        'attributes'   => 'array',
-        'is_available' => 'boolean',
-        'is_featured'  => 'boolean',
-        'is_active'    => 'boolean',
+        'attributes'     => 'array',
+        'is_available'   => 'boolean',
+        'is_featured'    => 'boolean',
+        'is_active'      => 'boolean',
+        'is_on_sale'     => 'boolean',
+        'is_purchasable' => 'boolean',
+        'price'          => 'decimal:2',
     ];
 
     public function category(): BelongsTo
@@ -63,6 +67,11 @@ class Product extends Model
     public function scopeFeatured($query)
     {
         return $query->where('is_featured', true);
+    }
+
+    public function scopeOnSale($query)
+    {
+        return $query->where('is_on_sale', true);
     }
 
     public function scopeOrdered($query)

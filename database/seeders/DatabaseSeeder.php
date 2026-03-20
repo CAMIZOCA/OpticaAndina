@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         // Admin user for Filament
         User::factory()->create([
             'name'  => 'Admin',
-            'email' => 'admin@opticavistaandina.com',
+            'email' => 'admin@opticaandina.com',
         ]);
     }
 }

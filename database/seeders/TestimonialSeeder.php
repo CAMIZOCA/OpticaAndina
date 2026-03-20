@@ -17,7 +17,7 @@ class TestimonialSeeder extends Seeder
                 'name' => 'María García',
                 'photo' => null,
                 'rating' => 5,
-                'text' => 'Excelente atención y profesionalismo. El equipo es muy amable y los exámenes visuales son completos. Recomiendo ampliamente a Óptica Vista Andina.',
+                'text' => 'Excelente atención y profesionalismo. El equipo es muy amable y los exámenes visuales son completos. Recomiendo ampliamente a Óptica Andina.',
                 'date' => now()->subDays(30),
                 'is_featured' => true,
                 'is_active' => true,

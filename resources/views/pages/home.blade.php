@@ -199,4 +199,9 @@
     :cta_link="route('contacto')"
 />
 
+{{-- ═══════════════════════════════════════════════════════════
+     INSTAGRAM FEED — between CTA and footer
+═══════════════════════════════════════════════════════════ --}}
+<x-instagram-feed />
+
 @endsection

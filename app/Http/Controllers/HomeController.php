@@ -66,7 +66,7 @@ class HomeController extends Controller
         $aboutImagePath = $settings['about_image'] ?? null;
         $about = [
             'title'    => $settings['about_title']   ?? 'Cuidado profesional y personalizado',
-            'content'  => $settings['about_content'] ?? 'En Óptica Vista Andina nos dedicamos a proporcionar cuidado visual profesional y personalizado. Contamos con equipamiento de última generación y un equipo de especialistas certificados.',
+            'content'  => $settings['about_content'] ?? 'En Óptica Andina nos dedicamos a proporcionar cuidado visual profesional y personalizado. Contamos con equipamiento de última generación y un equipo de especialistas certificados.',
             'features' => $aboutFeatures,
             'image'    => $aboutImagePath ? Storage::disk('public')->url($aboutImagePath) : null,
         ];
@@ -157,7 +157,7 @@ class HomeController extends Controller
         $settings = SiteSetting::getAll();
 
         $historia = array_filter([
-            $settings['nosotros_historia_1'] ?? 'Óptica Vista Andina nació en Tumbaco con la misión de ofrecer atención visual de calidad a precios accesibles para las familias de nuestra comunidad.',
+            $settings['nosotros_historia_1'] ?? 'Óptica Andina nació en Tumbaco con la misión de ofrecer atención visual de calidad a precios accesibles para las familias de nuestra comunidad.',
             $settings['nosotros_historia_2'] ?? 'Con más de 15 años de experiencia, hemos atendido a miles de pacientes, desde niños hasta adultos mayores, ayudándoles a ver el mundo con claridad.',
             $settings['nosotros_historia_3'] ?? 'Contamos con tecnología moderna para exámenes visuales y una amplia selección de monturas nacionales e importadas para todos los gustos y presupuestos.',
         ]);
@@ -177,7 +177,7 @@ class HomeController extends Controller
             ];
         }
 
-        $siteName         = SiteSetting::get('site_name', 'Óptica Vista Andina');
+        $siteName         = SiteSetting::get('site_name', 'Óptica Andina');
         $seo['schema']    = json_encode([
             '@context'    => 'https://schema.org',
             '@type'       => 'AboutPage',

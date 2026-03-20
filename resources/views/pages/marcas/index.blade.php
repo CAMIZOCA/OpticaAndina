@@ -5,7 +5,7 @@
     <div class="container mx-auto px-4 text-center">
         <h1 class="text-4xl font-bold mb-4">Marcas</h1>
         <p class="hero-subtitle text-lg max-w-2xl mx-auto">
-            Las mejores marcas de monturas y lentes en Óptica Vista Andina, Tumbaco.
+            Las mejores marcas de monturas y lentes en Óptica Andina, Tumbaco.
         </p>
     </div>
 </section>

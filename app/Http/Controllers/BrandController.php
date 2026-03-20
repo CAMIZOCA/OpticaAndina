@@ -11,7 +11,7 @@ class BrandController extends Controller
 {
     public function index()
     {
-        $siteName = SiteSetting::get('site_name', 'Óptica Vista Andina');
+        $siteName = SiteSetting::get('site_name', 'Óptica Andina');
         $seo = [
             'title' => 'Marcas – ' . $siteName,
             'meta_description' => 'Conoce las marcas de monturas y lentes en ' . $siteName . ' – Tumbaco, Ecuador.',
@@ -28,7 +28,7 @@ class BrandController extends Controller
     public function show(string $slug)
     {
         $brand    = Brand::where('slug', $slug)->where('is_active', true)->firstOrFail();
-        $siteName = SiteSetting::get('site_name', 'Óptica Vista Andina');
+        $siteName = SiteSetting::get('site_name', 'Óptica Andina');
         $seo = [
             'title' => $brand->name . ' – ' . $siteName,
             'meta_description' => 'Productos de ' . $brand->name . ' en ' . $siteName . ', Tumbaco.',

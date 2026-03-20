@@ -75,9 +75,15 @@
 </head>
 <body class="bg-white text-text-primary">
 
+    {{-- Skip navigation for keyboard/screen reader users --}}
+    <a href="#main-content"
+       class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-brand-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-semibold">
+        Saltar al contenido principal
+    </a>
+
     @include('components.header')
 
-    <main>
+    <main id="main-content">
         @yield('content')
     </main>
 

@@ -2,6 +2,20 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\ManageSettings;
+use App\Filament\Resources\BlogPostResource;
+use App\Filament\Resources\BrandResource;
+use App\Filament\Resources\CategoryResource;
+use App\Filament\Resources\ContactMessageResource;
+use App\Filament\Resources\FaqResource;
+use App\Filament\Resources\ProductResource;
+use App\Filament\Resources\RedirectResource;
+use App\Filament\Resources\SeoMetaResource;
+use App\Filament\Resources\ServiceResource;
+use App\Filament\Resources\StatResource;
+use App\Filament\Resources\UserResource;
+use App\Filament\Widgets\RecentContactMessages;
+use App\Filament\Widgets\SiteOverviewWidget;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -28,19 +42,31 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->profile(isSimple: false)
-            ->brandName('Óptica Vista Andina')
+            ->brandName('Óptica Andina')
             ->colors([
                 'primary' => Color::Teal,
             ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            ->resources([
+                BlogPostResource::class,
+                BrandResource::class,
+                CategoryResource::class,
+                ContactMessageResource::class,
+                FaqResource::class,
+                ProductResource::class,
+                RedirectResource::class,
+                SeoMetaResource::class,
+                ServiceResource::class,
+                StatResource::class,
+                UserResource::class,
+            ])
             ->pages([
                 Pages\Dashboard::class,
+                ManageSettings::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                \App\Filament\Widgets\SiteOverviewWidget::class,
+                SiteOverviewWidget::class,
+                RecentContactMessages::class,
             ])
             ->middleware([
                 EncryptCookies::class,

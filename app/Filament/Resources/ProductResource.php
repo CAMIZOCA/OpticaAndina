@@ -93,6 +93,10 @@ class ProductResource extends Resource
                     Forms\Components\Toggle::make('is_active')
                         ->label('Activo')
                         ->default(true),
+                    Forms\Components\Toggle::make('is_on_sale')
+                        ->label('En liquidación')
+                        ->helperText('Aparece en la sección Liquidación del catálogo.')
+                        ->default(false),
                     Forms\Components\TextInput::make('sort_order')
                         ->label('Orden')
                         ->numeric()
@@ -101,6 +105,29 @@ class ProductResource extends Resource
                         ->label('Texto personalizado WhatsApp')
                         ->placeholder('Dejar vacío para usar el texto automático')
                         ->rows(2)
+                        ->columnSpanFull(),
+                ]),
+
+            Forms\Components\Section::make('Compra online (Stripe)')
+                ->description('Activa la compra directa por Stripe para este producto. Requiere que Stripe esté habilitado en Configuración del sitio.')
+                ->columns(2)
+                ->collapsed()
+                ->schema([
+                    Forms\Components\Toggle::make('is_purchasable')
+                        ->label('Permitir compra online')
+                        ->helperText('Muestra el botón "Comprar" en la página del producto.')
+                        ->default(false),
+                    Forms\Components\TextInput::make('price')
+                        ->label('Precio (USD)')
+                        ->numeric()
+                        ->prefix('$')
+                        ->minValue(0)
+                        ->step(0.01)
+                        ->helperText('Precio para Stripe. Dejar vacío si no se vende online.'),
+                    Forms\Components\TextInput::make('stripe_price_id')
+                        ->label('Stripe Price ID (opcional)')
+                        ->placeholder('price_...')
+                        ->helperText('Si tienes un Price creado en el dashboard de Stripe, pégalo aquí.')
                         ->columnSpanFull(),
                 ]),
 
@@ -121,6 +148,7 @@ class ProductResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn ($query) => $query->with(['category', 'brand']))
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nombre')
@@ -141,6 +169,16 @@ class ProductResource extends Resource
                 Tables\Columns\IconColumn::make('is_active')
                     ->label('Activo')
                     ->boolean(),
+                Tables\Columns\IconColumn::make('is_on_sale')
+                    ->label('Oferta')
+                    ->boolean()
+                    ->trueColor('danger')
+                    ->falseColor('gray'),
+                Tables\Columns\TextColumn::make('price')
+                    ->label('Precio')
+                    ->money('USD')
+                    ->placeholder('—')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('sort_order')
                     ->label('Orden')
                     ->sortable(),
@@ -151,6 +189,8 @@ class ProductResource extends Resource
                 Tables\Filters\SelectFilter::make('brand')->relationship('brand', 'name'),
                 Tables\Filters\TernaryFilter::make('is_active')->label('Activo'),
                 Tables\Filters\TernaryFilter::make('is_featured')->label('Destacado'),
+                Tables\Filters\TernaryFilter::make('is_on_sale')->label('En liquidación'),
+                Tables\Filters\TernaryFilter::make('is_purchasable')->label('Compra online'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

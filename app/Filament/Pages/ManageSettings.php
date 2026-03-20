@@ -138,7 +138,7 @@ class ManageSettings extends Page
                                             ->placeholder('Cuidado profesional y personalizado'),
                                         Forms\Components\Textarea::make('about_content')
                                             ->label('Texto principal')->rows(4)
-                                            ->placeholder('En Óptica Vista Andina nos dedicamos a…'),
+                                            ->placeholder('En Óptica Andina nos dedicamos a…'),
                                         Forms\Components\Repeater::make('about_features')
                                             ->label('Características destacadas (lista con ✓)')
                                             ->schema([
@@ -246,7 +246,7 @@ class ManageSettings extends Page
                                     ->schema([
                                         Forms\Components\Textarea::make('nosotros_historia_1')
                                             ->label('Párrafo 1 — Origen')->rows(4)
-                                            ->placeholder('Óptica Vista Andina nació en Tumbaco…'),
+                                            ->placeholder('Óptica Andina nació en Tumbaco…'),
                                         Forms\Components\Textarea::make('nosotros_historia_2')
                                             ->label('Párrafo 2 — Trayectoria')->rows(4)
                                             ->placeholder('Con más de 15 años de experiencia…'),
@@ -342,6 +342,38 @@ class ManageSettings extends Page
                                 Forms\Components\TextInput::make('facebook_url')->label('Facebook')->url(),
                                 Forms\Components\TextInput::make('instagram_url')->label('Instagram')->url(),
                                 Forms\Components\TextInput::make('tiktok_url')->label('TikTok')->url(),
+                                Forms\Components\Textarea::make('instagram_widget_html')
+                                    ->label('Widget de Instagram (código embed)')
+                                    ->helperText('Pega aquí el código de embed de LightWidget, Behold.so u otro servicio de feed de Instagram. Si está vacío, se muestra un enlace al perfil.')
+                                    ->rows(5)
+                                    ->columnSpanFull(),
+                            ]),
+
+                        // ─── Stripe ───────────────────────────────────────────
+                        Forms\Components\Tabs\Tab::make('Stripe / Pagos')
+                            ->icon('heroicon-o-credit-card')
+                            ->schema([
+                                Forms\Components\Section::make('Compra online con Stripe')
+                                    ->description('Activa el botón "Comprar ahora" en productos marcados como comprables. Las claves se obtienen en dashboard.stripe.com.')
+                                    ->columns(2)
+                                    ->schema([
+                                        Forms\Components\Toggle::make('stripe_enabled')
+                                            ->label('Habilitar pagos con Stripe')
+                                            ->helperText('Muestra el botón de compra en productos con precio configurado.')
+                                            ->columnSpanFull(),
+                                        Forms\Components\TextInput::make('stripe_public_key')
+                                            ->label('Clave pública (Publishable key)')
+                                            ->placeholder('pk_live_...')
+                                            ->helperText('Empieza con pk_test_ (pruebas) o pk_live_ (producción).')
+                                            ->password()
+                                            ->revealable(),
+                                        Forms\Components\TextInput::make('stripe_secret_key')
+                                            ->label('Clave secreta (Secret key)')
+                                            ->placeholder('sk_live_...')
+                                            ->helperText('Empieza con sk_test_ (pruebas) o sk_live_ (producción). Nunca compartas esta clave.')
+                                            ->password()
+                                            ->revealable(),
+                                    ]),
                             ]),
                     ])
                     ->columnSpanFull(),

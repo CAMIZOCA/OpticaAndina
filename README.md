@@ -1,4 +1,4 @@
-# Óptica Vista Andina — Laravel Web Application
+# Óptica Andina — Laravel Web Application
 
 A full-stack web application built for a brick-and-mortar optical shop in Tumbaco, Ecuador. Replaces a legacy Weebly site with a professional, SEO-optimized, and fully manageable Laravel platform.
 
@@ -6,7 +6,7 @@ A full-stack web application built for a brick-and-mortar optical shop in Tumbac
 
 ## Overview
 
-Óptica Vista Andina is a content-driven business website for a local optical shop that offers prescription lenses, contact lenses, sports eyewear, sunglasses, and vision care services. The previous Weebly-based site offered no CMS flexibility, poor local SEO, and no structured product catalog.
+Óptica Andina is a content-driven business website for a local optical shop that offers prescription lenses, contact lenses, sports eyewear, sunglasses, and vision care services. The previous Weebly-based site offered no CMS flexibility, poor local SEO, and no structured product catalog.
 
 This application solves those problems by providing:
 

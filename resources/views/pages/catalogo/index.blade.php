@@ -47,5 +47,32 @@
         @endif
     </div>
 </section>
+
+{{-- Sección Liquidación --}}
+@if($saleProducts->isNotEmpty())
+<section class="py-16 bg-red-50 border-t border-red-100">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center gap-3 mb-8">
+            <span class="inline-flex items-center gap-2 bg-red-600 text-white text-sm font-bold px-4 py-1.5 rounded-full uppercase tracking-wide">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                </svg>
+                Liquidación
+            </span>
+            <h2 class="text-2xl font-bold text-gray-900">Productos en Oferta</h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            @foreach($saleProducts as $product)
+                <x-product-card :product="$product" :show-sale-badge="true" />
+            @endforeach
+        </div>
+        @if($saleTotalCount > $saleProducts->count())
+            <div class="text-center mt-8">
+                <p class="text-text-muted text-sm">Mostrando {{ $saleProducts->count() }} de {{ $saleTotalCount }} productos en oferta.</p>
+            </div>
+        @endif
+    </div>
+</section>
+@endif
 @endsection
 

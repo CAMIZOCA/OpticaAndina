@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project context
 
-Migration of **Óptica Vista Andina** (currently on Weebly) to a full Laravel application. The site is an optical shop in Tumbaco/Quito, Ecuador. Core requirements:
+Migration of **Óptica Andina** (currently on Weebly) to a full Laravel application. The site is an optical shop in Tumbaco/Quito, Ecuador. Core requirements:
 
 - SEO local (Tumbaco/Quito) with Schema.org JSON-LD
 - Product catalogue **without prices** — all purchase inquiries go via WhatsApp

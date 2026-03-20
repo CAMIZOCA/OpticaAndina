@@ -7,6 +7,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -26,6 +27,9 @@ Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
 Route::get('/contacto', [ContactController::class, 'index'])->name('contacto');
-Route::post('/contacto', [ContactController::class, 'store'])->name('contacto.store');
+Route::post('/contacto', [ContactController::class, 'store'])->name('contacto.store')->middleware('throttle:5,1');
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+
+Route::get('/checkout/success', [StripeController::class, 'success'])->name('checkout.success');
+Route::post('/checkout/{product:slug}', [StripeController::class, 'checkout'])->name('checkout');

@@ -101,9 +101,18 @@
                     @endif
                 </div>
 
-                {{-- Mapa placeholder --}}
-                <div class="mt-8 rounded-xl overflow-hidden border border-gray-200 h-56 bg-gray-100 flex items-center justify-center">
-                    <p class="text-text-muted text-sm">Mapa – Tumbaco, Quito, Ecuador</p>
+                {{-- Google Maps embed --}}
+                <div class="mt-8 rounded-xl overflow-hidden border border-gray-200 h-56">
+                    <iframe
+                        title="Ubicación Óptica Andina en Tumbaco, Quito"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7977.5!2d-78.3833!3d-0.2167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d59e0000000001%3A0x0!2sTumbaco%2C+Ecuador!5e0!3m2!1ses!2sec!4v1"
+                        width="100%"
+                        height="100%"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
                 </div>
             </div>
 
@@ -119,6 +128,11 @@
 
                 <form action="{{ route('contacto.store') }}" method="POST" class="space-y-5">
                     @csrf
+                    {{-- Honeypot anti-spam: oculto para humanos, visible para bots --}}
+                    <div style="display:none" aria-hidden="true">
+                        <label for="website">No rellenar</label>
+                        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                    </div>
 
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
