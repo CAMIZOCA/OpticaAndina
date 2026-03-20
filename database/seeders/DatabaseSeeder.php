@@ -30,11 +30,14 @@ class DatabaseSeeder extends Seeder
             ImageSeeder::class,
         ]);
 
-        // Admin user for Filament
-        User::factory()->create([
-            'name'  => 'Admin',
-            'email' => 'admin@opticaandina.com',
-        ]);
+        // Admin user for Filament (sin factory para compatibilidad con --no-dev)
+        User::firstOrCreate(
+            ['email' => 'admin@opticaandina.com'],
+            [
+                'name'     => 'Admin',
+                'password' => bcrypt('ChangeMe2024!'),
+            ]
+        );
     }
 }
 
