@@ -41,7 +41,9 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
+            'url' => ($publicStorageUrl = env('PUBLIC_STORAGE_URL'))
+                ? rtrim($publicStorageUrl, '/')
+                : '/storage',
             'visibility' => 'public',
             'throw' => false,
             'report' => false,
