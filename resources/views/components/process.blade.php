@@ -16,7 +16,7 @@
             @endphp
 
             @foreach($steps as $index => $step)
-            <div class="text-center">
+            <div class="relative text-center">
                 <div class="mb-4">
                     <div class="inline-flex items-center justify-center w-16 h-16 bg-brand-600 text-white rounded-full">
                         <i class="{{ $step['icon'] ?? 'fas fa-check' }} text-2xl"></i>
@@ -26,7 +26,7 @@
                 <p class="text-gray-600 text-sm">{{ $step['text'] }}</p>
 
                 @if($index < count($steps) - 1)
-                <div class="hidden md:block absolute mt-8 ml-8 text-brand-300 text-2xl">→</div>
+                <div class="hidden md:flex absolute top-8 -right-4 -translate-y-1/2 items-center justify-center text-brand-300 text-2xl leading-none">→</div>
                 @endif
             </div>
             @endforeach
