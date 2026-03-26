@@ -14,6 +14,8 @@ use App\Filament\Resources\SeoMetaResource;
 use App\Filament\Resources\ServiceResource;
 use App\Filament\Resources\StatResource;
 use App\Filament\Resources\UserResource;
+use App\Filament\Widgets\ConversionOverviewWidget;
+use App\Filament\Widgets\ConversionPagesWidget;
 use App\Filament\Widgets\RecentContactMessages;
 use App\Filament\Widgets\SiteOverviewWidget;
 use Filament\Http\Middleware\Authenticate;
@@ -66,7 +68,9 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 SiteOverviewWidget::class,
+                ConversionOverviewWidget::class,
                 RecentContactMessages::class,
+                ConversionPagesWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

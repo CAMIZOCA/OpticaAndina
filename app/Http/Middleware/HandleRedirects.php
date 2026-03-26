@@ -6,13 +6,18 @@ use App\Models\Redirect;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Schema;
 use Symfony\Component\HttpFoundation\Response;
 
 class HandleRedirects
 {
     public function handle(Request $request, Closure $next): Response
     {
-        $path = '/' . ltrim($request->getPathInfo(), '/');
+        if (! Schema::hasTable('redirects')) {
+            return $next($request);
+        }
+
+        $path = '/'.ltrim($request->getPathInfo(), '/');
 
         $redirects = Cache::rememberForever('active_redirects', function () {
             return Redirect::active()->get(['from_path', 'to_path', 'code'])->keyBy('from_path');
@@ -20,6 +25,7 @@ class HandleRedirects
 
         if ($redirects->has($path)) {
             $redirect = $redirects->get($path);
+
             return redirect($redirect->to_path, $redirect->code);
         }
 

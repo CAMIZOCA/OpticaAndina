@@ -2,6 +2,11 @@
 <a href="{{ $url }}"
    target="_blank"
    rel="noopener noreferrer"
+   data-track-event="{{ $eventName }}"
+   data-track-category="conversion"
+   data-track-label="{{ $label }}"
+   data-track-location="{{ $eventLocation }}"
+   data-track-destination="whatsapp"
    class="whatsapp-fab"
    aria-label="Contactar por WhatsApp">
     <svg class="h-6 w-6 shrink-0" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -13,6 +18,11 @@
 <a href="{{ $url }}"
    target="_blank"
    rel="noopener noreferrer"
+   data-track-event="{{ $eventName }}"
+   data-track-category="conversion"
+   data-track-label="{{ $label }}"
+   data-track-location="{{ $eventLocation }}"
+   data-track-destination="whatsapp"
    class="btn-secondary"
    aria-label="{{ $label }}">
     <svg class="h-5 w-5 shrink-0" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

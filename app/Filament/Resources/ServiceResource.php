@@ -15,9 +15,13 @@ use Illuminate\Support\Str;
 class ServiceResource extends Resource
 {
     protected static ?string $model = Service::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-wrench-screwdriver';
+
     protected static ?string $navigationLabel = 'Servicios';
+
     protected static ?string $navigationGroup = 'Servicios';
+
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
@@ -46,6 +50,7 @@ class ServiceResource extends Resource
                     Forms\Components\FileUpload::make('image')
                         ->label('Imagen')
                         ->image()
+                        ->disk('public')
                         ->directory('services'),
                     Forms\Components\TextInput::make('icon')
                         ->label('Ícono Heroicon')
@@ -108,7 +113,7 @@ class ServiceResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image')->label('Imagen'),
+                Tables\Columns\ImageColumn::make('image')->label('Imagen')->disk('public'),
                 Tables\Columns\TextColumn::make('title')->label('Título')->searchable()->sortable(),
                 Tables\Columns\IconColumn::make('is_active')->label('Activo')->boolean(),
                 Tables\Columns\TextColumn::make('sort_order')->label('Orden')->sortable(),
@@ -126,9 +131,9 @@ class ServiceResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListServices::route('/'),
+            'index' => Pages\ListServices::route('/'),
             'create' => Pages\CreateService::route('/create'),
-            'edit'   => Pages\EditService::route('/{record}/edit'),
+            'edit' => Pages\EditService::route('/{record}/edit'),
         ];
     }
 }

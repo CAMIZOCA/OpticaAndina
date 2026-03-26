@@ -6,7 +6,7 @@
 
     // Logo header: primero desde settings (storage), luego archivos estáticos de fallback
     $logoHeaderPath = \App\Models\SiteSetting::get('logo_header', '');
-    $logoHeaderUrl  = $logoHeaderPath ? \Illuminate\Support\Facades\Storage::disk('public')->url($logoHeaderPath) : null;
+    $logoHeaderUrl  = \App\Support\MediaUrl::image($logoHeaderPath);
     $hasFullLogo    = $logoHeaderUrl || file_exists(public_path('images/brand/logo-full.svg'));
     $hasMarkLogo    = file_exists(public_path('images/brand/logo-mark.svg'));
 @endphp
@@ -64,6 +64,11 @@
                 <a href="https://wa.me/{{ $whatsapp }}"
                    target="_blank"
                    rel="noopener"
+                   data-track-event="whatsapp_click"
+                   data-track-category="conversion"
+                   data-track-label="WhatsApp Header"
+                   data-track-location="header"
+                   data-track-destination="whatsapp"
                    class="btn-secondary hidden px-4 py-2 text-sm sm:inline-flex"
                    aria-label="Escribir por WhatsApp">
                     WhatsApp

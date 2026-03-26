@@ -21,7 +21,7 @@
 
                 <div class="flex items-center">
                     @if($testimonial->photo)
-                        <img src="{{ asset('storage/' . $testimonial->photo) }}" 
+                        <img src="{{ \App\Support\MediaUrl::image($testimonial->photo) }}" 
                              alt="{{ $testimonial->name }}" 
                              class="w-12 h-12 rounded-full mr-3 object-cover">
                     @else
@@ -45,4 +45,3 @@
         </div>
     </div>
 </section>
-

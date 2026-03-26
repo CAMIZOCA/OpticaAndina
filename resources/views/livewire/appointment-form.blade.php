@@ -159,7 +159,12 @@
                     </span>
                 </button>
 
-                <a href="https://wa.me/{{ config('services.whatsapp.number') }}?text=Hola%2C%20quiero%20agendar%20mi%20cita%20de%20examen%20visual"
+                <a href="https://wa.me/{{ \App\Models\SiteSetting::get('whatsapp_number', '593999000000') }}?text=Hola%2C%20quiero%20agendar%20mi%20cita%20de%20examen%20visual"
+                   data-track-event="whatsapp_click"
+                   data-track-category="conversion"
+                   data-track-label="WhatsApp Citas"
+                   data-track-location="appointment_form"
+                   data-track-destination="whatsapp"
                    target="_blank"
                    class="bg-accent-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-accent-600 transition inline-flex items-center gap-2"
                 >

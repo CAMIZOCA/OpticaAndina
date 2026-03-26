@@ -22,7 +22,12 @@
                 </ul>
                 @endif
 
-                <a href="{{ $cta_link }}" class="inline-block bg-brand-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-brand-700 transition">
+                <a href="{{ $cta_link }}" class="inline-block bg-brand-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-brand-700 transition"
+                   data-track-event="primary_cta_click"
+                   data-track-category="conversion"
+                   data-track-label="{{ $cta_text }}"
+                   data-track-location="home_about"
+                   data-track-destination="{{ $cta_link }}">
                     {{ $cta_text }}
                 </a>
             </div>

@@ -18,7 +18,7 @@
     <div class="container mx-auto px-4">
         <div class="flex items-center gap-6">
             @if($brand->logo)
-                <img src="{{ asset('storage/' . $brand->logo) }}" alt="{{ $brand->name }}" class="h-20 object-contain">
+                <img src="{{ \App\Support\MediaUrl::image($brand->logo) }}" alt="{{ $brand->name }}" class="h-20 object-contain">
             @endif
             <div>
                 <h1 class="text-3xl font-bold text-gray-900">{{ $brand->name }}</h1>
@@ -54,4 +54,3 @@
     </div>
 </section>
 @endsection
-

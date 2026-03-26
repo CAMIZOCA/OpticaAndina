@@ -20,7 +20,7 @@
                     <a href="{{ route('catalogo.categoria', $category->slug) }}"
                        class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition border border-gray-100">
                         @if($category->image)
-                            <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
+                            <img src="{{ \App\Support\MediaUrl::image($category->image) }}" alt="{{ $category->name }}"
                                  class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
                         @else
                             <div class="w-full h-48 bg-brand-50 flex items-center justify-center">
@@ -75,4 +75,3 @@
 </section>
 @endif
 @endsection
-

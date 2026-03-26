@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="route-name" content="{{ request()->route()?->getName() }}">
 
     @php
         $defaultOgImage   = file_exists(public_path('images/brand/logo-full.svg')) ? asset('images/brand/logo-full.svg') : '';
@@ -89,9 +90,12 @@
 
     @include('components.footer')
 
-    <x-whatsapp-button :floating="true" label="WhatsApp" />
+    <x-whatsapp-button :floating="true" label="WhatsApp" event-location="floating_button" />
 
     @livewireScripts
+    <script>
+        window.__oaTrackedEvents = @json(session('tracked_conversion_events', []));
+    </script>
     <script>
         document.addEventListener('alpine:init', () => {});
     </script>

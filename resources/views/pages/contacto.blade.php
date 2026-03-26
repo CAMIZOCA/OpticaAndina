@@ -24,7 +24,9 @@
                         $phone    = \App\Models\SiteSetting::get('phone', '');
                         $whatsapp = \App\Models\SiteSetting::get('whatsapp_number', '');
                         $email    = \App\Models\SiteSetting::get('email', '');
-                        $hours    = \App\Models\SiteSetting::get('business_hours', 'Lun–Vie 9:00–18:00 / Sáb 9:00–14:00');
+                        $hours    = \App\Models\SiteSetting::get('hours', 'Lun-Vie 9:00-18:00 / Sab 9:00-14:00');
+                        $mapsUrl  = \App\Models\SiteSetting::get('maps_url', '');
+                        $mapsEmbed = \App\Models\SiteSetting::get('maps_embed', '');
                     @endphp
 
                     @if($address)
@@ -67,6 +69,11 @@
                                 <p class="font-semibold text-gray-800">WhatsApp</p>
                                 <a href="https://wa.me/{{ preg_replace('/\D/', '', $whatsapp) }}"
                                    target="_blank" rel="noopener"
+                                   data-track-event="whatsapp_click"
+                                   data-track-category="conversion"
+                                   data-track-label="WhatsApp Contacto"
+                                   data-track-location="contact_page"
+                                   data-track-destination="whatsapp"
                                    class="text-accent-600 hover:underline">{{ $whatsapp }}</a>
                             </div>
                         </div>
@@ -103,16 +110,18 @@
 
                 {{-- Google Maps embed --}}
                 <div class="mt-8 rounded-xl overflow-hidden border border-gray-200 h-56">
-                    <iframe
-                        title="Ubicación Óptica Andina en Tumbaco, Quito"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7977.5!2d-78.3833!3d-0.2167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d59e0000000001%3A0x0!2sTumbaco%2C+Ecuador!5e0!3m2!1ses!2sec!4v1"
-                        width="100%"
-                        height="100%"
-                        style="border:0;"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
+                    @if($mapsEmbed)
+                        {!! $mapsEmbed !!}
+                    @elseif($mapsUrl)
+                        <div class="h-full flex items-center justify-center bg-gray-50 text-center p-6">
+                            <div>
+                                <p class="font-semibold text-gray-900 mb-2">Abrir ubicacion en Google Maps</p>
+                                <a href="{{ $mapsUrl }}" target="_blank" rel="noopener" class="text-brand-600 hover:underline">
+                                    Ver mapa
+                                </a>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
 
@@ -190,6 +199,11 @@
                     </div>
 
                     <button type="submit"
+                            data-track-event="primary_cta_click"
+                            data-track-category="conversion"
+                            data-track-label="Enviar mensaje"
+                            data-track-location="contact_form"
+                            data-track-destination="contact_form"
                             class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 px-6 rounded-lg transition">
                         Enviar Mensaje
                     </button>

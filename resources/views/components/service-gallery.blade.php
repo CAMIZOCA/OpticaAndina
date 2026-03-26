@@ -9,7 +9,7 @@
             <div class="group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition">
                 <div class="relative h-64 bg-gray-200 overflow-hidden">
                     @if($service->image)
-                        <img src="{{ asset('storage/' . $service->image) }}" 
+                        <img src="{{ \App\Support\MediaUrl::image($service->image) }}" 
                              alt="{{ $service->title }}" 
                              class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                     @else
@@ -45,4 +45,3 @@
         </div>
     </div>
 </section>
-

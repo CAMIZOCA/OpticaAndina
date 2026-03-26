@@ -10,9 +10,11 @@ use App\Models\Product;
 use App\Models\Service;
 use App\Models\SiteSetting;
 use App\Models\Stat;
+use App\Models\Testimonial;
+use App\Models\Video;
 use App\Services\SeoService;
+use App\Support\MediaUrl;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -33,7 +35,7 @@ class HomeController extends Controller
     public function index()
     {
         $seo = SeoService::forPage('home');
-        $seo['schema']       = json_encode(SeoService::localBusinessSchema(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $seo['schema'] = json_encode(SeoService::localBusinessSchema(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         $seo['extra_schema'] = SeoService::websiteSchema();
 
         $settings = SiteSetting::getAll();
@@ -41,15 +43,15 @@ class HomeController extends Controller
         // ── Hero ────────────────────────────────────────────────────────────
         $heroImagePath = $settings['hero_image'] ?? null;
         $hero = [
-            'title'    => $settings['hero_title']    ?? 'Tu visión, nuestro compromiso',
-            'subtitle' => $settings['hero_subtitle']  ?? 'Más de 15 años cuidando la salud visual de las familias de Tumbaco. Exámenes visuales, monturas nacionales e importadas, lentes de contacto y mucho más.',
-            'cta_text' => $settings['hero_cta_text']  ?? 'Ver Catálogo',
+            'title' => $settings['hero_title'] ?? 'Tu visión, nuestro compromiso',
+            'subtitle' => $settings['hero_subtitle'] ?? 'Más de 15 años cuidando la salud visual de las familias de Tumbaco. Exámenes visuales, monturas nacionales e importadas, lentes de contacto y mucho más.',
+            'cta_text' => $settings['hero_cta_text'] ?? 'Ver Catálogo',
             'cta_link' => route('catalogo'),
-            'image'    => $heroImagePath ? Storage::disk('public')->url($heroImagePath) : null,
+            'image' => MediaUrl::image($heroImagePath),
         ];
 
         // ── About section ───────────────────────────────────────────────────
-        $rawFeatures  = $settings['about_features'] ?? null;
+        $rawFeatures = $settings['about_features'] ?? null;
         $featuresData = $rawFeatures ? json_decode($rawFeatures, true) : null;
         $aboutFeatures = [];
         if (is_array($featuresData)) {
@@ -65,16 +67,16 @@ class HomeController extends Controller
         }
         $aboutImagePath = $settings['about_image'] ?? null;
         $about = [
-            'title'    => $settings['about_title']   ?? 'Cuidado profesional y personalizado',
-            'content'  => $settings['about_content'] ?? 'En Óptica Andina nos dedicamos a proporcionar cuidado visual profesional y personalizado. Contamos con equipamiento de última generación y un equipo de especialistas certificados.',
+            'title' => $settings['about_title'] ?? 'Cuidado profesional y personalizado',
+            'content' => $settings['about_content'] ?? 'En Óptica Andina nos dedicamos a proporcionar cuidado visual profesional y personalizado. Contamos con equipamiento de última generación y un equipo de especialistas certificados.',
             'features' => $aboutFeatures,
-            'image'    => $aboutImagePath ? Storage::disk('public')->url($aboutImagePath) : null,
+            'image' => MediaUrl::image($aboutImagePath),
         ];
 
         // ── Process ─────────────────────────────────────────────────────────
         $rawProcess = $settings['home_process'] ?? null;
-        $process    = $rawProcess ? json_decode($rawProcess, true) : [];
-        if (!is_array($process)) {
+        $process = $rawProcess ? json_decode($rawProcess, true) : [];
+        if (! is_array($process)) {
             $process = [];
         }
 
@@ -84,7 +86,7 @@ class HomeController extends Controller
         // ── Section ordering ────────────────────────────────────────────────
         $rawOrder = $settings['home_sections_order'] ?? null;
         $sections = $rawOrder ? json_decode($rawOrder, true) : null;
-        if (!is_array($sections) || empty($sections)) {
+        if (! is_array($sections) || empty($sections)) {
             $sections = self::DEFAULT_SECTIONS;
         }
         // Only include sections with visible = true
@@ -97,30 +99,30 @@ class HomeController extends Controller
         $neededSectionKeys = array_column($sections, 'key');
 
         $services = in_array('services', $neededSectionKeys) || in_array('service_gallery', $neededSectionKeys)
-            ? Service::active()->ordered()->get()
+            ? $this->safeQuery('services', fn () => Service::active()->ordered()->get())
             : collect();
 
         $serviceGallery = $services->take(3);
-        $services       = $services->take(5);
+        $services = $services->take(5);
 
         $stats = in_array('stats', $neededSectionKeys)
             ? $this->safeQuery('stats', fn () => Stat::active()->ordered()->get())
             : collect();
 
         $featuredProducts = in_array('featured_products', $neededSectionKeys)
-            ? Product::with(['category', 'brand', 'images'])->active()->available()->featured()->ordered()->limit(8)->get()
+            ? $this->safeQuery('products', fn () => Product::with(['category', 'brand', 'images'])->active()->available()->featured()->ordered()->limit(8)->get())
             : collect();
 
         $brands = in_array('brands', $neededSectionKeys)
-            ? Brand::active()->limit(8)->get()
+            ? $this->safeQuery('brands', fn () => Brand::active()->limit(8)->get())
             : collect();
 
         $categories = in_array('categories', $neededSectionKeys)
-            ? Category::active()->root()->ordered()->get()
+            ? $this->safeQuery('categories', fn () => Category::active()->root()->ordered()->get())
             : collect();
 
         $latestPosts = in_array('latest_posts', $neededSectionKeys)
-            ? BlogPost::published()->latest()->limit($articlesCount)->get()
+            ? $this->safeQuery('blog_posts', fn () => BlogPost::published()->latest()->limit($articlesCount)->get())
             : collect();
 
         $faqs = in_array('faq', $neededSectionKeys)
@@ -128,8 +130,8 @@ class HomeController extends Controller
             : collect();
 
         // Optional: testimonials, video (future)
-        $testimonials = $this->safeQuery('testimonials', fn () => \App\Models\Testimonial::active()->featured()->ordered()->limit(3)->get());
-        $video        = $this->safeQuery('videos',       fn () => \App\Models\Video::ordered()->first());
+        $testimonials = $this->safeQuery('testimonials', fn () => Testimonial::active()->featured()->ordered()->limit(3)->get());
+        $video = $this->safeQuery('videos', fn () => Video::ordered()->first());
 
         return view('pages.home', compact(
             'seo',
@@ -153,7 +155,7 @@ class HomeController extends Controller
 
     public function nosotros()
     {
-        $seo      = SeoService::forPage('nosotros');
+        $seo = SeoService::forPage('nosotros');
         $settings = SiteSetting::getAll();
 
         $historia = array_filter([
@@ -163,13 +165,11 @@ class HomeController extends Controller
         ]);
 
         $nosotrosImagePath = $settings['nosotros_imagen'] ?? null;
-        $nosotrosImageUrl  = $nosotrosImagePath
-            ? \Illuminate\Support\Facades\Storage::disk('public')->url($nosotrosImagePath)
-            : null;
+        $nosotrosImageUrl = MediaUrl::image($nosotrosImagePath);
 
         $rawTeam = $settings['nosotros_team'] ?? null;
-        $team    = $rawTeam ? json_decode($rawTeam, true) : [];
-        if (!is_array($team) || empty($team)) {
+        $team = $rawTeam ? json_decode($rawTeam, true) : [];
+        if (! is_array($team) || empty($team)) {
             $team = [
                 ['name' => 'Especialista Óptico',  'role' => 'Optómetra Certificado',  'photo' => null],
                 ['name' => 'Atención al Cliente',  'role' => 'Asesora de Monturas',    'photo' => null],
@@ -177,17 +177,17 @@ class HomeController extends Controller
             ];
         }
 
-        $siteName         = SiteSetting::get('site_name', 'Óptica Andina');
-        $seo['schema']    = json_encode([
-            '@context'    => 'https://schema.org',
-            '@type'       => 'AboutPage',
-            'url'         => route('nosotros'),
-            'name'        => 'Nosotros – ' . $siteName,
+        $siteName = SiteSetting::get('site_name', 'Óptica Andina');
+        $seo['schema'] = json_encode([
+            '@context' => 'https://schema.org',
+            '@type' => 'AboutPage',
+            'url' => route('nosotros'),
+            'name' => 'Nosotros – '.$siteName,
             'description' => SiteSetting::get('seo_description', ''),
-            'mainEntity'  => [
+            'mainEntity' => [
                 '@type' => 'Organization',
-                'name'  => $siteName,
-                '@id'   => config('app.url') . '/#business',
+                'name' => $siteName,
+                '@id' => config('app.url').'/#business',
             ],
         ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         $seo['breadcrumb_schema'] = SeoService::breadcrumbSchema([
@@ -203,9 +203,10 @@ class HomeController extends Controller
     private function safeQuery(string $table, \Closure $query, mixed $default = null): mixed
     {
         try {
-            if (!Schema::hasTable($table)) {
+            if (! Schema::hasTable($table)) {
                 return $default ?? collect();
             }
+
             return $query();
         } catch (\Throwable) {
             return $default ?? collect();

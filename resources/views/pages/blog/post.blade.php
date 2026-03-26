@@ -50,7 +50,7 @@
 
             {{-- Imagen destacada --}}
             @if($post->image)
-                <img src="{{ asset('storage/' . $post->image) }}"
+                <img src="{{ \App\Support\MediaUrl::image($post->image) }}"
                      alt="{{ $post->title }}"
                      class="w-full rounded-2xl mb-10 max-h-96 object-cover">
             @endif
@@ -91,7 +91,7 @@
             @foreach($related as $rel)
                 <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
                     @if($rel->image)
-                        <img src="{{ asset('storage/' . $rel->image) }}" alt="{{ $rel->title }}" class="w-full h-40 object-cover">
+                        <img src="{{ \App\Support\MediaUrl::image($rel->image) }}" alt="{{ $rel->title }}" class="w-full h-40 object-cover">
                     @endif
                     <div class="p-5">
                         <p class="text-xs text-text-muted mb-2">{{ $rel->published_at?->format('d M Y') }}</p>
@@ -109,4 +109,3 @@
 </section>
 @endif
 @endsection
-

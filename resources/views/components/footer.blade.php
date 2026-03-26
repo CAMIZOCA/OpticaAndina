@@ -9,7 +9,7 @@
 
     // Logo footer: primero desde settings (storage), luego archivo estático de fallback
     $logoFooterPath = \App\Models\SiteSetting::get('logo_footer', '');
-    $logoFooterUrl  = $logoFooterPath ? \Illuminate\Support\Facades\Storage::disk('public')->url($logoFooterPath) : null;
+    $logoFooterUrl  = \App\Support\MediaUrl::image($logoFooterPath);
     $hasMarkLogo    = file_exists(public_path('images/brand/logo-mark.svg'));
 @endphp
 

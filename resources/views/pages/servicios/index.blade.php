@@ -28,7 +28,12 @@
     <div class="container mx-auto px-4">
         <h2 class="text-2xl font-bold mb-4">¿Tienes alguna pregunta?</h2>
         <p class="cta-subtitle mb-6">Escríbenos por WhatsApp o visítanos en nuestra óptica en Tumbaco.</p>
-        <a href="{{ route('contacto') }}" class="inline-block bg-white text-brand-700 font-semibold px-6 py-3 rounded-lg hover:bg-brand-50 transition">
+        <a href="{{ route('contacto') }}" class="inline-block bg-white text-brand-700 font-semibold px-6 py-3 rounded-lg hover:bg-brand-50 transition"
+           data-track-event="primary_cta_click"
+           data-track-category="conversion"
+           data-track-label="Cont?ctanos"
+           data-track-location="services_index"
+           data-track-destination="{{ route('contacto') }}">
             Contáctanos
         </a>
     </div>

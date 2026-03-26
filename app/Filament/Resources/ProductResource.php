@@ -15,9 +15,13 @@ use Illuminate\Support\Str;
 class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
+
     protected static ?string $navigationLabel = 'Productos';
+
     protected static ?string $navigationGroup = 'Catálogo';
+
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
@@ -66,6 +70,7 @@ class ProductResource extends Resource
                             Forms\Components\FileUpload::make('path')
                                 ->label('Imagen')
                                 ->image()
+                                ->disk('public')
                                 ->directory('products')
                                 ->required(),
                             Forms\Components\TextInput::make('alt')
@@ -206,9 +211,9 @@ class ProductResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListProducts::route('/'),
+            'index' => Pages\ListProducts::route('/'),
             'create' => Pages\CreateProduct::route('/create'),
-            'edit'   => Pages\EditProduct::route('/{record}/edit'),
+            'edit' => Pages\EditProduct::route('/{record}/edit'),
         ];
     }
 }

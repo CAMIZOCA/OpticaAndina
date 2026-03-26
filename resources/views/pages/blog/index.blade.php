@@ -20,7 +20,7 @@
                     <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition border border-gray-100">
                         @if($post->image)
                             <a href="{{ route('blog.show', $post->slug) }}">
-                                <img src="{{ asset('storage/' . $post->image) }}"
+                                <img src="{{ \App\Support\MediaUrl::image($post->image) }}"
                                      alt="{{ $post->title }}"
                                      class="w-full h-48 object-cover hover:opacity-90 transition">
                             </a>
@@ -69,4 +69,3 @@
     </div>
 </section>
 @endsection
-

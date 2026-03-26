@@ -4,4 +4,4 @@ Allow: /
 Disallow: /admin
 Disallow: /admin/*
 
-Sitemap: {{ config('app.url') }}/sitemap.xml
+Sitemap: {{ rtrim(config('app.url'), '/') }}/sitemap.xml

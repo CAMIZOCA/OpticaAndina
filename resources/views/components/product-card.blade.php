@@ -3,7 +3,7 @@
     <a href="{{ route('catalogo.producto', [$product->category->slug, $product->slug]) }}" class="block">
         @if($product->coverImage)
             <div class="aspect-square overflow-hidden bg-gray-50">
-                <img src="{{ asset('storage/' . $product->coverImage->path) }}"
+                <img src="{{ \App\Support\MediaUrl::image($product->coverImage->path) }}"
                      alt="{{ $product->coverImage->alt ?? $product->name }}"
                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                      loading="lazy">
@@ -35,4 +35,3 @@
         </div>
     </a>
 </article>
-

@@ -137,6 +137,10 @@ The Filament admin panel is at `/admin`. Create an admin user with:
 php artisan make:filament-user
 ```
 
+## Deploy y Backups
+
+Consulta la guía operativa en [docs/OPERATIONS.md](./docs/OPERATIONS.md).
+
 ---
 
 ## Technical Highlights

@@ -7,15 +7,19 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
-use Illuminate\Support\Facades\Storage;
 
 class ManageSettings extends Page
 {
-    protected static ?string $navigationIcon  = 'heroicon-o-cog-6-tooth';
+    protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
+
     protected static ?string $navigationLabel = 'Configuración';
+
     protected static ?string $navigationGroup = 'Ajustes';
+
     protected static ?string $title = 'Configuración del sitio';
+
     protected static string $view = 'filament.pages.manage-settings';
+
     protected static ?int $navigationSort = 1;
 
     /** Keys that store JSON arrays (Repeater fields). */
@@ -30,16 +34,16 @@ class ManageSettings extends Page
     public static function homeSectionOptions(): array
     {
         return [
-            'services'          => '🔧 Nuestros Servicios',
-            'stats'             => '📊 Estadísticas (Nos avala…)',
-            'about'             => '💡 Cuidado profesional y personalizado',
-            'process'           => '⚙️  Nuestro Proceso',
-            'service_gallery'   => '🖼️  Galería de Servicios',
+            'services' => '🔧 Nuestros Servicios',
+            'stats' => '📊 Estadísticas (Nos avala…)',
+            'about' => '💡 Cuidado profesional y personalizado',
+            'process' => '⚙️  Nuestro Proceso',
+            'service_gallery' => '🖼️  Galería de Servicios',
             'featured_products' => '🛍️  Productos Destacados',
-            'brands'            => '🏷️  Marcas',
-            'categories'        => '📁 Categorías',
-            'latest_posts'      => '📰 Artículos Recientes',
-            'faq'               => '❓ Preguntas Frecuentes',
+            'brands' => '🏷️  Marcas',
+            'categories' => '📁 Categorías',
+            'latest_posts' => '📰 Artículos Recientes',
+            'faq' => '❓ Preguntas Frecuentes',
         ];
     }
 
@@ -85,7 +89,7 @@ class ManageSettings extends Page
                                     ->schema([
                                         Forms\Components\FileUpload::make('logo_header')
                                             ->label('Logo header')->image()->disk('public')->directory('brand')
-                                            ->acceptedFileTypes(['image/png','image/jpeg','image/svg+xml','image/webp'])
+                                            ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/svg+xml', 'image/webp'])
                                             ->maxSize(2048)->imagePreviewHeight('80')->downloadable()
                                             ->helperText('Si no sube un logo, se mostrará el nombre del sitio en texto.'),
                                     ]),
@@ -94,7 +98,7 @@ class ManageSettings extends Page
                                     ->schema([
                                         Forms\Components\FileUpload::make('logo_footer')
                                             ->label('Logo footer')->image()->disk('public')->directory('brand')
-                                            ->acceptedFileTypes(['image/png','image/jpeg','image/svg+xml','image/webp'])
+                                            ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/svg+xml', 'image/webp'])
                                             ->maxSize(2048)->imagePreviewHeight('80')->downloadable()
                                             ->helperText('Si no sube un logo, se mostrará el isotipo por defecto.'),
                                     ]),
@@ -178,7 +182,7 @@ class ManageSettings extends Page
                                     ->schema([
                                         Forms\Components\Select::make('home_articles_count')
                                             ->label('Cantidad de artículos a mostrar en el inicio')
-                                            ->options(['2'=>'2 artículos','3'=>'3 artículos','4'=>'4 artículos','6'=>'6 artículos'])
+                                            ->options(['2' => '2 artículos', '3' => '3 artículos', '4' => '4 artículos', '6' => '6 artículos'])
                                             ->default('3')
                                             ->helperText('Número de artículos del blog visibles en la página de inicio.'),
                                     ]),
@@ -259,7 +263,7 @@ class ManageSettings extends Page
                                         Forms\Components\FileUpload::make('nosotros_imagen')
                                             ->label('Foto del local / equipo')->image()
                                             ->disk('public')->directory('pages')
-                                            ->acceptedFileTypes(['image/png','image/jpeg','image/webp'])
+                                            ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/webp'])
                                             ->maxSize(3072)->imagePreviewHeight('160')
                                             ->helperText('Tamaño recomendado: 800×600 px.'),
                                     ]),
@@ -274,7 +278,7 @@ class ManageSettings extends Page
                                                     ->label('Cargo')->required()->placeholder('Optómetra Certificada'),
                                                 Forms\Components\FileUpload::make('photo')
                                                     ->label('Foto')->image()->disk('public')->directory('team')
-                                                    ->acceptedFileTypes(['image/png','image/jpeg','image/webp'])
+                                                    ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/webp'])
                                                     ->maxSize(1024)->imagePreviewHeight('100'),
                                             ])
                                             ->reorderable()->collapsible()->defaultItems(0),
@@ -298,6 +302,7 @@ class ManageSettings extends Page
                                         Forms\Components\FileUpload::make('og_image')
                                             ->label('Imagen Open Graph')
                                             ->image()
+                                            ->disk('public')
                                             ->directory('seo')
                                             ->columnSpanFull(),
                                     ]),

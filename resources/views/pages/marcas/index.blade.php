@@ -20,7 +20,7 @@
                     <a href="{{ route('marcas.show', $brand->slug) }}"
                        class="group bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-md transition border border-gray-100 hover:border-brand-200">
                         @if($brand->logo)
-                            <img src="{{ asset('storage/' . $brand->logo) }}" alt="{{ $brand->name }}"
+                            <img src="{{ \App\Support\MediaUrl::image($brand->logo) }}" alt="{{ $brand->name }}"
                                  class="h-16 object-contain mx-auto mb-3 grayscale group-hover:grayscale-0 transition">
                         @else
                             <div class="h-16 flex items-center justify-center mb-3">
@@ -38,4 +38,3 @@
     </div>
 </section>
 @endsection
-

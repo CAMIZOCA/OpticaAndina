@@ -101,7 +101,7 @@
                     @foreach($brands as $brand)
                         <a href="{{ route('marcas.show', $brand->slug) }}" class="grayscale hover:grayscale-0 transition opacity-70 hover:opacity-100">
                             @if($brand->logo)
-                                <img src="{{ asset('storage/' . $brand->logo) }}" alt="{{ $brand->name }}" class="h-12 object-contain">
+                                <img src="{{ \App\Support\MediaUrl::image($brand->logo) }}" alt="{{ $brand->name }}" class="h-12 object-contain">
                             @else
                                 <span class="text-gray-600 font-semibold text-lg">{{ $brand->name }}</span>
                             @endif
@@ -127,7 +127,7 @@
                         <a href="{{ route('catalogo.categoria', $category->slug) }}"
                            class="group relative overflow-hidden rounded-xl bg-brand-50 hover:bg-brand-100 transition p-6 text-center border border-brand-100 hover:border-brand-300">
                             @if($category->image)
-                                <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" class="w-16 h-16 object-cover rounded-full mx-auto mb-3">
+                                <img src="{{ \App\Support\MediaUrl::image($category->image) }}" alt="{{ $category->name }}" class="w-16 h-16 object-cover rounded-full mx-auto mb-3">
                             @else
                                 <div class="w-16 h-16 bg-brand-200 rounded-full mx-auto mb-3 flex items-center justify-center">
                                     <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -159,7 +159,7 @@
                     @foreach($latestPosts as $post)
                         <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
                             @if($post->image)
-                                <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="w-full h-44 object-cover">
+                                <img src="{{ \App\Support\MediaUrl::image($post->image) }}" alt="{{ $post->title }}" class="w-full h-44 object-cover">
                             @endif
                             <div class="p-5">
                                 <p class="text-sm text-text-muted mb-2">{{ $post->published_at?->format('d M Y') }}</p>

@@ -4,22 +4,31 @@ namespace App\Livewire;
 
 use App\Models\Appointment;
 use App\Models\Service;
+use App\Services\ConversionTracker;
 use Livewire\Component;
-use Illuminate\Support\Facades\Mail;
 
 class AppointmentForm extends Component
 {
     public $name = '';
+
     public $email = '';
+
     public $phone = '';
+
     public $service_slug = '';
+
     public $appointment_date = '';
+
     public $appointment_time = '';
+
     public $message = '';
 
     public $services = [];
+
     public $submitted = false;
+
     public $successMessage = '';
+
     public $errorMessage = '';
 
     public function mount()
@@ -73,6 +82,10 @@ class AppointmentForm extends Component
                 'message' => $this->message,
                 'status' => 'pending',
             ]);
+
+            ConversionTracker::track('appointment_form_submitted', request(), [
+                'service_slug' => $this->service_slug,
+            ], 'lead');
 
             // Reset form
             $this->reset();

@@ -26,7 +26,7 @@
                     <div class="rounded-2xl overflow-hidden bg-gray-50 mb-4">
                         @foreach($product->images as $i => $img)
                             <img x-show="active === {{ $i }}"
-                                 src="{{ asset('storage/' . $img->path) }}"
+                                 src="{{ \App\Support\MediaUrl::image($img->path) }}"
                                  alt="{{ $img->alt ?? $product->name }}"
                                  class="w-full h-96 object-contain">
                         @endforeach
@@ -38,7 +38,7 @@
                                 <button @click="active = {{ $i }}"
                                         class="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition"
                                         :class="active === {{ $i }} ? 'border-brand-500' : 'border-transparent hover:border-gray-300'">
-                                    <img src="{{ asset('storage/' . $img->path) }}" alt="" class="w-full h-full object-cover">
+                                    <img src="{{ \App\Support\MediaUrl::image($img->path) }}" alt="" class="w-full h-full object-cover">
                                 </button>
                             @endforeach
                         </div>
@@ -134,6 +134,7 @@
                     <x-whatsapp-button
                         :message="$product->whatsapp_text ?? 'Hola, me interesa el producto: ' . $product->name"
                         label="Consultar por WhatsApp"
+                        event-location="product_detail"
                         class="w-full justify-center"
                     />
                 </div>
@@ -156,4 +157,3 @@
 </section>
 @endif
 @endsection
-

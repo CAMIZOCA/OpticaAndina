@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Schema;
 
 class SeoMeta extends Model
 {
@@ -18,7 +19,11 @@ class SeoMeta extends Model
 
     public static function getForPage(string $key): ?static
     {
-        return Cache::rememberForever('seo_meta_' . $key, function () use ($key) {
+        if (! Schema::hasTable('seo_metas')) {
+            return null;
+        }
+
+        return Cache::rememberForever('seo_meta_'.$key, function () use ($key) {
             return static::where('page_key', $key)->first();
         });
     }
@@ -27,7 +32,7 @@ class SeoMeta extends Model
     {
         $pages = $key ? [$key] : ['home', 'nosotros', 'servicios', 'catalogo', 'marcas', 'blog', 'contacto'];
         foreach ($pages as $page) {
-            Cache::forget('seo_meta_' . $page);
+            Cache::forget('seo_meta_'.$page);
         }
     }
 

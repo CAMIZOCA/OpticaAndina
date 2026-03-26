@@ -74,7 +74,7 @@
             @foreach($team as $member)
                 <div class="text-center">
                     @if(!empty($member['photo']))
-                        <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($member['photo']) }}"
+                        <img src="{{ \App\Support\MediaUrl::image($member['photo']) }}"
                              alt="{{ $member['name'] }}"
                              class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-brand-100">
                     @else

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\SiteSetting;
+use App\Support\MediaUrl;
 use Illuminate\Http\Request;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
@@ -38,13 +39,13 @@ class StripeController extends Controller
             $lineItem['price'] = $product->stripe_price_id;
         } else {
             $lineItem['price_data'] = [
-                'currency'     => 'usd',
-                'unit_amount'  => (int) round((float) $product->price * 100),
+                'currency' => 'usd',
+                'unit_amount' => (int) round((float) $product->price * 100),
                 'product_data' => [
-                    'name'        => $product->name,
+                    'name' => $product->name,
                     'description' => $product->short_description ?? $product->category?->name,
-                    'images'      => $product->coverImage
-                        ? [asset('storage/' . $product->coverImage->path)]
+                    'images' => $product->coverImage
+                        ? [MediaUrl::image($product->coverImage->path)]
                         : [],
                 ],
             ];
@@ -52,15 +53,15 @@ class StripeController extends Controller
 
         $checkoutSession = Session::create([
             'payment_method_types' => ['card'],
-            'line_items'           => [$lineItem],
-            'mode'                 => 'payment',
-            'success_url'          => route('checkout.success') . '?session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url'           => route('catalogo.producto', [
+            'line_items' => [$lineItem],
+            'mode' => 'payment',
+            'success_url' => route('checkout.success').'?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => route('catalogo.producto', [
                 $product->category->slug,
                 $product->slug,
             ]),
             'metadata' => [
-                'product_id'   => $product->id,
+                'product_id' => $product->id,
                 'product_name' => $product->name,
             ],
         ]);
@@ -70,7 +71,8 @@ class StripeController extends Controller
 
     public function success(Request $request)
     {
-        $seo = ['title' => 'Pago exitoso – ' . config('app.name')];
+        $seo = ['title' => 'Pago exitoso – '.config('app.name')];
+
         return view('pages.checkout.success', compact('seo'));
     }
 

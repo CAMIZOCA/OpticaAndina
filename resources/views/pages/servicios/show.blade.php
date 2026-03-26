@@ -32,7 +32,7 @@
 
             {{-- Imagen principal --}}
             @if($service->image)
-                <img src="{{ asset('storage/' . $service->image) }}" alt="{{ $service->title }}"
+                <img src="{{ \App\Support\MediaUrl::image($service->image) }}" alt="{{ $service->title }}"
                      class="w-full h-72 object-cover rounded-2xl mb-8">
             @endif
 
@@ -52,6 +52,7 @@
                 <x-whatsapp-button
                     :message="$service->cta_whatsapp_text ?? 'Hola, quisiera información sobre el servicio: ' . $service->title"
                     label="Consultar por WhatsApp"
+                    event-location="service_detail"
                 />
             </div>
 
@@ -95,4 +96,3 @@
 </section>
 @endif
 @endsection
-
