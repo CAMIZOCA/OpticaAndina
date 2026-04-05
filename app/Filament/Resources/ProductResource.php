@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Imports\ProductImporter;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Models\Product;
 use Filament\Forms;
@@ -30,12 +31,14 @@ class ProductResource extends Resource
             Forms\Components\Section::make('Información principal')
                 ->columns(2)
                 ->schema([
-                    Forms\Components\Select::make('category_id')
-                        ->label('Categoría')
-                        ->relationship('category', 'name')
+                    Forms\Components\Select::make('categories')
+                        ->label('Categorías')
+                        ->relationship('categories', 'name')
+                        ->multiple()
                         ->searchable()
                         ->preload()
-                        ->required(),
+                        ->required()
+                        ->columnSpanFull(),
                     Forms\Components\Select::make('brand_id')
                         ->label('Marca')
                         ->relationship('brand', 'name')
@@ -153,15 +156,16 @@ class ProductResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn ($query) => $query->with(['category', 'brand']))
+            ->modifyQueryUsing(fn ($query) => $query->with(['categories', 'brand']))
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nombre')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('category.name')
-                    ->label('Categoría')
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('categories.name')
+                    ->label('Categorías')
+                    ->badge()
+                    ->separator(','),
                 Tables\Columns\TextColumn::make('brand.name')
                     ->label('Marca')
                     ->sortable(),
@@ -189,8 +193,14 @@ class ProductResource extends Resource
                     ->sortable(),
             ])
             ->defaultSort('sort_order')
+            ->headerActions([
+                Tables\Actions\ImportAction::make()
+                    ->importer(ProductImporter::class)
+                    ->label('Importar CSV')
+                    ->icon('heroicon-o-arrow-up-tray'),
+            ])
             ->filters([
-                Tables\Filters\SelectFilter::make('category')->relationship('category', 'name'),
+                Tables\Filters\SelectFilter::make('categories')->relationship('categories', 'name'),
                 Tables\Filters\SelectFilter::make('brand')->relationship('brand', 'name'),
                 Tables\Filters\TernaryFilter::make('is_active')->label('Activo'),
                 Tables\Filters\TernaryFilter::make('is_featured')->label('Destacado'),

@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Imports\BrandImporter;
 use App\Filament\Resources\BrandResource\Pages;
 use App\Models\Brand;
+use Filament\Actions\ImportAction;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
@@ -111,6 +113,12 @@ class BrandResource extends Resource
                     ->since()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->headerActions([
+                Tables\Actions\ImportAction::make()
+                    ->importer(BrandImporter::class)
+                    ->label('Importar CSV')
+                    ->icon('heroicon-o-arrow-up-tray'),
             ])
             ->filters([
                 Tables\Filters\TernaryFilter::make('is_active')->label('Estado'),

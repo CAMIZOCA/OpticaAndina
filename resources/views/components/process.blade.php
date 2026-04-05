@@ -16,19 +16,28 @@
             @endphp
 
             @foreach($steps as $index => $step)
+            @php $stepUrl = $step['url'] ?? ''; @endphp
+            @if($stepUrl)
+            <a href="{{ $stepUrl }}" class="relative text-center group block">
+            @else
             <div class="relative text-center">
+            @endif
                 <div class="mb-4">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-brand-600 text-white rounded-full">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-brand-600 text-white rounded-full {{ $stepUrl ? 'group-hover:bg-brand-700 transition-colors' : '' }}">
                         <i class="{{ $step['icon'] ?? 'fas fa-check' }} text-2xl"></i>
                     </div>
                 </div>
-                <h3 class="font-semibold text-gray-800 mb-2">{{ $step['title'] }}</h3>
+                <h3 class="font-semibold text-gray-800 mb-2 {{ $stepUrl ? 'group-hover:text-brand-700 transition-colors' : '' }}">{{ $step['title'] }}</h3>
                 <p class="text-gray-600 text-sm">{{ $step['text'] }}</p>
 
                 @if($index < count($steps) - 1)
                 <div class="hidden md:flex absolute top-8 -right-4 -translate-y-1/2 items-center justify-center text-brand-300 text-2xl leading-none">→</div>
                 @endif
+            @if($stepUrl)
+            </a>
+            @else
             </div>
+            @endif
             @endforeach
         </div>
     </div>

@@ -1,20 +1,25 @@
 @php
-    $siteName  = \App\Models\SiteSetting::get('site_name', 'Óptica Andina');
-    $whatsapp  = \App\Models\SiteSetting::get('whatsapp_number', '593999000000');
-    $phone     = \App\Models\SiteSetting::get('phone', '');
-    $currentRoute = request()->route()?->getName() ?? '';
+    $siteName     = \App\Models\SiteSetting::get('site_name', 'Óptica Andina');
+    $whatsapp     = \App\Models\SiteSetting::get('whatsapp_number', '593999000000');
+    $whatsappMsg  = \App\Models\SiteSetting::get('whatsapp_message', '');
+    $phone        = \App\Models\SiteSetting::get('phone', '');
+    $currentRoute  = request()->route()?->getName() ?? '';
+    $headerAddress = \App\Models\SiteSetting::get('address_header') ?: \App\Models\SiteSetting::get('address', '');
 
     // Logo header: primero desde settings (storage), luego archivos estáticos de fallback
     $logoHeaderPath = \App\Models\SiteSetting::get('logo_header', '');
     $logoHeaderUrl  = \App\Support\MediaUrl::image($logoHeaderPath);
     $hasFullLogo    = $logoHeaderUrl || file_exists(public_path('images/brand/logo-full.svg'));
-    $hasMarkLogo    = file_exists(public_path('images/brand/logo-mark.svg'));
+
+    $logoMarkPath   = \App\Models\SiteSetting::get('logo_mark', '');
+    $logoMarkUrl    = \App\Support\MediaUrl::image($logoMarkPath);
+    $hasMarkLogo    = $logoMarkUrl || file_exists(public_path('images/brand/logo-mark.svg'));
 @endphp
 
 <header class="site-header sticky top-0 z-50" x-data="{ open: false }">
     <div class="bg-brand-700 py-1.5 text-sm text-white hidden md:block">
         <div class="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-            <span>{{ \App\Models\SiteSetting::get('address', '') }}</span>
+            <span>{{ $headerAddress }}</span>
             <div class="flex items-center gap-4">
                 @if($phone)
                 <a href="tel:{{ $phone }}" class="text-white transition-colors hover:text-accent-200">{{ $phone }}</a>
@@ -28,7 +33,7 @@
         <div class="flex h-18 items-center justify-between">
             <a href="{{ route('home') }}" class="inline-flex items-center gap-3" aria-label="Inicio {{ $siteName }}">
                 @if($hasMarkLogo)
-                <img src="{{ asset('images/brand/logo-mark.svg') }}" alt="Isotipo {{ $siteName }}" width="42" height="42" class="h-10 w-10 shrink-0 md:hidden">
+                <img src="{{ $logoMarkUrl ?: asset('images/brand/logo-mark.svg') }}" alt="Isotipo {{ $siteName }}" width="42" height="42" class="h-10 w-10 shrink-0 md:hidden">
                 @endif
 
                 @if($logoHeaderUrl)
@@ -61,7 +66,7 @@
             </nav>
 
             <div class="flex items-center gap-3">
-                <a href="https://wa.me/{{ $whatsapp }}"
+                <a href="https://wa.me/{{ $whatsapp }}{{ $whatsappMsg ? '?text='.rawurlencode($whatsappMsg) : '' }}"
                    target="_blank"
                    rel="noopener"
                    data-track-event="whatsapp_click"

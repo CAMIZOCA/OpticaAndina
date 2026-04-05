@@ -49,7 +49,7 @@ class ProductFilter extends Component
     {
         $query = Product::with(['brand', 'images'])
             ->active()
-            ->where('category_id', $this->category->id);
+            ->whereHas('categories', fn ($q) => $q->where('categories.id', $this->category->id));
 
         if ($this->search) {
             $term = $this->search;

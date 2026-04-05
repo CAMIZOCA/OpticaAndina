@@ -2,7 +2,12 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\ManageSettings;
+use App\Filament\Pages\ManageContactSettings;
+use App\Filament\Pages\ManageGeneralSettings;
+use App\Filament\Pages\ManageHomeSettings;
+use App\Filament\Pages\ManageNosotrosSettings;
+use App\Filament\Pages\ManagePaymentSettings;
+use App\Filament\Pages\ManageSeoSettings;
 use App\Filament\Resources\BlogPostResource;
 use App\Filament\Resources\BrandResource;
 use App\Filament\Resources\CategoryResource;
@@ -43,6 +48,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->passwordReset()
             ->profile(isSimple: false)
             ->brandName('Óptica Andina')
             ->colors([
@@ -63,7 +69,12 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->pages([
                 Pages\Dashboard::class,
-                ManageSettings::class,
+                ManageGeneralSettings::class,
+                ManageContactSettings::class,
+                ManageHomeSettings::class,
+                ManageNosotrosSettings::class,
+                ManageSeoSettings::class,
+                ManagePaymentSettings::class,
             ])
             ->widgets([
                 Widgets\AccountWidget::class,

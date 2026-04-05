@@ -11,6 +11,14 @@
         $trackingSettings = \App\Models\SiteSetting::getAll();
     @endphp
 
+    {{-- Favicon --}}
+    @php $faviconPath = $trackingSettings['favicon'] ?? ''; @endphp
+    @if($faviconPath)
+    <link rel="icon" href="{{ \App\Support\MediaUrl::image($faviconPath) }}">
+    @else
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
+    @endif
+
     {{-- Verification meta tags --}}
     @if(!empty($trackingSettings['google_search_console']))
     <meta name="google-site-verification" content="{{ $trackingSettings['google_search_console'] }}">
@@ -35,6 +43,7 @@
         :site-name="$seo['site_name'] ?? config('app.name')"
     />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.bunny.net">
     <link rel="preload" href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">

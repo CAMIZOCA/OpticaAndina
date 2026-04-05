@@ -88,10 +88,15 @@ class ManageSettings extends Page
                                     ->description('Se muestra en la barra de navegación superior (fondo blanco). Formatos: PNG, JPG, SVG, WebP. Tamaño recomendado: 320×80 px.')
                                     ->schema([
                                         Forms\Components\FileUpload::make('logo_header')
-                                            ->label('Logo header')->image()->disk('public')->directory('brand')
+                                            ->label('Logo header (escritorio)')->image()->disk('public')->directory('brand')
                                             ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/svg+xml', 'image/webp'])
                                             ->maxSize(2048)->imagePreviewHeight('80')->downloadable()
-                                            ->helperText('Si no sube un logo, se mostrará el nombre del sitio en texto.'),
+                                            ->helperText('Visible en pantallas medianas y grandes (≥768 px). Si no sube un logo, se mostrará el nombre del sitio en texto.'),
+                                        Forms\Components\FileUpload::make('logo_mark')
+                                            ->label('Logo móvil / isotipo (mobile)')->image()->disk('public')->directory('brand')
+                                            ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/svg+xml', 'image/webp'])
+                                            ->maxSize(1024)->imagePreviewHeight('60')->downloadable()
+                                            ->helperText('Icono cuadrado que aparece en el header en móvil (<768 px). Tamaño recomendado: 80×80 px. Si no sube ninguno, se usará el archivo logo-mark.svg estático.'),
                                     ]),
                                 Forms\Components\Section::make('Logo del Footer')
                                     ->description('Se muestra en el pie de página (fondo oscuro azul). Usa preferentemente una versión blanca o clara del logo. Tamaño recomendado: 160×50 px.')
