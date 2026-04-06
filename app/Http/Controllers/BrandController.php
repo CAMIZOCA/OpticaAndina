@@ -22,9 +22,17 @@ class BrandController extends Controller
         $seo['breadcrumb_schema'] = SeoService::breadcrumbSchema([
             ['name' => 'Marcas', 'url' => route('marcas')],
         ]);
-        $brands = Brand::active()->withCount(['products' => fn ($q) => $q->active()])->get();
+        $withProductCount = ['products' => fn ($q) => $q->active()];
+        $featuredBrands = Brand::active()->featured()
+            ->withCount($withProductCount)
+            ->orderBy('name')
+            ->get();
+        $regularBrands = Brand::active()->where('is_featured', false)
+            ->withCount($withProductCount)
+            ->orderBy('name')
+            ->get();
 
-        return view('pages.marcas.index', compact('seo', 'brands'));
+        return view('pages.marcas.index', compact('seo', 'featuredBrands', 'regularBrands'));
     }
 
     public function show(string $slug)

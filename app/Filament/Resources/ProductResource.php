@@ -4,13 +4,18 @@ namespace App\Filament\Resources;
 
 use App\Filament\Imports\ProductImporter;
 use App\Filament\Resources\ProductResource\Pages;
+use App\Models\Media;
 use App\Models\Product;
+use App\Support\MediaUrl;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
 class ProductResource extends Resource
@@ -65,29 +70,154 @@ class ProductResource extends Resource
                 ]),
 
             Forms\Components\Section::make('Imágenes')
+                ->description('Agrega imágenes eligiendo desde la galería de medios o subiendo nuevas.')
                 ->schema([
                     Forms\Components\Repeater::make('images')
                         ->relationship()
                         ->label('Imágenes del producto')
                         ->schema([
-                            Forms\Components\FileUpload::make('path')
-                                ->label('Imagen')
-                                ->image()
-                                ->disk('public')
-                                ->directory('products')
-                                ->required(),
+
+                            // ── Almacena el path real (DB column) ─────────────
+                            Forms\Components\Hidden::make('path'),
+
+                            // ── Preview de la imagen actual ───────────────────
+                            Forms\Components\Placeholder::make('image_preview')
+                                ->label('Vista previa')
+                                ->live()
+                                ->content(function (Get $get): HtmlString {
+                                    $path = $get('path');
+                                    $url  = $path ? MediaUrl::image($path) : null;
+                                    if ($url) {
+                                        return new HtmlString(
+                                            '<img src="' . e($url) . '" alt="Vista previa"
+                                                 style="max-height:160px;max-width:100%;border-radius:0.5rem;object-fit:cover;"
+                                                 loading="lazy">'
+                                        );
+                                    }
+                                    return new HtmlString(
+                                        '<div style="height:80px;display:flex;align-items:center;justify-content:center;'
+                                        . 'background:#f3f4f6;border-radius:0.5rem;border:2px dashed #d1d5db;'
+                                        . 'color:#9ca3af;font-size:0.875rem;">Sin imagen seleccionada</div>'
+                                    );
+                                })
+                                ->columnSpanFull(),
+
+                            // ── Botones de selección ──────────────────────────
+                            Forms\Components\Actions::make([
+
+                                // Botón 1: Elegir de la galería de medios
+                                Forms\Components\Actions\Action::make('pick_from_gallery')
+                                    ->label('Elegir de galería')
+                                    ->icon('heroicon-o-photo')
+                                    ->color('gray')
+                                    ->slideOver()
+                                    ->form([
+                                        Forms\Components\Select::make('media_id')
+                                            ->label('Imagen de la galería de medios')
+                                            ->options(fn (): array => Media::orderByDesc('created_at')
+                                                ->get()
+                                                ->mapWithKeys(fn (Media $m) => [
+                                                    $m->id => ($m->filename ?: basename($m->path)),
+                                                ])
+                                                ->all()
+                                            )
+                                            ->searchable()
+                                            ->native(false)
+                                            ->required()
+                                            ->live()
+                                            ->placeholder('Buscar imagen por nombre…')
+                                            ->helperText('Las imágenes se administran en Contenido → Galería de Medios.'),
+
+                                        Forms\Components\Placeholder::make('gallery_preview')
+                                            ->label('Vista previa')
+                                            ->content(function (Get $get): HtmlString {
+                                                $mediaId = $get('media_id');
+                                                if (! $mediaId) {
+                                                    return new HtmlString(
+                                                        '<p style="color:#9ca3af;font-size:0.875rem;">Selecciona una imagen para ver la vista previa.</p>'
+                                                    );
+                                                }
+                                                $media = Media::find($mediaId);
+                                                $url   = $media ? MediaUrl::image($media->path) : null;
+                                                if (! $url) {
+                                                    return new HtmlString('<p style="color:#9ca3af;">Imagen no disponible.</p>');
+                                                }
+                                                return new HtmlString(
+                                                    '<img src="' . e($url) . '" alt="' . e($media->alt ?? '') . '"
+                                                         style="max-height:220px;max-width:100%;border-radius:0.5rem;object-fit:cover;"
+                                                         loading="lazy">'
+                                                );
+                                            }),
+                                    ])
+                                    ->action(function (array $data, Set $set): void {
+                                        $media = Media::find($data['media_id']);
+                                        if ($media) {
+                                            $set('path', $media->path);
+                                        }
+                                    }),
+
+                                // Botón 2: Subir imagen nueva (la registra también en Media)
+                                Forms\Components\Actions\Action::make('upload_new_image')
+                                    ->label('Subir imagen nueva')
+                                    ->icon('heroicon-o-arrow-up-tray')
+                                    ->color('primary')
+                                    ->slideOver()
+                                    ->form([
+                                        Forms\Components\FileUpload::make('upload')
+                                            ->label('Archivo de imagen')
+                                            ->image()
+                                            ->disk('public')
+                                            ->directory('media')
+                                            ->maxSize(4096)
+                                            ->acceptedFileTypes([
+                                                'image/jpeg',
+                                                'image/png',
+                                                'image/webp',
+                                                'image/gif',
+                                            ])
+                                            ->imagePreviewHeight('160')
+                                            ->required(),
+
+                                        Forms\Components\TextInput::make('filename')
+                                            ->label('Nombre descriptivo')
+                                            ->maxLength(255)
+                                            ->required()
+                                            ->placeholder('Ej: Lente de sol modelo X – frontal'),
+
+                                        Forms\Components\TextInput::make('upload_alt')
+                                            ->label('Texto alternativo (SEO)')
+                                            ->maxLength(255)
+                                            ->placeholder('Describe la imagen para accesibilidad'),
+                                    ])
+                                    ->action(function (array $data, Set $set): void {
+                                        $storagePath = $data['upload'];
+                                        $mimeType    = Storage::disk('public')->mimeType($storagePath) ?: 'image/jpeg';
+                                        $size        = Storage::disk('public')->size($storagePath) ?: 0;
+
+                                        Media::create([
+                                            'filename'  => $data['filename'],
+                                            'path'      => $storagePath,
+                                            'mime_type' => $mimeType,
+                                            'size'      => $size,
+                                            'alt'       => $data['upload_alt'] ?? null,
+                                        ]);
+
+                                        $set('path', $storagePath);
+                                    }),
+
+                            ])->columnSpanFull(),
+
+                            // ── Metadatos de la imagen ────────────────────────
                             Forms\Components\TextInput::make('alt')
                                 ->label('Texto alternativo')
                                 ->maxLength(255),
-                            Forms\Components\TextInput::make('sort_order')
-                                ->label('Orden')
-                                ->numeric()
-                                ->default(0),
+
                             Forms\Components\Toggle::make('is_cover')
                                 ->label('Imagen portada'),
                         ])
                         ->columns(2)
-                        ->reorderable('sort_order'),
+                        ->reorderable('sort_order')
+                        ->addActionLabel('Agregar imagen'),
                 ]),
 
             Forms\Components\Section::make('Opciones')

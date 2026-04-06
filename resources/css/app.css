@@ -247,6 +247,7 @@
         background: linear-gradient(140deg, var(--color-brand-700) 0%, var(--color-brand-800) 100%);
         color: #ffffff;
     }
+    .section-cta h1,
     .section-cta h2,
     .section-cta h3 { color: #ffffff; }
     .section-cta .cta-subtitle { color: var(--color-brand-100); }
@@ -254,6 +255,7 @@
         background: linear-gradient(140deg, var(--color-brand-700) 0%, var(--color-brand-800) 100%);
         color: #ffffff;
     }
+    .section-cta-contrast h1,
     .section-cta-contrast h2,
     .section-cta-contrast h3 { color: #ffffff; }
     .section-cta-contrast .cta-subtitle { color: var(--color-brand-100); }

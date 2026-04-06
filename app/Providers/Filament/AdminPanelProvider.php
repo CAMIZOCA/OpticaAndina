@@ -12,6 +12,7 @@ use App\Filament\Resources\BlogPostResource;
 use App\Filament\Resources\BrandResource;
 use App\Filament\Resources\CategoryResource;
 use App\Filament\Resources\ContactMessageResource;
+use App\Filament\Resources\MediaResource;
 use App\Filament\Resources\FaqResource;
 use App\Filament\Resources\ProductResource;
 use App\Filament\Resources\RedirectResource;
@@ -59,6 +60,7 @@ class AdminPanelProvider extends PanelProvider
                 BrandResource::class,
                 CategoryResource::class,
                 ContactMessageResource::class,
+                MediaResource::class,
                 FaqResource::class,
                 ProductResource::class,
                 RedirectResource::class,

@@ -6,6 +6,7 @@ use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ConversionEventController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\StripeController;
@@ -23,6 +24,8 @@ Route::get('/catalogo/{category}/{product}', [CatalogController::class, 'product
 
 Route::get('/marcas', [BrandController::class, 'index'])->name('marcas');
 Route::get('/marcas/{slug}', [BrandController::class, 'show'])->name('marcas.show');
+
+Route::get('/galeria', [MediaController::class, 'index'])->name('galeria');
 
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
