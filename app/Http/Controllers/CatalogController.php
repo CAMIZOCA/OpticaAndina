@@ -18,7 +18,7 @@ class CatalogController extends Controller
             ->withCount(['products' => fn ($q) => $q->active()])
             ->get();
 
-        $saleProducts = Product::with(['category', 'brand', 'images'])->active()->onSale()->latest()->limit(8)->get();
+        $saleProducts = Product::with(['category', 'categories', 'brand', 'images'])->active()->onSale()->latest()->limit(8)->get();
         $saleTotalCount = Product::active()->onSale()->count();
 
         $seo['schema'] = SeoService::collectionPageSchema(
@@ -83,9 +83,12 @@ class CatalogController extends Controller
     public function product(string $categorySlug, string $productSlug)
     {
         $category = Category::where('slug', $categorySlug)->firstOrFail();
-        $product = Product::with(['category', 'brand', 'images'])
+        $product = Product::with(['category', 'categories', 'brand', 'images'])
             ->where('slug', $productSlug)
-            ->where('category_id', $category->id)
+            ->where(function ($q) use ($category) {
+                $q->where('category_id', $category->id)
+                  ->orWhereHas('categories', fn ($q2) => $q2->where('categories.id', $category->id));
+            })
             ->where('is_active', true)
             ->firstOrFail();
 
@@ -97,8 +100,15 @@ class CatalogController extends Controller
         ]);
         $seo = SeoService::applyDefaults($seo);
 
-        $related = Product::with(['category', 'brand', 'images'])
-            ->active()->where('category_id', $category->id)->where('id', '!=', $product->id)->limit(4)->get();
+        $related = Product::with(['category', 'categories', 'brand', 'images'])
+            ->active()
+            ->where(function ($q) use ($category) {
+                $q->where('category_id', $category->id)
+                  ->orWhereHas('categories', fn ($q2) => $q2->where('categories.id', $category->id));
+            })
+            ->where('id', '!=', $product->id)
+            ->limit(4)
+            ->get();
         $stripeEnabled = SiteSetting::get('stripe_enabled', '0') === '1';
 
         return view('pages.catalogo.product', compact('seo', 'category', 'product', 'related', 'stripeEnabled'));

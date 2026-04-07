@@ -47,7 +47,7 @@ class ProductFilter extends Component
 
     public function render()
     {
-        $query = Product::with(['brand', 'images'])
+        $query = Product::with(['category', 'categories', 'brand', 'images'])
             ->active()
             ->whereHas('categories', fn ($q) => $q->where('categories.id', $this->category->id));
 

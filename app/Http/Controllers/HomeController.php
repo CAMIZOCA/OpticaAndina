@@ -111,7 +111,7 @@ class HomeController extends Controller
             : collect();
 
         $featuredProducts = in_array('featured_products', $neededSectionKeys)
-            ? $this->safeQuery('products', fn () => Product::with(['category', 'brand', 'images'])->active()->available()->featured()->ordered()->limit(8)->get())
+            ? $this->safeQuery('products', fn () => Product::with(['category', 'categories', 'brand', 'images'])->active()->available()->featured()->ordered()->limit(8)->get())
             : collect();
 
         $brands = in_array('brands', $neededSectionKeys)

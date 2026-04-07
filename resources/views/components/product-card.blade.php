@@ -1,6 +1,12 @@
 @props(['product'])
+@php
+    $primaryCategory = $product->category ?? $product->categories->first();
+    $productUrl = $primaryCategory
+        ? route('catalogo.producto', [$primaryCategory->slug, $product->slug])
+        : route('catalogo');
+@endphp
 <article class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-200 group">
-    <a href="{{ route('catalogo.producto', [$product->category->slug, $product->slug]) }}" class="block">
+    <a href="{{ $productUrl }}" class="block">
         @if($product->coverImage)
             <div class="aspect-video overflow-hidden bg-gray-50">
                 <img src="{{ \App\Support\MediaUrl::image($product->coverImage->path) }}"

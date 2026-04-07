@@ -57,7 +57,7 @@ class BrandController extends Controller
         $brand = Brand::where('slug', $slug)->where('is_active', true)->firstOrFail();
         $siteName = SiteSetting::get('site_name', 'Optica Andina');
 
-        $products = Product::with(['category', 'brand', 'images'])
+        $products = Product::with(['category', 'categories', 'brand', 'images'])
             ->active()->where('brand_id', $brand->id)->paginate(12);
 
         $seo = SeoService::applyDefaults([
