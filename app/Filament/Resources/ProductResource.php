@@ -14,7 +14,6 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
@@ -80,6 +79,36 @@ class ProductResource extends Resource
                             // ── Almacena el path real (DB column) ─────────────
                             Forms\Components\Hidden::make('path'),
 
+                            // ── Upload inline (sin modal — evita bug FilePond) ─
+                            Forms\Components\FileUpload::make('_upload_trigger')
+                                ->label('Subir imagen')
+                                ->image()
+                                ->maxSize(4096)
+                                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
+                                ->imagePreviewHeight('160')
+                                ->placeholder('Arrastra una imagen o haz clic para subir')
+                                ->live()
+                                ->afterStateUpdated(function (?string $state, Set $set): void {
+                                    if (! $state) return;
+                                    try {
+                                        $tmpFile = \Livewire\Features\SupportFileUploads\TemporaryUploadedFile::createFromLivewire($state);
+                                        if (! $tmpFile || ! $tmpFile->exists()) return;
+                                        $path = $tmpFile->storePubliclyAs('media', $tmpFile->hashName(), 'public');
+                                        Media::firstOrCreate(
+                                            ['path' => $path],
+                                            [
+                                                'filename'  => $tmpFile->getClientOriginalName(),
+                                                'mime_type' => $tmpFile->getMimeType() ?: 'image/jpeg',
+                                                'size'      => $tmpFile->getSize() ?: 0,
+                                            ]
+                                        );
+                                        $set('path', $path);
+                                    } catch (\Throwable) {}
+                                })
+                                ->dehydrated(false)
+                                ->columnSpanFull()
+                                ->visible(fn (Get $get): bool => empty($get('path'))),
+
                             // ── Preview de la imagen actual ───────────────────
                             Forms\Components\Placeholder::make('image_preview')
                                 ->label('Vista previa')
@@ -94,18 +123,15 @@ class ProductResource extends Resource
                                                  loading="lazy">'
                                         );
                                     }
-                                    return new HtmlString(
-                                        '<div style="height:80px;display:flex;align-items:center;justify-content:center;'
-                                        . 'background:#f3f4f6;border-radius:0.5rem;border:2px dashed #d1d5db;'
-                                        . 'color:#9ca3af;font-size:0.875rem;">Sin imagen seleccionada</div>'
-                                    );
+                                    return new HtmlString('');
                                 })
-                                ->columnSpanFull(),
+                                ->columnSpanFull()
+                                ->visible(fn (Get $get): bool => filled($get('path'))),
 
                             // ── Botones de selección ──────────────────────────
                             Forms\Components\Actions::make([
 
-                                // Botón 1: Elegir de la galería de medios
+                                // Elegir de la galería de medios
                                 Forms\Components\Actions\Action::make('pick_from_gallery')
                                     ->label('Elegir de galería')
                                     ->icon('heroicon-o-photo')
@@ -156,54 +182,16 @@ class ProductResource extends Resource
                                         }
                                     }),
 
-                                // Botón 2: Subir imagen nueva (la registra también en Media)
-                                Forms\Components\Actions\Action::make('upload_new_image')
-                                    ->label('Subir imagen nueva')
-                                    ->icon('heroicon-o-arrow-up-tray')
-                                    ->color('primary')
-                                    ->slideOver()
-                                    ->form([
-                                        Forms\Components\FileUpload::make('upload')
-                                            ->label('Archivo de imagen')
-                                            ->image()
-                                            ->disk('public')
-                                            ->directory('media')
-                                            ->maxSize(4096)
-                                            ->acceptedFileTypes([
-                                                'image/jpeg',
-                                                'image/png',
-                                                'image/webp',
-                                                'image/gif',
-                                            ])
-                                            ->imagePreviewHeight('160')
-                                            ->required(),
-
-                                        Forms\Components\TextInput::make('filename')
-                                            ->label('Nombre descriptivo')
-                                            ->maxLength(255)
-                                            ->required()
-                                            ->placeholder('Ej: Lente de sol modelo X – frontal'),
-
-                                        Forms\Components\TextInput::make('upload_alt')
-                                            ->label('Texto alternativo (SEO)')
-                                            ->maxLength(255)
-                                            ->placeholder('Describe la imagen para accesibilidad'),
-                                    ])
-                                    ->action(function (array $data, Set $set): void {
-                                        $storagePath = $data['upload'];
-                                        $mimeType    = Storage::disk('public')->mimeType($storagePath) ?: 'image/jpeg';
-                                        $size        = Storage::disk('public')->size($storagePath) ?: 0;
-
-                                        Media::create([
-                                            'filename'  => $data['filename'],
-                                            'path'      => $storagePath,
-                                            'mime_type' => $mimeType,
-                                            'size'      => $size,
-                                            'alt'       => $data['upload_alt'] ?? null,
-                                        ]);
-
-                                        $set('path', $storagePath);
-                                    }),
+                                // Cambiar imagen (limpiar path actual)
+                                Forms\Components\Actions\Action::make('clear_image')
+                                    ->label('Cambiar imagen')
+                                    ->icon('heroicon-o-arrow-path')
+                                    ->color('warning')
+                                    ->requiresConfirmation()
+                                    ->modalHeading('¿Cambiar imagen?')
+                                    ->modalDescription('Se quitará la imagen actual. Luego podrás subir una nueva o elegir de la galería.')
+                                    ->action(fn (Set $set) => $set('path', null))
+                                    ->visible(fn (Get $get): bool => filled($get('path'))),
 
                             ])->columnSpanFull(),
 
