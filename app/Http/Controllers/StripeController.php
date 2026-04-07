@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\SiteSetting;
+use App\Services\SeoService;
 use App\Support\MediaUrl;
 use Illuminate\Http\Request;
 use Stripe\Checkout\Session;
@@ -29,12 +30,8 @@ class StripeController extends Controller
 
         Stripe::setApiKey($secretKey);
 
-        // Build line item
-        $lineItem = [
-            'quantity' => 1,
-        ];
+        $lineItem = ['quantity' => 1];
 
-        // Prefer a pre-created Stripe Price ID
         if ($product->stripe_price_id) {
             $lineItem['price'] = $product->stripe_price_id;
         } else {
@@ -71,7 +68,12 @@ class StripeController extends Controller
 
     public function success(Request $request)
     {
-        $seo = ['title' => 'Pago exitoso – '.config('app.name')];
+        $seo = SeoService::applyDefaults([
+            'title' => 'Pago exitoso | '.config('app.name'),
+            'meta_description' => 'Confirmacion de pago exitoso.',
+            'noindex' => true,
+            'canonical' => SeoService::canonicalForCurrentRequest(),
+        ]);
 
         return view('pages.checkout.success', compact('seo'));
     }

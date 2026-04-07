@@ -1,15 +1,16 @@
 @props([
     'title', 'metaDescription' => '', 'ogTitle' => '', 'ogDescription' => '',
     'ogImage' => null, 'ogType' => 'website', 'canonical' => null, 'noindex' => false,
-    'schema' => null, 'faqSchema' => null, 'breadcrumbSchema' => null,
-    'extraSchema' => null, 'siteName' => '',
+    'robots' => 'index, follow', 'ogLocale' => 'es_EC',
+    'twitterSite' => null, 'twitterCreator' => null, 'themeColor' => '#0f766e',
+    'schema' => null, 'faqSchema' => null, 'breadcrumbSchema' => null, 'extraSchema' => null,
+    'siteName' => '',
 ])
 <title>{{ $title }}</title>
 <meta name="description" content="{{ $metaDescription }}">
-@if($noindex)
-<meta name="robots" content="noindex, nofollow">
-@else
-<meta name="robots" content="index, follow">
+<meta name="robots" content="{{ $robots }}">
+@if($themeColor)
+<meta name="theme-color" content="{{ $themeColor }}">
 @endif
 @if($canonical)
 <link rel="canonical" href="{{ $canonical }}">
@@ -17,6 +18,7 @@
 
 {{-- Open Graph --}}
 <meta property="og:type" content="{{ $ogType }}">
+<meta property="og:locale" content="{{ $ogLocale }}">
 <meta property="og:site_name" content="{{ $siteName }}">
 <meta property="og:title" content="{{ $ogTitle ?: $title }}">
 <meta property="og:description" content="{{ $ogDescription ?: $metaDescription }}">
@@ -29,6 +31,12 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ $ogTitle ?: $title }}">
 <meta name="twitter:description" content="{{ $ogDescription ?: $metaDescription }}">
+@if($twitterSite)
+<meta name="twitter:site" content="{{ $twitterSite }}">
+@endif
+@if($twitterCreator)
+<meta name="twitter:creator" content="{{ $twitterCreator }}">
+@endif
 @if($ogImage)
 <meta name="twitter:image" content="{{ $ogImage }}">
 @endif

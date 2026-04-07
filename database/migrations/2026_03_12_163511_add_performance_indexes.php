@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -11,14 +12,18 @@ return new class extends Migration
      */
     public function up(): void
     {
+        $driver = DB::connection()->getDriverName();
+
         // products: lookups by slug, category, brand, availability, featured
-        Schema::table('products', function (Blueprint $table) {
+        Schema::table('products', function (Blueprint $table) use ($driver) {
             $table->index('is_available',  'idx_products_is_available');
             $table->index('is_featured',   'idx_products_is_featured');
             $table->index(['category_id', 'is_available'], 'idx_products_cat_available');
             $table->index(['brand_id',    'is_available'], 'idx_products_brand_available');
             // Full-text index on name for LIKE searches in ProductFilter
-            $table->fullText('name', 'ft_products_name');
+            if ($driver !== 'sqlite') {
+                $table->fullText('name', 'ft_products_name');
+            }
         });
 
         // categories: lookups by slug and active state
@@ -53,12 +58,16 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('products', function (Blueprint $table) {
+        $driver = DB::connection()->getDriverName();
+
+        Schema::table('products', function (Blueprint $table) use ($driver) {
             $table->dropIndex('idx_products_is_available');
             $table->dropIndex('idx_products_is_featured');
             $table->dropIndex('idx_products_cat_available');
             $table->dropIndex('idx_products_brand_available');
-            $table->dropFullText('ft_products_name');
+            if ($driver !== 'sqlite') {
+                $table->dropFullText('ft_products_name');
+            }
         });
 
         Schema::table('categories', function (Blueprint $table) {

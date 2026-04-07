@@ -11,6 +11,7 @@ class ServiceController extends Controller
     {
         $seo      = SeoService::forPage('servicios');
         $services = Service::active()->ordered()->get();
+        $seo      = SeoService::applyDefaults($seo);
         return view('pages.servicios.index', compact('seo', 'services'));
     }
 
@@ -22,6 +23,7 @@ class ServiceController extends Controller
             ['name' => 'Servicios', 'url' => route('servicios')],
             ['name' => $service->title],
         ]);
+        $seo = SeoService::applyDefaults($seo);
         $related = Service::active()->ordered()->where('id', '!=', $service->id)->limit(3)->get();
         return view('pages.servicios.show', compact('seo', 'service', 'related'));
     }

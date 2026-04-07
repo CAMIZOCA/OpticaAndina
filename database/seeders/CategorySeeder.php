@@ -10,6 +10,7 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
+            ['name' => 'Armazones',          'slug' => 'armazones',         'sort_order' => 0, 'meta_title' => 'Armazones – Óptica Andina',                'meta_description' => 'Armazones ópticos para hombre y mujer en Tumbaco, Ecuador.'],
             ['name' => 'Lentes de Hombre',    'slug' => 'lentes-hombre',     'sort_order' => 1, 'meta_title' => 'Lentes para Hombre – Óptica Andina',    'meta_description' => 'Monturas y lentes oftálmicos para hombre en Tumbaco, Ecuador.'],
             ['name' => 'Lentes de Mujer',     'slug' => 'lentes-mujer',      'sort_order' => 2, 'meta_title' => 'Lentes para Mujer – Óptica Andina',     'meta_description' => 'Monturas y lentes oftálmicos para mujer en Tumbaco, Ecuador.'],
             ['name' => 'Lentes Infantiles',   'slug' => 'lentes-infantiles', 'sort_order' => 3, 'meta_title' => 'Lentes Infantiles – Óptica Andina',     'meta_description' => 'Lentes oftálmicos para niños en Tumbaco, Ecuador.'],

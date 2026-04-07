@@ -37,6 +37,7 @@ class HomeController extends Controller
         $seo = SeoService::forPage('home');
         $seo['schema'] = json_encode(SeoService::localBusinessSchema(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         $seo['extra_schema'] = SeoService::websiteSchema();
+        $seo = SeoService::applyDefaults($seo);
 
         $settings = SiteSetting::getAll();
 
@@ -187,12 +188,13 @@ class HomeController extends Controller
             'mainEntity' => [
                 '@type' => 'Organization',
                 'name' => $siteName,
-                '@id' => config('app.url').'/#business',
+                '@id' => SeoService::hostUrl().'/#business',
             ],
         ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         $seo['breadcrumb_schema'] = SeoService::breadcrumbSchema([
             ['name' => 'Nosotros', 'url' => route('nosotros')],
         ]);
+        $seo = SeoService::applyDefaults($seo);
 
         return view('pages.nosotros', compact('seo', 'historia', 'nosotrosImageUrl', 'team'));
     }

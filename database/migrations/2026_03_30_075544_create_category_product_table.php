@@ -16,11 +16,20 @@ return new class extends Migration
         });
 
         // Migrate existing category_id data to the pivot table
-        DB::statement('
-            INSERT IGNORE INTO category_product (category_id, product_id)
-            SELECT category_id, id FROM products
-            WHERE category_id IS NOT NULL
-        ');
+        $driver = DB::connection()->getDriverName();
+        if ($driver === 'sqlite') {
+            DB::statement('
+                INSERT OR IGNORE INTO category_product (category_id, product_id)
+                SELECT category_id, id FROM products
+                WHERE category_id IS NOT NULL
+            ');
+        } else {
+            DB::statement('
+                INSERT IGNORE INTO category_product (category_id, product_id)
+                SELECT category_id, id FROM products
+                WHERE category_id IS NOT NULL
+            ');
+        }
     }
 
     public function down(): void

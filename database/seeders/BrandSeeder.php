@@ -41,7 +41,20 @@ class BrandSeeder extends Seeder
             ['name' => 'Artistik Eyewear', 'slug' => 'artistik-eyewear', 'country' => 'International', 'description' => 'Marca de monturas con enfoque creativo y diferenciador.'],
             ['name' => 'Dicaprio', 'slug' => 'dicaprio', 'country' => 'International', 'description' => 'Marca de eyewear con propuestas casuales y formales.'],
             ['name' => 'Mimito', 'slug' => 'mimito', 'country' => 'Peru', 'description' => 'Marca infantil con disenos amigables y coloridos.'],
-            ['name' => 'OA Eyewear', 'slug' => 'oa-eyewear', 'country' => 'Ecuador', 'description' => 'Marca de eyewear comercializada localmente por Optica Andina.'],
+            ['name' => 'OA Eyewear',        'slug' => 'oa-eyewear',        'country' => 'Ecuador',        'description' => 'Marca de eyewear comercializada localmente por Optica Andina.'],
+            // Marcas del CSV de importación
+            ['name' => 'Carolina Herrera',  'slug' => 'carolina-herrera',  'country' => 'Venezuela',      'description' => 'Marca de lujo con eyewear de alta costura.'],
+            ['name' => 'Dakar',             'slug' => 'dakar',             'country' => 'International',  'description' => 'Marca de monturas ópticas funcionales.'],
+            ['name' => 'Eco',               'slug' => 'eco',               'country' => 'Denmark',        'description' => 'Eyewear eco-sostenible y ligero.'],
+            ['name' => 'Ferrari',           'slug' => 'ferrari',           'country' => 'Italy',          'description' => 'Monturas de inspiración deportiva italiana.'],
+            ['name' => 'Modo',              'slug' => 'modo',              'country' => 'Sweden',         'description' => 'Marca escandinava de eyewear minimalista.'],
+            ['name' => 'New Balance',       'slug' => 'new-balance',       'country' => 'United States',  'description' => 'Marca deportiva con línea de eyewear activo.'],
+            ['name' => 'Nike',              'slug' => 'nike',              'country' => 'United States',  'description' => 'Marca deportiva global con gafas de alto rendimiento.'],
+            ['name' => 'Oakley',            'slug' => 'oakley',            'country' => 'United States',  'description' => 'Eyewear deportivo premium con tecnología óptica avanzada.'],
+            ['name' => 'Off Beat',          'slug' => 'off-beat',          'country' => 'International',  'description' => 'Monturas de estilo urbano y alternativo.'],
+            ['name' => 'PINK',              'slug' => 'pink',              'country' => 'United States',  'description' => 'Eyewear de moda femenina y juvenil.'],
+            ['name' => 'Polar Gold',        'slug' => 'polar-gold',        'country' => 'International',  'description' => 'Gafas solares con lentes polarizadas premium.'],
+            ['name' => 'Vogue',             'slug' => 'vogue',             'country' => 'Italy',          'description' => 'Marca de moda con eyewear de tendencia.'],
         ];
 
         foreach ($brands as $brand) {

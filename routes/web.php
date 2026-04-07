@@ -7,6 +7,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ConversionEventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MediaController;
+use App\Http\Controllers\RobotsController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\StripeController;
@@ -41,6 +42,8 @@ Route::get('/sitemaps/categories.xml', [SitemapController::class, 'categories'])
 Route::get('/sitemaps/products.xml', [SitemapController::class, 'products'])->name('sitemap.products');
 Route::get('/sitemaps/brands.xml', [SitemapController::class, 'brands'])->name('sitemap.brands');
 Route::get('/sitemaps/articles.xml', [SitemapController::class, 'articles'])->name('sitemap.articles');
+Route::get('/sitemaps/images.xml', [SitemapController::class, 'images'])->name('sitemap.images');
+Route::get('/robots.txt', RobotsController::class)->name('robots');
 
 Route::get('/checkout/success', [StripeController::class, 'success'])->name('checkout.success');
 Route::post('/checkout/{product:slug}', [StripeController::class, 'checkout'])->name('checkout');

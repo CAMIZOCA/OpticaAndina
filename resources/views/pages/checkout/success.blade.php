@@ -1,4 +1,3 @@
-@php $seo = ['title' => 'Pago exitoso – ' . config('app.name'), 'noindex' => true]; @endphp
 @extends('layouts.app')
 
 @section('content')

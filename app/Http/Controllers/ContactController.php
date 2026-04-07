@@ -26,6 +26,7 @@ class ContactController extends Controller
         $seo['breadcrumb_schema'] = SeoService::breadcrumbSchema([
             ['name' => 'Contacto', 'url' => route('contacto')],
         ]);
+        $seo = SeoService::applyDefaults($seo);
 
         return view('pages.contacto', compact('seo'));
     }
